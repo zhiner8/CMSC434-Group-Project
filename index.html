@@ -16,11 +16,11 @@
          https://www.w3schools.com/howto/howto_js_tab_header.asp -->
         <div class="tab">
           <button class="tablink" onclick="openTab(event, 'Text')" id="defaultOpen">Text</button>
-          <button class="tablink" onclick="openTab(event, 'Tab2')">Tab2</button>
-          <button class="tablink" onclick="openTab(event, 'Tab3')">Tab3</button>
-          <button class="tablink" onclick="openTab(event, 'Tab4')">Tab4</button>
-          <button class="tablink" onclick="openTab(event, 'Tab5')">Tab5</button>
-          <button class="tablink" onclick="openTab(event, 'Tab6')">Tab6</button>
+          <button class="tablink" onclick="openTab(event, 'LR')">LR</button>
+          <button class="tablink" onclick="openTab(event, 'Colors')">Colors</button>
+          <button class="tablink" onclick="openTab(event, 'Profile')">Profile</button>
+          <button class="tablink" onclick="openTab(event, 'Choices')">Choices</button>
+          <button class="tablink" onclick="openTab(event, 'ToDo')">ToDo</button>
         </div>
 
         <!-- Tab content -->
@@ -61,6 +61,50 @@
               And lose the name of action." </p>
 
         </div>
+
+        <div id="LR" class="tabcontent">
+          <p> 
+            The tab itself will be titled "LR" and the contents will be the text "Down Here" positioned in the lower right corner of the app's area.
+          </p>
+        </div>
+
+        <div id="Colors" class="tabcontent">
+          <p> 
+           The tab itself will be titled "Colors" and the contents will be colorful - specifically two lines of text where the first line has a text color of yellow and a background of black, and the second line has a text color of purple and a background color of yellow, followed by a pie chart which uses multiple bright colors.
+          </p>
+        </div>
+
+         <div id="Profile" class="tabcontent">
+          <p> 
+            The tab itself will be titled "Profile" and the contents need to be a https://www.cs.umd.edu/class/spring2025/cmsc434-0101-0201-0501/P1_2/Tab3.pngcentered image with a centered bold name under the image, such that when the user taps the image a notification appears. The user should then be able to close the notification. 
+          </p>
+        </div>
+
+         <div id="Choices" class="tabcontent">
+          <p> 
+            The tab itself will be titled "Choices" and the contents need to include (1) something with a radio button entry option, (2) something with a drop-down list entry option, (3) a traditional button that when pressed will display text that is somehow reflecting the options chosen.
+          </p>
+        </div>
+
+        <div id="ToDo" class="tabcontent">
+          <p> 
+           The tab itself will be titled "ToDo" and the contents need to be a functional, basic, "To Do" list where the user can type in a new item and add it to the list, and the user can then either delete things from the list or be able to "cross off" things on the list in some meaningful manner.
+          </p>      
+          </div>
+
+        
+        <!--- https://www.w3docs.com/snippets/javascript/how-to-make-javascript-execute-after-page-load.html -->
+        <!--- not sure why this is in the HTML file and not the JS file. Just did it based on the example I found -->
+       <script>
+        function loadFunction() {
+          tabcontent = document.getElementsByClassName("tabcontent");
+          for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+          }
+        }
+          window.onload = loadFunction();
+          openTab(event, 'Text');
+      </script> 
 
       </div>
     </div>
