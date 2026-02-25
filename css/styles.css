@@ -53,11 +53,11 @@ body {
 
 /* Text tab */
 #Text {
-  background-color: white;
+  background-color: pink;
   overflow: scroll;
 }
 
 .monologue {
   font-size: 25px;
-  padding: 14px 16px;
+  padding-left: 5px;
 }
