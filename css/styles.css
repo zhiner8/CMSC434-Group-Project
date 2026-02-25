@@ -40,7 +40,7 @@ body {
   outline: none;
   cursor: pointer;
   background: blue;
-  font-size: 18px;
+  font-size: 22px;
   color: yellow;
   height: 100px;
   flex: 1; /* replaces width: 16.667% — cleaner and exact */
@@ -49,6 +49,10 @@ body {
 /* Change background color of buttons on hover */
 .tablink:hover {
   background-color: #777;
+}
+.tablink i {
+  font-size: 50px;
+  margin-bottom: 10px;
 }
 
 /* Text tab */
