@@ -21,8 +21,8 @@ body {
   display: flex;
   flex-direction: column;
 }
- 
-#tab {
+
+.tab {
   display: flex;
   height: 100px;
   margin-top: auto;
@@ -33,19 +33,17 @@ body {
 
 /* Style the tab buttons */
 
-/* How do i get the tabs on the bottom of the screen... */
 .tablink {
   background-color: #555;
   color: white;
-  float: left;
   border: none;
   outline: none;
   cursor: pointer;
-  padding: 14px 16px;
   background: blue;
   font-size: 18px;
   color: yellow;
-  width: 16.667%; /* how to get it exactly 1/6th of screen lol */
+  height: 100px;
+  flex: 1; /* replaces width: 16.667% — cleaner and exact */
 }
 
 /* Change background color of buttons on hover */
@@ -55,12 +53,11 @@ body {
 
 /* Text tab */
 #Text {
-  background-color:white;
-  overflow:scroll
+  background-color: white;
+  overflow: scroll;
 }
 
-.monologue { 
+.monologue {
   font-size: 25px;
   padding: 14px 16px;
 }
-
