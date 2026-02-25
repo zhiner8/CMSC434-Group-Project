@@ -21,16 +21,46 @@ body {
   display: flex;
   flex-direction: column;
 }
-
-#tabs {
+ 
+#tab {
   display: flex;
   height: 100px;
   margin-top: auto;
 }
-.tab {
-  flex: 1;
+
+/* Adapted code from
+ https://www.w3schools.com/howto/howto_js_tab_header.asp */
+
+/* Style the tab buttons */
+
+/* How do i get the tabs on the bottom of the screen... */
+.tablink {
+  background-color: #555;
+  color: white;
+  float: left;
   border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
   background: blue;
   font-size: 18px;
   color: yellow;
+  width: 16.667%; /* how to get it exactly 1/6th of screen lol */
 }
+
+/* Change background color of buttons on hover */
+.tablink:hover {
+  background-color: #777;
+}
+
+/* Text tab */
+#Text {
+  background-color:white;
+  overflow:scroll
+}
+
+.monologue { 
+  font-size: 25px;
+  padding: 14px 16px;
+}
+
