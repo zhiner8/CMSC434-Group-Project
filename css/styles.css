@@ -1,0 +1,23 @@
+body {
+  background: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* THIS is the tablet */
+#device {
+  width: 640px;
+  height: 960px;
+  background: white;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.7);
+}
+
+/* This is the actual UI area */
+#screen {
+  width: 100%;
+  height: 100%;
+  background: white;
+  box-sizing: border-box;
+}
