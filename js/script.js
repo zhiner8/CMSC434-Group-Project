@@ -24,3 +24,10 @@ function openTab(evt, tab) {
   document.getElementById(tab).style.display = "block";
   evt.currentTarget.className += " active";
 } 
+function openNotif() {
+  document.getElementById("notification").style.display = "block";
+}
+
+function closeNotif() {
+  document.getElementById("notification").style.display = "none";
+}

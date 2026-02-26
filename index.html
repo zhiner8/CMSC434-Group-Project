@@ -63,26 +63,34 @@
         </div>
 
         <div id="Colors" class="tabcontent">
-          <p>
-            The tab itself will be titled "Colors" and the contents will be
-            colorful - specifically two lines of text where the first line has a
-            text color of yellow and a background of black, and the second line
-            has a text color of purple and a background color of yellow,
-            followed by a pie chart which uses multiple bright colors.
-          </p>
+          <h1>- Colors Screen -</h1>
+
+          <p class="line1">Yellow text on a black background.</p>
+
+          <p class="line2">Purple text on a yellow background.</p>
+
+          <div class="piechart">
+            <img src="res/pie.png" width="500" height="500">
+          </div>
         </div>
 
         <div id="Profile" class="tabcontent">
-          <p>
-            The tab itself will be titled "Profile" and the contents need to be
-            a
-            https://www.cs.umd.edu/class/spring2025/cmsc434-0101-0201-0501/P1_2/Tab3.pngcentered
-            image with a centered bold name under the image, such that when the
-            user taps the image a notification appears. The user should then be
-            able to close the notification.
-          </p>
-        </div>
+          <div class="profile-container">
+            <img
+              src="res/star.webp"
+              class="profile-pic"
+              onclick="openNotif()"
+            />
 
+            <h2 class="profile-name">Star</h2>
+
+            <div id="notification" class="notification">
+              <p>Star</p>
+              <button onclick="closeNotif()">Close</button>
+            </div>
+          </div>
+        </div>
+        
         <div id="Choices" class="tabcontent">
           <p>
             The tab itself will be titled "Choices" and the contents need to
