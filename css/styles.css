@@ -152,4 +152,96 @@ body {
   background-color: gray;
 }
 
-/* TO DO: Choices, ToDo */
+/*choices tab*/
+#Choices {
+  background-color: pink;
+  padding: 15px;
+}
+#Choices h1 {
+  font-size: 25px;
+}
+#Choices h3 {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+#Choices label {
+  font-size: 20px;
+  line-height: 2.2;
+}
+.choices-section {
+  margin-bottom: 20px;
+}
+#colorChoice {
+  font-size: 20px;
+  padding: 5px;
+}
+.choices-btn {
+  font-size: 20px;
+  padding: 10px 20px;
+  background: blue;
+  color: yellow;
+  border: none;
+  cursor: pointer;
+}
+#choices-result {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+/* todo  tab */
+#ToDo {
+  background-color: pink;
+  padding: 15px;
+}
+#ToDo h1 {
+  font-size: 25px;
+}
+.todo-input-area {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+#todoInput {
+  flex: 1;
+  font-size: 20px;
+  padding: 8px;
+  border: 2px solid #aaa;
+}
+.todo-input-area button {
+  font-size: 20px;
+  padding: 8px 15px;
+  background: blue;
+  color: yellow;
+  border: none;
+  cursor: pointer;
+}
+#todoList {
+  list-style: none;
+  padding: 0;
+}
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 20px;
+  padding: 10px 5px;
+  border-bottom: 2px solid #ccc;
+}
+.todo-item span {
+  cursor: pointer;
+  flex: 1;
+}
+.todo-item.crossed-off span {
+  text-decoration: line-through;
+  color: gray;
+}
+.delete-btn {
+  font-size: 16px;
+  padding: 5px 10px;
+  background: blue;
+  color: yellow;
+  border: none;
+  cursor: pointer;
+}
+

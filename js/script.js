@@ -31,3 +31,49 @@ function openNotif() {
 function closeNotif() {
   document.getElementById("notification").style.display = "none";
 }
+function showChoices() {
+  var radios = document.getElementsByName("season");
+  var selectedFood = "None";
+
+  for (var i = 0; i < radios.length; i++) {
+    if (radios[i].checked) {
+      selectedFood = radios[i].value;
+      break;
+    }
+  }
+
+  var selectedColor = document.getElementById("colorChoice").value;
+
+  document.getElementById("choices-result").textContent =
+    "you chose the food: " + selectedFood + " and the color: " + selectedColor + "!";
+}
+
+function addTodo() {
+  var input = document.getElementById("todoInput");
+  var text = input.value.trim();
+
+  if (text === "") {
+    return;
+  }
+
+  var li = document.createElement("li");
+  li.className = "todo-item";
+
+  var span = document.createElement("span");
+  span.textContent = text;
+  span.onclick = function () {
+    li.classList.toggle("crossed-off");
+  };
+
+  var deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "Delete";
+  deleteBtn.className = "delete-btn";
+  deleteBtn.onclick = function () {
+    li.remove();
+  };
+
+  li.appendChild(span);
+  li.appendChild(deleteBtn);
+  document.getElementById("todoList").appendChild(li);
+  input.value = "";
+}

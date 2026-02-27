@@ -90,23 +90,35 @@
         </div>
         
         <div id="Choices" class="tabcontent">
-          <p>
-            The tab itself will be titled "Choices" and the contents need to
-            include (1) something with a radio button entry option, (2)
-            something with a drop-down list entry option, (3) a traditional
-            button that when pressed will display text that is somehow
-            reflecting the options chosen.
-          </p>
+          <h1>- Choices Screen -</h1>
+        <div class="choices-section">
+          <h3>Favorite Food That Starts With C?</h3>
+            <label><input type="radio" name="season" value="Chicken" /> Chicken</label><br />
+            <label><input type="radio" name="season" value="Corn" /> Corn</label><br />
+            <label><input type="radio" name="season" value="Clams" /> Clams</label><br />
+            <label><input type="radio" name="season" value="Candy" /> Candy</label>
+        </div>
+        <div class="choices-section">
+          <h3>Favorite Color?</h3>
+          <select id="colorChoice">
+            <option value="Red">Red</option>
+            <option value="Blue">Blue</option>
+            <option value="Green">Green</option>
+            <option value="Purple">Purple</option>
+          </select>
         </div>
 
+        <button class="choices-btn" onclick="showChoices()">Submit</button>
+        <p id="choices-result"></p>
+      </div>
+
         <div id="ToDo" class="tabcontent">
-          <p>
-            The tab itself will be titled "ToDo" and the contents need to be a
-            functional, basic, "To Do" list where the user can type in a new
-            item and add it to the list, and the user can then either delete
-            things from the list or be able to "cross off" things on the list in
-            some meaningful manner.
-          </p>
+          <h1>- ToDO Screen -<h1>
+            <div class="todo-input-area">
+              <input type="text" id="todoInput" placeholder="Add a new task..." />
+              <button onclick="addTodo()">Add</button>
+            </div>
+          <ul id="todoList"></ul>
         </div>
 
         <!--- https://www.w3docs.com/snippets/javascript/how-to-make-javascript-execute-after-page-load.html -->
