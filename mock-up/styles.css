@@ -1,0 +1,157 @@
+body {
+  background: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: "Roboto", sans-serif;
+  color: #011627;
+}
+
+/* THIS is the tablet */
+#device {
+  width: 640px;
+  height: 960px;
+  background: #f4f7f5;
+}
+
+/* This is the actual UI area */
+#screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #f4f7f5;
+  display: flex;
+  flex-direction: row;
+}
+.back-button {
+  color: #225469;
+  font-size: 40px;
+  padding-left: 5px;
+  padding-top: 10px;
+}
+h1 {
+  font-size: 42px;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  top: 20px; /* adjust to align vertically with your back button */
+}
+.date-added {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  top: 90px; /* sits just below the h1 */
+  font-size: 16px;
+  color: #011627;
+}
+/* Everything below the header */
+.content {
+  position: absolute;
+  top: 130px;
+  left: 20px;
+  right: 20px;
+}
+
+/* Details section */
+.details-label {
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.details-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 24px;
+  align-items: stretch;
+}
+
+.details-box {
+  flex: 1;
+  min-height: 160px;
+  border: 2px solid #011627;
+  border-radius: 8px;
+  background: #fff;
+  padding: 10px;
+  font-size: 15px;
+  color: #444;
+}
+
+.photo-box {
+  flex: 1;
+  min-height: 160px;
+  border: 2px solid #011627;
+  border-radius: 8px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #888;
+}
+
+/* Ingredients and Tags row */
+.bottom-row {
+  display: flex;
+  gap: 20px;
+}
+
+.ingredients-col,
+.tags-col {
+  flex: 1;
+}
+
+.section-label {
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.ingredient-item {
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ingredient-item.unchecked {
+  background: #f28b82;
+}
+
+.ingredient-item.checked {
+  background: #a8d5a2;
+}
+
+.tag-item {
+  border: 2px solid #011627;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+}
+
+.add-btn {
+  font-size: 24px;
+  color: #225469;
+  margin-top: 6px;
+  display: inline-block;
+}
+
+/* Trash button */
+.trash-btn {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  font-size: 40px;
+  color: #225469;
+}
