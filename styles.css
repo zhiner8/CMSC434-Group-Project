@@ -17,55 +17,53 @@ body {
   background: #f4f7f5;
 }
 
+/* This is the actual UI area */
+#screen {
+  display: flex;
+  flex-direction: column; 
+  width: 100%;
+  height: 100%;
+  background: #f4f7f5;
+}
+
 h1 {
   font-size: 46px;
   color: white;
   width: 100%;
   text-align: center;
   margin: 0;
-  top: 20px; /* adjust to align vertically with your back button */
 }
 
-/* This is the actual UI area */
-#screen {
-  display: flex;
-  position: relative;
-  display: flex;
-  width: 100%;
-  height: 100%;
-  background: #f4f7f5;
-  flex-wrap: wrap;
-}
 
 #header {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 10%;
   background-color: rgb(39, 36, 36);
   border-radius: 0% 0% 10px 10px;
-  color: rgb(39, 36, 36);
 }
+
 
 #button-area {
   display: flex;
   width: 100%;
-  height: 80%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 50px;
+  flex: 1; 
 }
+
 
 #nav-bar {
   border-radius: 15px 15px 0px 0px;
   width: 100%;
-  height: 10%;
   background-color: rgb(39, 36, 36);
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  margin-top: auto; 
 }
 
 #first-row {
@@ -97,13 +95,13 @@ h1 {
   height: 90%;
   width: 32%;
 
-  display: flex; /* 🔥 important */
-  justify-content: center; /* center text */
+  display: flex;
+  justify-content: center;
   align-items: center;
 
-  text-decoration: none; /* remove underline */
-  color: black; /* text color */
-  background-color: white; /* optional default */
+  text-decoration: none;
+  color: black;
+  background-color: white;
 }
 
 #selected {
