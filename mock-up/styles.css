@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com");
+
 body {
   background: #333;
   display: flex;
@@ -15,143 +17,95 @@ body {
   background: #f4f7f5;
 }
 
-/* This is the actual UI area */
-#screen {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: #f4f7f5;
-  display: flex;
-  flex-direction: row;
-}
-.back-button {
-  color: #225469;
-  font-size: 40px;
-  padding-left: 5px;
-  padding-top: 10px;
-}
 h1 {
-  font-size: 42px;
-  position: absolute;
+  font-size: 46px;
+  color: white;
   width: 100%;
   text-align: center;
   margin: 0;
   top: 20px; /* adjust to align vertically with your back button */
 }
-.date-added {
-  position: absolute;
+
+/* This is the actual UI area */
+#screen {
+  display: flex;
+  position: relative;
+  display: flex;
   width: 100%;
-  text-align: center;
-  margin: 0;
-  top: 90px; /* sits just below the h1 */
-  font-size: 16px;
-  color: #011627;
-}
-/* Everything below the header */
-.content {
-  position: absolute;
-  top: 130px;
-  left: 20px;
-  right: 20px;
+  height: 100%;
+  background: #f4f7f5;
+  flex-wrap: wrap;
 }
 
-/* Details section */
-.details-label {
-  font-size: 22px;
-  font-weight: 500;
-  margin-bottom: 10px;
-}
-
-.details-row {
+#header {
   display: flex;
-  gap: 20px;
-  margin-bottom: 24px;
-  align-items: stretch;
-}
-
-.details-box {
-  flex: 1;
-  min-height: 160px;
-  border: 2px solid #011627;
-  border-radius: 8px;
-  background: #fff;
-  padding: 10px;
-  font-size: 15px;
-  color: #444;
-}
-
-.photo-box {
-  flex: 1;
-  min-height: 160px;
-  border: 2px solid #011627;
-  border-radius: 8px;
-  background: #fff;
-  display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 18px;
-  color: #888;
-}
-
-/* Ingredients and Tags row */
-.bottom-row {
-  display: flex;
-  gap: 20px;
-}
-
-.ingredients-col,
-.tags-col {
-  flex: 1;
-}
-
-.section-label {
-  font-size: 22px;
-  font-weight: 500;
-  margin-bottom: 10px;
-}
-
-.ingredient-item {
-  border-radius: 6px;
-  padding: 8px 12px;
-  margin-bottom: 10px;
-  font-size: 15px;
-  display: flex;
   align-items: center;
-  gap: 8px;
+  width: 100%;
+  height: 10%;
+  background-color: rgb(39, 36, 36);
+  border-radius: 0% 0% 10px 10px;
+  color: rgb(39, 36, 36);
 }
 
-.ingredient-item.unchecked {
-  background: #f28b82;
-}
-
-.ingredient-item.checked {
-  background: #a8d5a2;
-}
-
-.tag-item {
-  border: 2px solid #011627;
-  border-radius: 6px;
-  padding: 8px 12px;
-  margin-bottom: 10px;
-  font-size: 15px;
+#button-area {
   display: flex;
+  width: 100%;
+  height: 80%;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 8px;
-  background: #fff;
+  gap: 50px;
 }
 
-.add-btn {
-  font-size: 24px;
-  color: #225469;
-  margin-top: 6px;
-  display: inline-block;
+#nav-bar {
+  border-radius: 15px 15px 0px 0px;
+  width: 100%;
+  height: 10%;
+  background-color: rgb(39, 36, 36);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
-/* Trash button */
-.trash-btn {
-  position: absolute;
-  bottom: 16px;
-  right: 16px;
-  font-size: 40px;
-  color: #225469;
+#first-row {
+  display: flex;
+  gap: 50px;
+}
+
+#second-row {
+  display: flex;
+  gap: 50px;
+}
+
+.landing-page-button {
+  background-color: lightblue;
+  font-family: "Caveat Brush", cursive;
+  font-size: 30px;
+  border-radius: 15px;
+  border-color: #225469;
+  border-width: 5px;
+  height: 210px;
+  width: 210px;
+}
+
+.nav-buttons {
+  font-family: "Caveat Brush", cursive;
+  font-weight: 300;
+  font-size: large;
+  border-radius: 8px;
+  height: 90%;
+  width: 32%;
+
+  display: flex; /* 🔥 important */
+  justify-content: center; /* center text */
+  align-items: center;
+
+  text-decoration: none; /* remove underline */
+  color: black; /* text color */
+  background-color: white; /* optional default */
+}
+
+#selected {
+  background-color: lightblue;
 }
