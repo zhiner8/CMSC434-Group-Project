@@ -6,7 +6,10 @@
  --dark-text:#011627;
  --accent-blue-1: #14313E;
  --accent-blue-2: #225469 ;
- --border-radius: 20px;
+ font-size: "Roboto", sans-serif;
+ font-size: 25px;
+ border: 2px solid var(--dark-text);
+ border-radius: 20px; /* why isn't this working :( */
 }
 
 /* does this block do anything? */
@@ -45,15 +48,14 @@ h1 {
   top: 20px; /* adjust to align vertically with your back button */
 }
 
-/* This is the actual UI area */
-#screen {
-  display: flex;
-  position: relative;
-  display: flex;
-  width: 100%;
-  height: 100%;
-  background:var(--off-white);
-  flex-wrap: wrap;
+h2{
+  font-size: 40px;
+  color: var(--dark-text);
+}
+
+table{
+  border-collapse: collapse;
+  border-radius: 20px;
 }
 
 
@@ -64,8 +66,8 @@ h1 {
   width: 100%;
   height: 10%;
   background-color: var(--accent-blue-1);
-  border-radius: 0% 0% var(--border-radius) var(--border-radius);
   color: var(--off-white);
+ 
 }
 
 
