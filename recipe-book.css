@@ -1,0 +1,29 @@
+#recipe-list {
+  display: flex;
+  width: 80%;
+  height: 40%;
+  margin: auto auto;
+  border: 2px solid var(--accent-blue-1);
+  border-radius: var(--border-radius);
+  border-color: var(--accent-blue-1);
+  border-width: 1px solid var(--accent-blue-1);
+  color:var(--dark-text);
+  flex-direction: column;
+  justify-content: top;
+  gap: 50px;
+  border-collapse: collapse;
+}
+
+th {
+  border: 2px solid black;
+  border-radius: 10px;
+  border-color: #011627;
+  margin:auto;
+}
+
+td {
+  border: 2px solid black;
+  border-radius: 10px;
+  border-color: #011627;
+  margin:auto;
+}

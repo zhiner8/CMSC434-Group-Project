@@ -82,7 +82,7 @@ h1 {
 #recipe-list {
   display: flex;
   width: 80%;
-  height: 50%;
+  height: 40%;
   margin: auto auto;
   border: 2px solid var(--accent-blue-1);
   border-radius: var(--border-radius);
