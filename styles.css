@@ -2,14 +2,14 @@
 
 /* style guide */
 :root {
- --off-white:#f4f7f5;
- --dark-text:#011627;
- --accent-blue-1: #14313E;
- --accent-blue-2: #225469;
- font-size: "Roboto", sans-serif;
- font-size: 25px;
- border: 2px solid var(--dark-text);
- border-radius: 20px; /* why isn't this working :( */
+  --off-white: #f4f7f5;
+  --dark-text: #011627;
+  --accent-blue-1: #14313e;
+  --accent-blue-2: #225469;
+  font-size: "Roboto", sans-serif;
+  font-size: 25px;
+  border: 2px solid var(--dark-text);
+  border-radius: 20px; /* why isn't this working :( */
 }
 
 /* does this block do anything? */
@@ -20,7 +20,7 @@ body {
   align-items: center;
   height: 100vh;
   font-family: "Roboto", sans-serif;
-  color:var(--off-white);
+  color: var(--off-white);
 }
 
 /* THIS is the tablet */
@@ -33,7 +33,7 @@ body {
 /* This is the actual UI area */
 #screen {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   width: 100%;
   height: 100%;
   background: #f4f7f5;
@@ -48,16 +48,15 @@ h1 {
   top: 20px; /* adjust to align vertically with your back button */
 }
 
-h2{
+h2 {
   font-size: 40px;
   color: var(--dark-text);
 }
 
-table{
+table {
   border-collapse: collapse;
   border-radius: 20px;
 }
-
 
 #header {
   display: flex;
@@ -67,9 +66,7 @@ table{
   height: 10%;
   background-color: var(--accent-blue-1);
   color: var(--off-white);
- 
 }
-
 
 #nav-bar {
   border-radius: 15px 15px 0px 0px;
@@ -77,11 +74,11 @@ table{
   border-color: var(--dark-text);
   width: 100%;
   height: 8%;
-  background-color:var(--accent-blue-1);
+  background-color: var(--accent-blue-1);
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  margin-top: auto; 
+  margin-top: auto;
 }
 
 .nav-buttons {
@@ -102,7 +99,41 @@ table{
   background-color: var(--accent-blue-1);
 }
 
-
 #selected {
   background-color: var(--accent-blue-2);
+}
+#button-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+  padding: 20px;
+  height: 75%;
+  min-height: 0;
+}
+
+#first-row,
+#second-row {
+  display: contents;
+}
+
+.landing-page-button {
+  width: 100%;
+  height: 100%;
+  background-color: var(--accent-blue-2);
+  color: var(--off-white);
+  border: none;
+  border-radius: 16px;
+  font-family: "Roboto", sans-serif;
+  font-size: 28px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.landing-page-button:hover {
+  background-color: var(--accent-blue-1);
+}
+
+a {
+  display: contents;
 }
