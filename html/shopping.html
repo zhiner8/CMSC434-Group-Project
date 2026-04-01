@@ -5,19 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shopping Lists</title>
     <link rel="stylesheet" href="../styles.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
-      rel="stylesheet"
-    />
-
-    <script
-      src="https://kit.fontawesome.com/75ab6db391.js"
-      crossorigin="anonymous"
-    ></script>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/75ab6db391.js" crossorigin="anonymous"></script>
+    <script src="../storage.js"></script>
 
     <style>
       #shopping-list-container {
@@ -86,14 +77,14 @@
         <div id="nav-bar">
           <a href="my-kitchen.html" class="nav-buttons">My Kitchen</a>
           <a href="recipe-book.html" class="nav-buttons">Recipe Book</a>
-          <a href="shopping.html" class="nav-buttons" id="selected">
-            Shopping Lists
-          </a>
+          <a href="shopping.html" class="nav-buttons" id="selected">Shopping Lists</a>
         </div>
       </div>
     </div>
 
     <script>
+      initStorage();
+
       const itemInput = document.getElementById("item-input");
       const addItemButton = document.getElementById("add-item");
       const itemsUl = document.getElementById("items-ul");

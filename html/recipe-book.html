@@ -1,22 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-  +
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mock-Up</title>
+  <title>Recipe Book</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
-
   <link rel="stylesheet" href="../styles.css" />
   <link rel="stylesheet" href="../recipe-book.css" />
+  <script src="https://kit.fontawesome.com/75ab6db391.js" crossorigin="anonymous"></script>
+  <script src="../storage.js"></script>
 
-    <!-- what is this-->
-    <script
-      src="https://kit.fontawesome.com/75ab6db391.js"
-      crossorigin="anonymous"
-    ></script>
-  </head>
+  <style>
+    /*dims background */
+    #modal-overlay {
+      display: none;
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      z-index: 10;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #modal-overlay.open {
+      display: flex;
+    }
+
+    #recipe-modal {
+      background: var(--off-white);
+      border-radius: 16px;
+      padding: 24px;
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    #recipe-modal h3 {
+      color: var(--dark-text);
+      margin: 0;
+      font-size: 22px;
+    }
+
+    #recipe-modal input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid var(--accent-blue-2);
+      font-family: "Roboto", sans-serif;
+      font-size: 16px;
+      color: var(--dark-text);
+      box-sizing: border-box;
+    }
+
+    #recipe-modal label {
+      color: var(--dark-text);
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    #ingredient-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    #ingredient-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--accent-blue-2);
+      color: var(--off-white);
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 16px;
+      border: none;
+    }
+
+    #ingredient-list li button {
+      background: none;
+      border: none;
+      color: var(--off-white);
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #ingredient-input-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    #ingredient-input-row input {
+      flex: 1;
+    }
+
+    #add-ingredient-btn {
+      padding: 8px 14px;
+      background: var(--accent-blue-2);
+      color: var(--off-white);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #modal-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    #modal-buttons button {
+      padding: 8px 20px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #save-recipe-btn {
+      background: var(--accent-blue-1);
+      color: var(--off-white);
+    }
+
+    #cancel-btn {
+      background: #ccc;
+      color: var(--dark-text);
+    }
+  </style>
+</head>
 
   <body>
     <div id="device">
@@ -33,33 +149,172 @@
           </div>
           <div id="recipe-list">
             <table>
-              <tr>
-                <th>Name</th>
-                <th>Ingredients</th>
-                <th>Tags</th>
-              </tr>
-              <tr>
-                <td>Spaghetti</td>
-                <td>Tomato Sauce, Pasta</td>
-                <td>Dinner</td>
-              </tr>
-              <tr>
-                <td>Tofu Scramble</td>
-                <td>Tofu, Spinach</td>
-                <td>Breakfast</td>
-              </tr>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Ingredients</th>
+                  <th>Tags</th>
+                </tr>
+              </thead>
+              <tbody id="recipe-table-body">
+                <!-- rows injected by renderRecipes() -->
+              </tbody>
             </table>
+          </div>
+        </div>
+
+        <!-- modal overlay -->
+        <div id="modal-overlay">
+          <div id="recipe-modal">
+            <h3>New Recipe</h3>
+
+            <label>Name</label>
+            <input type="text" id="recipe-name-input" placeholder="e.g. Spaghetti Bolognese" />
+
+            <label>Tags <span style="font-weight:400;font-size:14px;">(comma separated)</span></label>
+            <input type="text" id="recipe-tags-input" placeholder="e.g. Italian, Dinner" />
+
+            <label>Ingredients</label>
+            <ul id="ingredient-list"></ul>
+            <div id="ingredient-input-row">
+              <input type="text" id="ingredient-input" placeholder="e.g. tomato sauce" />
+              <button id="add-ingredient-btn">Add</button>
+            </div>
+
+            <div id="modal-buttons">
+              <button id="cancel-btn">Cancel</button>
+              <button id="save-recipe-btn">Save</button>
+            </div>
           </div>
         </div>
 
         <div id="nav-bar">
           <a href="my-kitchen.html" class="nav-buttons">My Kitchen</a>
-          <a href="recipe-book.html" class="nav-buttons" id="selected"
-            >Recipe Book</a
-          >
+          <a href="recipe-book.html" class="nav-buttons" id="selected">Recipe Book</a>
           <a href="shopping.html" class="nav-buttons">Shopping Lists</a>
         </div>
       </div>
     </div>
+
+    <script>
+      initStorage();
+
+      const recipeTableBody = document.getElementById("recipe-table-body");
+      const modalOverlay = document.getElementById("modal-overlay");
+      const newRecipeBtn = document.getElementById("new-recipe");
+      const cancelBtn = document.getElementById("cancel-btn");
+      const saveRecipeBtn = document.getElementById("save-recipe-btn");
+      const recipeNameInput = document.getElementById("recipe-name-input");
+      const recipeTagsInput = document.getElementById("recipe-tags-input");
+      const ingredientInput = document.getElementById("ingredient-input");
+      const addIngredientBtn = document.getElementById("add-ingredient-btn");
+      const ingredientList = document.getElementById("ingredient-list");
+
+      // tracks ingredients added during the current  session
+      let currentIngredients = [];
+
+      // create recipe table 
+      function renderRecipes() {
+        const recipes = getRecipes();
+        recipeTableBody.innerHTML = "";
+
+        if (recipes.length === 0) {
+          recipeTableBody.innerHTML = `
+            <tr>
+              <td colspan="3" style="text-align:center; color:gray;">
+                No recipes yet. Press + to add one.
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        recipes.forEach(recipe => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${recipe.name}</td>
+            <td>${recipe.ingredients.join(", ")}</td>
+            <td>${recipe.tags}</td>
+          `;
+          recipeTableBody.appendChild(tr);
+        });
+      }
+
+      // ── Modal open/close 
+      function openModal() {
+        // clear form fields each time it opens
+        recipeNameInput.value = "";
+        recipeTagsInput.value = "";
+        ingredientInput.value = "";
+        currentIngredients = [];
+        renderIngredientList();
+        modalOverlay.classList.add("open");
+      }
+
+      function closeModal() {
+        modalOverlay.classList.remove("open");
+      }
+
+      //  Ingredient list inside the form 
+      function renderIngredientList() {
+        ingredientList.innerHTML = "";
+        currentIngredients.forEach((ing, index) => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+            <span>${ing}</span>
+            <button onclick="removeIngredient(${index})">✕</button>
+          `;
+          ingredientList.appendChild(li);
+        });
+      }
+
+      function addIngredient() {
+        const val = ingredientInput.value.trim();
+        if (!val) return;
+        currentIngredients.push(val);
+        ingredientInput.value = "";
+        renderIngredientList();
+      }
+
+      function removeIngredient(index) {
+        currentIngredients.splice(index, 1);
+        renderIngredientList();
+      }
+
+      //  Save new recipe 
+      function saveRecipe() {
+        const name = recipeNameInput.value.trim();
+        if (!name) {
+          alert("Please enter a recipe name.");
+          return;
+        }
+        if (currentIngredients.length === 0) {
+          alert("Please add at least one ingredient.");
+          return;
+        }
+
+        addRecipe({
+          name: name,
+          description: "",
+          tags: recipeTagsInput.value.trim(),
+          ingredients: currentIngredients
+        });
+
+        closeModal();
+        renderRecipes();
+      }
+
+      newRecipeBtn.addEventListener("click", openModal);
+      cancelBtn.addEventListener("click", closeModal);
+      saveRecipeBtn.addEventListener("click", saveRecipe);
+      addIngredientBtn.addEventListener("click", addIngredient);
+
+      // lets you press Enter to add an ingredient without clicking the button
+      ingredientInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") addIngredient();
+      });
+
+      renderRecipes();
+    </script>
   </body>
 </html>
