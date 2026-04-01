@@ -1,3 +1,36 @@
+class Ingredient {
+  constructor(name, description, useBy, location) {
+    this.name = name;
+    this.description = description;
+    this.useBy = useBy;
+    this.location = location;
+  }
+}
+
+class Recipe {
+  constructor(name, description, tags, ingredients){
+    this.name = name;
+    this.description = description;
+    this.tags = tags;
+    this.ingredients = ingredients;
+  }
+}
+
+/* our examples */
+const inventory = [
+  new Ingredient("spaghetti noodles", "", (new Date("2028-01-01")), "pantry"),
+  new Ingredient("tomato sauce", "", (new Date("2026-06-02")), "fridge"),
+  new Ingredient("firm tofu", "", (new Date("2026-05-02")), "fridge")
+
+  /* to continue adding */
+];
+
+const recipeBook = [
+  new Recipe("Spaghetti", "", "Italian, Nut-Free", new Array(inventory[0], inventory[1]))
+]
+
+
+/*
 const user = {
     recipes: [
       {
@@ -84,3 +117,4 @@ const user = {
       ]
     }
   };
+*/
