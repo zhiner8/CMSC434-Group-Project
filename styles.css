@@ -6,7 +6,7 @@
   --dark-text: #011627;
   --accent-blue-1: #14313e;
   --accent-blue-2: #225469;
-  font-size: "Roboto", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 25px;
   border: 2px solid var(--dark-text);
   border-radius: 20px; /* why isn't this working :( */
@@ -59,6 +59,7 @@ table {
 }
 
 #header {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -134,6 +135,52 @@ table {
   background-color: var(--accent-blue-1);
 }
 
-a {
-  display: contents;
+#toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 12px;
+  background-color: var(--off-white);
+  border-bottom: 1px solid var(--accent-blue-1);
+}
+
+#search-input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--accent-blue-2);
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  background-color: var(--off-white);
+  color: var(--dark-text);
+}
+
+#toolbar-right {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.toolbar-button {
+  padding: 12px 40px;
+  border-radius: 8px;
+  border: 1px solid var(--accent-blue-2);
+  background-color: var(--accent-blue-2);
+  color: var(--off-white);
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.toolbar-button:hover {
+  background-color: var(--accent-blue-1);
+  color: var(--off-white);
+}
+#back-button {
+  position: absolute;
+  left: 16px;
+  color: var(--off-white);
+  font-size: 28px;
+  text-decoration: none;
 }
