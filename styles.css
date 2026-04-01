@@ -184,3 +184,29 @@ table {
   font-size: 28px;
   text-decoration: none;
 }
+#add-recipe-container {
+  display: flex;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+}
+
+#add-recipe-button {
+  padding: 12px 24px;
+  font-size: 20px;
+  font-family: "Roboto", sans-serif;
+  background-color: var(--accent-blue-2);
+  color: var(--off-white);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#add-recipe-button:hover {
+  background-color: var(--accent-blue-1);
+}
+.styled-table {
+  margin-left: 20px;
+  margin-right: 20px;
+}
