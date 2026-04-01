@@ -1,13 +1,13 @@
 const user = {
     recipes: [
       {
-        name: "Spaghetti Bolognese",
-        description: "Classic meat sauce pasta",
+        name: "Spaghetti Lentil Bolognese ",
+        description: "Classic pasta",
         tags: ["dinner", "italian"],
         ingredients: [
           {
-            name: "ground beef",
-            quantity: "1 lb"
+            name: "lentils",
+            quantity: "1 can"
           },
           {
             name: "tomato sauce",

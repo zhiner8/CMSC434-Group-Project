@@ -1,0 +1,31 @@
+#inventory-container {
+        margin: 20px;
+      }
+
+      #inventory-container input,
+      #inventory-container select,
+      #inventory-container button {
+        padding: 5px;
+        margin: 5px 0;
+      }
+
+      ul#inventory-ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      ul#inventory-ul li {
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .inventory-item span {
+        font-weight: 500;
+      }
+
+      .inventory-buttons button {
+        margin-left: 5px;
+      }
