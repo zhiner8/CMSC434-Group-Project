@@ -84,8 +84,8 @@
         </div>
 
         <div id="nav-bar">
-          <a href="mykitchen.html" class="nav-buttons">My Kitchen</a>
-          <a href="recipebook.html" class="nav-buttons">Recipe Book</a>
+          <a href="my-kitchen.html" class="nav-buttons">My Kitchen</a>
+          <a href="recipe-book.html" class="nav-buttons">Recipe Book</a>
           <a href="shopping.html" class="nav-buttons" id="selected">
             Shopping Lists
           </a>
@@ -139,12 +139,15 @@
       }
 
       function moveUnchecked() {
-        const uncheckedItems = shoppingList.filter(item => !item.checked);
+        const uncheckedItems = shoppingList.filter((item) => !item.checked);
         if (uncheckedItems.length === 0) {
           alert("No unchecked items to move!");
           return;
         }
-        shoppingList = uncheckedItems.map(item => ({ ...item, checked: false }));
+        shoppingList = uncheckedItems.map((item) => ({
+          ...item,
+          checked: false,
+        }));
         renderList();
         alert("Unchecked items moved to the next list!");
       }

@@ -1,69 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">+
+<html lang="en">
+  +
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mock-Up</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-    rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mock-Up</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="recipe-book.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="recipe-book.css" />
 
-  <!-- what is this-->
-  <script src="https://kit.fontawesome.com/75ab6db391.js" crossorigin="anonymous"></script>
-</head>
+    <!-- what is this-->
+    <script
+      src="https://kit.fontawesome.com/75ab6db391.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
 
-<body>
-  <div id="device">
-    <div id="screen">
-      <div id="header">
-        <h1>Kitchen Kompanion</h1>
-      </div>
-      <div id="recipe-book-tab">
-        <div id="recipe-book-header">
-          <h2> Recipe Book </h2>
+  <body>
+    <div id="device">
+      <div id="screen">
+        <div id="header">
+          <h1>Kitchen Kompanion</h1>
         </div>
-        <div id="new-recipe-container">
-          <button id="new-recipe">
-            +
-          </button>
+        <div id="recipe-book-tab">
+          <div id="recipe-book-header">
+            <h2>Recipe Book</h2>
+          </div>
+          <div id="new-recipe-container">
+            <button id="new-recipe">+</button>
+          </div>
+          <div id="recipe-list">
+            <table>
+              <tr>
+                <th>Name</th>
+                <th>Ingredients</th>
+                <th>Tags</th>
+              </tr>
+              <tr>
+                <td>Spaghetti</td>
+                <td>Tomato Sauce, Pasta</td>
+                <td>Dinner</td>
+              </tr>
+              <tr>
+                <td>Tofu Scramble</td>
+                <td>Tofu, Spinach</td>
+                <td>Breakfast</td>
+              </tr>
+            </table>
+          </div>
         </div>
-        <div id="recipe-list">
-          <table>
-            <tr>
-              <th>Name</th>
-              <th>Ingredients</th>
-              <th>Tags</th>
-            </tr>
-            <tr>
-              <td>Spaghetti</td>
-              <td>Tomato Sauce, Pasta</td>
-              <td>Dinner</td>
-            </tr>
-            <tr>
-              <td>Tofu Scramble</td>
-              <td>Tofu, Spinach</td>
-              <td>Breakfast</td>
-            </tr>
-          </table>
+
+        <div id="nav-bar">
+          <a href="my-kitchen.html" class="nav-buttons">My Kitchen</a>
+          <a href="recipe-book.html" class="nav-buttons" id="selected"
+            >Recipe Book</a
+          >
+          <a href="shopping.html" class="nav-buttons">Shopping Lists</a>
         </div>
-      </div>
-
-
-
-
-
-      <div id="nav-bar">
-        <a href="my-kitchen.html" class="nav-buttons">My Kitchen</a>
-        <a href="recipe-book.html" class="nav-buttons" id="selected">Recipe Book</a>
-        <a href="shopping.html" class="nav-buttons">Shopping Lists</a>
       </div>
     </div>
-  </div>
-</body>
-
+  </body>
 </html>
