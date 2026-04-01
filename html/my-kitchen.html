@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Kitchen</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script
+      src="https://kit.fontawesome.com/75ab6db391.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      #inventory-container {
+        margin: 20px;
+      }
+
+      #inventory-container input,
+      #inventory-container select,
+      #inventory-container button {
+        padding: 5px;
+        margin: 5px 0;
+      }
+
+      ul#inventory-ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      ul#inventory-ul li {
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .inventory-item span {
+        font-weight: 500;
+      }
+
+      .inventory-buttons button {
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="device">
+      <div id="screen">
+        <div id="header">
+          <h1>Kitchen Kompanion</h1>
+        </div>
+
+        <div id="inventory-container">
+          <h2>My Kitchen Inventory</h2>
+          <div id="inventory-input">
+            <input
+              type="text"
+              id="inventory-item-input"
+              placeholder="Add new item..."
+            />
+            <select id="location-select">
+              <option value="Fridge">Fridge</option>
+              <option value="Pantry">Pantry</option>
+              <option value="Freezer">Freezer</option>
+              <option value="Other">Other</option>
+            </select>
+            <button id="add-inventory-item">Add</button>
+          </div>
+
+          <ul id="inventory-ul"></ul>
+        </div>
+
+        <div id="button-area">
+          <div id="first-row">
+            <button class="landing-page-button">Fridge</button>
+            <button class="landing-page-button">Pantry</button>
+          </div>
+
+          <div id="second-row">
+            <button class="landing-page-button">Freezer</button>
+            <button class="landing-page-button">Other</button>
+          </div>
+        </div>
+
+        <div id="nav-bar">
+          <a href="my-kitchen.html" class="nav-buttons" id="selected"
+            >My Kitchen</a
+          >
+          <a href="recipe-book.html" class="nav-buttons">Recipe Book</a>
+          <a href="shopping.html" class="nav-buttons">Shopping Lists</a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const inventoryInput = document.getElementById("inventory-item-input");
+      const addInventoryButton = document.getElementById("add-inventory-item");
+      const inventoryUl = document.getElementById("inventory-ul");
+      const locationSelect = document.getElementById("location-select");
+
+      let inventoryList = [];
+
+      function renderInventory() {
+        inventoryUl.innerHTML = "";
+        inventoryList.forEach((item, index) => {
+          const li = document.createElement("li");
+          li.className = "inventory-item";
+          li.innerHTML = `
+            <span>${item.name} (${item.location})</span>
+            <div class="inventory-buttons">
+              <button onclick="removeInventoryItem(${index})">Used/Remove</button>
+            </div>
+          `;
+          inventoryUl.appendChild(li);
+        });
+      }
+
+      function addInventoryItem() {
+        const itemName = inventoryInput.value.trim();
+        const location = locationSelect.value;
+        if (itemName) {
+          inventoryList.push({ name: itemName, location });
+          inventoryInput.value = "";
+          renderInventory();
+        }
+      }
+
+      function removeInventoryItem(index) {
+        inventoryList.splice(index, 1);
+        renderInventory();
+      }
+
+      addInventoryButton.addEventListener("click", addInventoryItem);
+      inventoryInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") addInventoryItem();
+      });
+
+      renderInventory();
+    </script>
+  </body>
+</html>
