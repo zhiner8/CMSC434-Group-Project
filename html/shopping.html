@@ -78,79 +78,10 @@
     <script>
       initStorage();
 
-      const itemInput = document.getElementById("item-input");
-      const addItemButton = document.getElementById("add-item");
-      const itemsUl = document.getElementById("items-ul");
-      const moveButton = document.getElementById("move-unchecked");
-
-      let shoppingList = [];
-
-      function renderList() {
-        itemsUl.innerHTML = "";
-        shoppingList.forEach((item, index) => {
-          const li = document.createElement("li");
-          li.className = item.checked ? "checked" : "";
-          li.innerHTML = `
-            <span>${item.name}</span>
-            <div class="item-buttons">
-              <button onclick="toggleItem(${index})">
-                ${item.checked ? "Undo" : "Check"}
-              </button>
-              <button onclick="removeItem(${index})">Remove</button>
-            </div>
-          `;
-          itemsUl.appendChild(li);
-        });
-      }
-
-      function addItem() {
-        const itemName = itemInput.value.trim();
-        if (itemName) {
-          shoppingList.push({ name: itemName, checked: false });
-          itemInput.value = "";
-          renderList();
-        }
-      }
-
-      function toggleItem(index) {
-        shoppingList[index].checked = !shoppingList[index].checked;
-        renderList();
-      }
-
-      function removeItem(index) {
-        shoppingList.splice(index, 1);
-        renderList();
-      }
-
-      function moveUnchecked() {
-        const uncheckedItems = shoppingList.filter((item) => !item.checked);
-        if (uncheckedItems.length === 0) {
-          alert("No unchecked items to move!");
-          return;
-        }
-        shoppingList = uncheckedItems.map((item) => ({
-          ...item,
-          checked: false,
-        }));
-        renderList();
-        alert("Unchecked items moved to the next list!");
-      }
-
-      addItemButton.addEventListener("click", addItem);
-      itemInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") addItem();
-      });
-      moveButton.addEventListener("click", moveUnchecked);
-
-      renderList();
-    </script> -->
-    <script>
       const listsWrapper = document.getElementById("lists-wrapper");
 
-      const savedLists =
-        JSON.parse(localStorage.getItem("shoppingLists")) || [];
-
       function renderSavedLists() {
+        const savedLists = getShoppingLists();
         listsWrapper.innerHTML = "";
 
         if (savedLists.length === 0) {
@@ -164,11 +95,12 @@
 
           let itemsHTML = "";
           list.items.forEach((item) => {
-            itemsHTML += `<li>${item}</li>`;
+            const name = typeof item === "object" ? item.name : item;
+            itemsHTML += `<li>${name}</li>`;
           });
 
           listCard.innerHTML = `
-            <h2>List #${index + 1}</h2>
+            <h2>${list.name || "List #" + (index + 1)}</h2>
             <ul class="saved-items-list">
               ${itemsHTML}
             </ul>
