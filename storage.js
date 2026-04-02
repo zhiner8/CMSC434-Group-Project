@@ -37,8 +37,13 @@ function initStorage() {
 }
 
 //recipe functions//
-function getRecipes()          { return _get("recipes") || []; }
-function saveRecipes(recipes)  { _set("recipes", recipes); }
+function getRecipes(){ 
+    return _get("recipes") || []; 
+}
+function saveRecipes(recipes)  
+{ _set("recipes", recipes); 
+
+}
 
 function addRecipe(recipe) {
   recipe.id = "r" + Date.now();
