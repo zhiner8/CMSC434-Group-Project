@@ -55,7 +55,7 @@
                 <tr>
                   <th>Item</th>
                   <th>Location</th>
-                  <th>Added</th>
+                  <th>Use By</th>
                   <th class="edit-column hidden">Action</th>
                 </tr>
               </thead>
@@ -150,7 +150,7 @@
           row.innerHTML = `
             <td>${item.name}</td>
             <td>${item.location}</td>
-            <td>${item.dateAdded || "--"}</td>
+            <td>${formatDate(item.useBy)}</td>
             <td class="edit-column ${editMode ? "" : "hidden"}">
               <button class="remove-btn" onclick="removeInventoryItem(${originalIndex})">
                 Remove
@@ -169,7 +169,19 @@
           }
         });
       }
+      function formatDate(dateValue) {
+        if (!dateValue) return "--";
 
+        const date = new Date(dateValue);
+
+        if (isNaN(date)) return "--";
+
+        const mm = String(date.getMonth() + 1).padStart(2, "0");
+        const dd = String(date.getDate()).padStart(2, "0");
+        const yy = String(date.getFullYear()).slice(-2);
+
+        return `${mm}/${dd}/${yy}`;
+      }
       function openModal() {
         inventoryNameInput.value = "";
         inventoryLocationInput.value = "";
