@@ -63,6 +63,34 @@
             </table>
           </div>
         </div>
+
+        <!-- Modal -->
+        <div id="modal-overlay">
+          <div id="inventory-modal">
+            <h3>New Item</h3>
+
+            <label for="inventory-name-input">Name</label>
+            <input
+              type="text"
+              id="inventory-name-input"
+              placeholder="e.g. Lettuce"
+            />
+
+            <label for="inventory-location-input">Location</label>
+            <select id="inventory-location-input">
+              <option value="">Select a location</option>
+              <option value="Fridge">Fridge</option>
+              <option value="Pantry">Pantry</option>
+              <option value="Freezer">Freezer</option>
+              <option value="Other">Other</option>
+            </select>
+
+            <div id="modal-buttons">
+              <button id="cancel-btn">Cancel</button>
+              <button id="save-item-btn">Save</button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div id="nav-bar">
@@ -80,6 +108,16 @@
       const locationFilter = document.getElementById("location-filter");
       const editButton = document.getElementById("edit-button");
       const addButton = document.getElementById("add-button");
+
+      const modalOverlay = document.getElementById("modal-overlay");
+      const inventoryNameInput = document.getElementById(
+        "inventory-name-input"
+      );
+      const inventoryLocationInput = document.getElementById(
+        "inventory-location-input"
+      );
+      const cancelBtn = document.getElementById("cancel-btn");
+      const saveItemBtn = document.getElementById("save-item-btn");
 
       let editMode = false;
 
@@ -132,21 +170,38 @@
         });
       }
 
-      function addInventoryItem() {
-        const itemName = prompt("Enter item name:");
-        if (!itemName || !itemName.trim()) return;
+      function openModal() {
+        inventoryNameInput.value = "";
+        inventoryLocationInput.value = "";
+        modalOverlay.classList.add("open");
+        inventoryNameInput.focus();
+      }
 
-        const location = prompt(
-          "Enter location: Fridge, Pantry, Freezer, or Other"
-        );
-        if (!location || !location.trim()) return;
+      function closeModal() {
+        modalOverlay.classList.remove("open");
+      }
+
+      function saveInventoryItem() {
+        const itemName = inventoryNameInput.value.trim();
+        const location = inventoryLocationInput.value;
+
+        if (!itemName) {
+          alert("Please enter an item name.");
+          return;
+        }
+
+        if (!location) {
+          alert("Please select a location.");
+          return;
+        }
 
         inventory.push({
-          name: itemName.trim(),
-          location: location.trim(),
+          name: itemName,
+          location: location,
           dateAdded: getTodayDate(),
         });
 
+        closeModal();
         renderInventory();
       }
 
@@ -161,9 +216,20 @@
         renderInventory();
       });
 
-      addButton.addEventListener("click", addInventoryItem);
+      addButton.addEventListener("click", openModal);
+      cancelBtn.addEventListener("click", closeModal);
+      saveItemBtn.addEventListener("click", saveInventoryItem);
+
       searchInput.addEventListener("input", renderInventory);
       locationFilter.addEventListener("change", renderInventory);
+
+      inventoryNameInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") saveInventoryItem();
+      });
+
+      inventoryLocationInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") saveInventoryItem();
+      });
 
       renderInventory();
     </script>
