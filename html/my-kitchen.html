@@ -23,9 +23,11 @@
         <div id="header">
           <h1>My Kitchen</h1>
         </div>
-
+        <!-- entire container div -->
         <div id="inventory-container">
+          <!-- tool bar like search and edit and add -->
           <div id="inventory-toolbar">
+            <!-- all search stuff for search bar -->
             <div id="search-wrapper">
               <i class="fa-solid fa-magnifying-glass"></i>
               <input
@@ -34,7 +36,7 @@
                 placeholder="Search items..."
               />
             </div>
-
+            <!-- for the dropdown of where the items r stored  -->
             <select id="location-filter">
               <option value="All">Locations: All</option>
               <option value="Fridge">Fridge</option>
@@ -42,13 +44,13 @@
               <option value="Freezer">Freezer</option>
               <option value="Other">Other</option>
             </select>
-
+            <!-- edit and add buttons next to dropdown -->
             <div id="toolbar-buttons">
               <button id="edit-button">Edit</button>
               <button id="add-button">Add</button>
             </div>
           </div>
-
+          <!-- where table starts -->
           <div id="inventory-table-wrapper">
             <table id="inventory-table">
               <thead>
@@ -64,7 +66,7 @@
           </div>
         </div>
 
-        <!-- Modal -->
+        <!-- modal -->
         <div id="modal-overlay">
           <div id="inventory-modal">
             <h3>New Item</h3>
@@ -92,7 +94,7 @@
           </div>
         </div>
       </div>
-
+      <!-- nav bar  -->
       <div id="nav-bar">
         <a href="my-kitchen.html" class="nav-buttons" id="selected"
           >My Kitchen</a
