@@ -16,6 +16,8 @@
       crossorigin="anonymous"
     ></script>
 
+    <script> src="App.js"</script>
+
     <style></style>
   </head>
 
@@ -41,14 +43,13 @@
             <a href="shopping.html" class="nav-buttons">Shopping Lists</a>
           </div>
     </div>
-
-    <script>
-      const inventoryInput = document.getElementById("inventory-item-input");
+    <!---
+           const inventoryInput = document.getElementById("inventory-item-input");
       const addInventoryButton = document.getElementById("add-inventory-item");
       const inventoryUl = document.getElementById("inventory-ul");
       const locationSelect = document.getElementById("location-select");
 
-      let inventoryList = [];
+      let inventoryList = inventory;
 
       function renderInventory() {
         inventoryUl.innerHTML = "";
@@ -85,7 +86,7 @@
         if (e.key === "Enter") addInventoryItem();
       });
 
-      renderInventory();
-    </script>
+      renderInventory();-->
+
   </body>
 </html>
