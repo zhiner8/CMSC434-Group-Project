@@ -68,7 +68,7 @@ table {
   background-color: var(--accent-blue-1);
   color: var(--off-white);
 }
-
+/*navvv barr*/
 #nav-bar {
   border-radius: 15px 15px 0px 0px;
   border-width: 0% 0% 10px 10px;
@@ -134,6 +134,7 @@ table {
 .landing-page-button:hover {
   background-color: var(--accent-blue-1);
 }
+/* tool bar to edit and add to storage*/
 
 #toolbar {
   display: flex;
@@ -184,6 +185,7 @@ table {
   font-size: 28px;
   text-decoration: none;
 }
+/* recipe css stuff*/
 #add-recipe-container {
   display: flex;
   padding-top: 20px;
@@ -217,6 +219,7 @@ table {
   font-size: 28px;
   text-decoration: none;
 }
+/* shopping list creation css*/
 #shopping-list-container {
   padding: 24px 20px;
   display: flex;
@@ -285,6 +288,7 @@ table {
   color: var(--off-white);
   cursor: pointer;
 }
+/*displaying shipping lists*/
 #saved-lists-container {
   padding: 24px 20px;
   overflow-y: auto;
