@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recipe Detail</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <script src="https://kit.fontawesome.com/75ab6db391.js" crossorigin="anonymous"></script>
+  <script src="../storage.js"></script>
+
+  <style>
+    #detail-container {
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      gap: 16px;
+      color: var(--dark-text);
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    #recipe-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--dark-text);
+      margin: 0;
+    }
+
+    #date-added {
+      font-size: 14px;
+      color: gray;
+      margin: 0;
+    }
+
+    .section-label {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--dark-text);
+      margin-bottom: 6px;
+    }
+
+    #ingredients-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    #ingredients-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      color: var(--dark-text);
+      border-bottom: 1px solid #ddd;
+      padding: 6px 0;
+    }
+
+    #tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag-pill {
+      background: var(--accent-blue-2);
+      color: var(--off-white);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 16px;
+    }
+
+    #action-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: auto;
+      justify-content: flex-end;
+    }
+
+    #delete-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #c0392b;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    #delete-btn:hover {
+      background: #a93226;
+    }
+
+    #edit-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-blue-2);
+      color: var(--off-white);
+      border: none;
+      border-radius: 10px;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    #edit-btn:hover {
+      background: var(--accent-blue-1);
+    }
+
+    #not-found {
+      display: none;
+      padding: 40px 20px;
+      text-align: center;
+      color: gray;
+      font-size: 18px;
+    }
+
+    #modal-overlay {
+      display: none;
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      z-index: 10;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #modal-overlay.open {
+      display: flex;
+    }
+
+    #recipe-modal {
+      background: var(--off-white);
+      border-radius: 16px;
+      padding: 24px;
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    #recipe-modal h3 {
+      color: var(--dark-text);
+      margin: 0;
+      font-size: 22px;
+    }
+
+    #recipe-modal input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid var(--accent-blue-2);
+      font-family: "Roboto", sans-serif;
+      font-size: 16px;
+      color: var(--dark-text);
+      box-sizing: border-box;
+    }
+
+    #recipe-modal label {
+      color: var(--dark-text);
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    #ingredient-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    #ingredient-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--accent-blue-2);
+      color: var(--off-white);
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 16px;
+      border: none;
+    }
+
+    #ingredient-list li button {
+      background: none;
+      border: none;
+      color: var(--off-white);
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #ingredient-input-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    #ingredient-input-row input {
+      flex: 1;
+    }
+
+    #add-ingredient-btn {
+      padding: 8px 14px;
+      background: var(--accent-blue-2);
+      color: var(--off-white);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #modal-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    #modal-buttons button {
+      padding: 8px 20px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #save-recipe-btn {
+      background: var(--accent-blue-1);
+      color: var(--off-white);
+    }
+
+    #cancel-btn {
+      background: #ccc;
+      color: var(--dark-text);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="device">
+    <div id="screen">
+
+      <div id="header">
+        <a href="recipe-book.html" id="back-button">
+          <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <h1>Recipe</h1>
+      </div>
+
+      <div id="detail-container">
+        <p id="recipe-title"></p>
+        <p id="date-added"></p>
+
+        <div>
+          <div class="section-label">Ingredients</div>
+          <ul id="ingredients-list"></ul>
+        </div>
+
+        <div>
+          <div class="section-label">Tags</div>
+          <div id="tags-container"></div>
+        </div>
+
+        <div id="action-buttons">
+          <button id="edit-btn">
+            <i class="fa-solid fa-pen"></i> Edit
+          </button>
+          <button id="delete-btn">
+            <i class="fa-solid fa-trash-can"></i> Delete
+          </button>
+        </div>
+      </div>
+
+      <div id="not-found">
+        <p>Recipe not found.</p>
+        <a href="recipe-book.html">Go back</a>
+      </div>
+
+      <div id="modal-overlay">
+        <div id="recipe-modal">
+          <h3>Edit Recipe</h3>
+
+          <label>Name</label>
+          <input type="text" id="recipe-name-input" placeholder="e.g. Spaghetti Bolognese" />
+
+          <label>Tags <span style="font-weight:400; font-size:14px;">(comma separated)</span></label>
+          <input type="text" id="recipe-tags-input" placeholder="e.g. Italian, Dinner" />
+
+          <label>Ingredients</label>
+          <ul id="ingredient-list"></ul>
+          <div id="ingredient-input-row">
+            <input type="text" id="ingredient-input" placeholder="e.g. tomato sauce" />
+            <button id="add-ingredient-btn">Add</button>
+          </div>
+
+          <div id="modal-buttons">
+            <button id="cancel-btn">Cancel</button>
+            <button id="save-recipe-btn">Save</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="nav-bar">
+        <a href="my-kitchen.html" class="nav-buttons">My Kitchen</a>
+        <a href="recipe-book.html" class="nav-buttons" id="selected">Recipe Book</a>
+        <a href="shopping.html" class="nav-buttons">Shopping Lists</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    initStorage();
+
+    const params = new URLSearchParams(window.location.search);
+    const recipeId = params.get("id");
+
+    const detailContainer = document.getElementById("detail-container");
+    const notFound = document.getElementById("not-found");
+    const modalOverlay = document.getElementById("modal-overlay");
+    const recipeNameInput = document.getElementById("recipe-name-input");
+    const recipeTagsInput = document.getElementById("recipe-tags-input");
+    const ingredientInput = document.getElementById("ingredient-input");
+    const addIngredientBtn = document.getElementById("add-ingredient-btn");
+    const ingredientList = document.getElementById("ingredient-list");
+
+    let currentIngredients = [];
+    let recipe = getRecipeById(recipeId);
+
+    function renderDetail() {
+      recipe = getRecipeById(recipeId);
+
+      document.getElementById("recipe-title").textContent = recipe.name;
+
+      const dateEl = document.getElementById("date-added");
+      if (recipe.createdAt) {
+        dateEl.textContent = "Added " + new Date(recipe.createdAt).toLocaleDateString();
+      } else {
+        dateEl.style.display = "none";
+      }
+
+      const ingredientsList = document.getElementById("ingredients-list");
+      ingredientsList.innerHTML = "";
+      recipe.ingredients.forEach(ing => {
+        const li = document.createElement("li");
+        li.innerHTML = `<i class="fa-solid fa-circle-dot" style="font-size:12px; color:var(--accent-blue-2)"></i> ${ing}`;
+        ingredientsList.appendChild(li);
+      });
+
+      const tagsContainer = document.getElementById("tags-container");
+      tagsContainer.innerHTML = "";
+      const tags = typeof recipe.tags === "string"
+        ? recipe.tags.split(",").map(t => t.trim()).filter(Boolean)
+        : recipe.tags;
+      tags.forEach(tag => {
+        const pill = document.createElement("span");
+        pill.className = "tag-pill";
+        pill.textContent = tag;
+        tagsContainer.appendChild(pill);
+      });
+    }
+
+    function openModal() {
+      recipeNameInput.value = recipe.name;
+      recipeTagsInput.value = recipe.tags;
+      currentIngredients = [...recipe.ingredients];
+      renderIngredientList();
+      modalOverlay.classList.add("open");
+    }
+
+    function closeModal() {
+      modalOverlay.classList.remove("open");
+    }
+
+    function renderIngredientList() {
+      ingredientList.innerHTML = "";
+      currentIngredients.forEach((ing, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <span>${ing}</span>
+          <button onclick="removeIngredient(${index})">✕</button>
+        `;
+        ingredientList.appendChild(li);
+      });
+    }
+
+    function addIngredient() {
+      const val = ingredientInput.value.trim();
+      if (!val) return;
+      currentIngredients.push(val);
+      ingredientInput.value = "";
+      renderIngredientList();
+    }
+
+    function removeIngredient(index) {
+      currentIngredients.splice(index, 1);
+      renderIngredientList();
+    }
+
+    function saveRecipe() {
+      const name = recipeNameInput.value.trim();
+      if (!name) {
+        alert("Please enter a recipe name.");
+        return;
+      }
+      if (currentIngredients.length === 0) {
+        alert("Please add at least one ingredient.");
+        return;
+      }
+
+      updateRecipe(recipeId, {
+        name: name,
+        tags: recipeTagsInput.value.trim(),
+        ingredients: currentIngredients
+      });
+
+      closeModal();
+      renderDetail();
+    }
+
+    document.getElementById("edit-btn").addEventListener("click", openModal);
+    document.getElementById("cancel-btn").addEventListener("click", closeModal);
+    document.getElementById("save-recipe-btn").addEventListener("click", saveRecipe);
+    addIngredientBtn.addEventListener("click", addIngredient);
+    ingredientInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") addIngredient();
+    });
+
+    document.getElementById("delete-btn").addEventListener("click", () => {
+      const confirmed = confirm(`Delete "${recipe.name}"? This cannot be undone.`);
+      if (confirmed) {
+        deleteRecipe(recipe.id);
+        window.location.href = "recipe-book.html";
+      }
+    });
+
+    if (!recipe) {
+      detailContainer.style.display = "none";
+      notFound.style.display = "block";
+    } else {
+      renderDetail();
+    }
+  </script>
+</body>
+</html>
