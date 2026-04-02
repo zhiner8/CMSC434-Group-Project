@@ -25,6 +25,7 @@ body {
 
 /* THIS is the tablet */
 #device {
+  position: relative;
   width: 640px;
   height: 960px;
   background: var(--off-white);
