@@ -36,7 +36,6 @@ ul#inventory-ul li {
 }
 
 #inventory-container {
-  padding: 20px;
   flex: 1;
   min-height: 0;
   display: flex;
@@ -79,7 +78,7 @@ ul#inventory-ul li {
 }
 
 #location-filter {
-  padding: 10px 12px;
+  padding: 10px;
   border: 2px solid var(--dark-text);
   border-radius: 12px;
   background: white;
