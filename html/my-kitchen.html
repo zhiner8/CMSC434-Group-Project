@@ -62,18 +62,12 @@
       const inventoryUl = document.getElementById("inventory-ul");
       const locationSelect = document.getElementById("location-select");
 
-      let inventoryList = inventory;
 
       function renderInventory() {
         inventoryUl.innerHTML = "";
-        inventoryList.forEach((item, index) => {
+        inventory.forEach((item, index) => {
           const li = document.createElement("li");
           li.className = "inventory-item";
-          console.log(item);
-          console.log(index);
-          console.log(item.name);
-          console.log(inventoryList.length);
-          console.log(inventory.length);
           li.innerHTML = `
             <span class="inventory-item">${item.name} (${item.location})</span>
             <div class="inventory-buttons">
@@ -88,14 +82,14 @@
         const itemName = inventoryInput.value.trim();
         const location = locationSelect.value;
         if (itemName) {
-          inventoryList.push({ name: itemName, location });
+          inventory.push({ name: itemName, location });
           inventoryInput.value = "";
           renderInventory();
         }
       }
 
       function removeInventoryItem(index) {
-        inventoryList.splice(index, 1);
+        inventory.splice(index, 1);
         renderInventory();
       }
 
