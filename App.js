@@ -45,8 +45,7 @@ const ingredientMemory = [
 ];
 
 /* our examples */
-const inventory = [ ];
-inventory.push(ingredientMemory.slice(0,8));
+const inventory = ingredientMemory.slice(0,8);
 
 const recipeBook = [
   new Recipe("Tofu Bolognese", "", "Italian, Nut-Free", new Array(inventory[0], inventory[1])),
@@ -59,12 +58,6 @@ exampleWeeklyList.push(ingredientMemory.slice(9,-1));
 const shoppingLists = [
   new ShoppingList("04-01 Shopping List", "", "weekly", new Date("2026-04-01"), exampleWeeklyList)
 ];
-
-
-
-function renderInventory() {
- print("Hi");
-}
 
 /*
 const user = {

@@ -16,6 +16,8 @@
       crossorigin="anonymous"
     ></script>
 
+    <script src="../App.js"></script>
+
     <style></style>
   </head>
 
@@ -25,7 +27,6 @@
         <div id="header">
           <h1>Kitchen Kompanion</h1>
         </div>
-        <!---
         <div id="inventory-container">
           <h2>My Kitchen Inventory</h2>
           <div id="inventory-input">
@@ -44,22 +45,7 @@
           </div>
 
           <ul id="inventory-ul"></ul>
-        </div> -->
-        <div id="button-area">
-          <a href="fridge.html">
-            <button class="landing-page-button">Fridge</button>
-          </a>
-          <a href="freezer.html">
-            <button class="landing-page-button">Freezer</button>
-          </a>
-          <a href="pantry.html">
-            <button class="landing-page-button">Pantry</button>
-          </a>
-          <a href="other.html">
-            <button class="landing-page-button">
-              Other
-            </button>
-          </a>
+        </div>
         </div>
         <div id="nav-bar">
           <a href="my-kitchen.html" class="nav-buttons" id="selected"
@@ -69,22 +55,27 @@
           <a href="shopping.html" class="nav-buttons">Shopping Lists</a>
         </div>
     </div>
-<!--- -
+    
     <script>
       const inventoryInput = document.getElementById("inventory-item-input");
       const addInventoryButton = document.getElementById("add-inventory-item");
       const inventoryUl = document.getElementById("inventory-ul");
       const locationSelect = document.getElementById("location-select");
 
-      let inventoryList = [];
+      let inventoryList = inventory;
 
       function renderInventory() {
         inventoryUl.innerHTML = "";
         inventoryList.forEach((item, index) => {
           const li = document.createElement("li");
           li.className = "inventory-item";
+          console.log(item);
+          console.log(index);
+          console.log(item.name);
+          console.log(inventoryList.length);
+          console.log(inventory.length);
           li.innerHTML = `
-            <span>${item.name} (${item.location})</span>
+            <span class="inventory-item">${item.name} (${item.location})</span>
             <div class="inventory-buttons">
               <button onclick="removeInventoryItem(${index})">Used/Remove</button>
             </div>
@@ -115,6 +106,6 @@
 
       renderInventory();
     </script>
-    -->
+
   </body>
 </html>
