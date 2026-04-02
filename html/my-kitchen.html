@@ -25,10 +25,9 @@
     <div id="device">
       <div id="screen">
         <div id="header">
-          <h1>Kitchen Kompanion</h1>
+          <h1>My Kitchen</h1>
         </div>
         <div id="inventory-container">
-          <h2>My Kitchen Inventory</h2>
           <div id="inventory-input">
             <input
               type="text"
@@ -46,22 +45,21 @@
 
           <ul id="inventory-ul"></ul>
         </div>
-        </div>
-        <div id="nav-bar">
-          <a href="my-kitchen.html" class="nav-buttons" id="selected"
-            >My Kitchen</a
-          >
-          <a href="recipe-book.html" class="nav-buttons">Recipe Book</a>
-          <a href="shopping.html" class="nav-buttons">Shopping Lists</a>
-        </div>
+      </div>
+      <div id="nav-bar">
+        <a href="my-kitchen.html" class="nav-buttons" id="selected"
+          >My Kitchen</a
+        >
+        <a href="recipe-book.html" class="nav-buttons">Recipe Book</a>
+        <a href="shopping.html" class="nav-buttons">Shopping Lists</a>
+      </div>
     </div>
-    
+
     <script>
       const inventoryInput = document.getElementById("inventory-item-input");
       const addInventoryButton = document.getElementById("add-inventory-item");
       const inventoryUl = document.getElementById("inventory-ul");
       const locationSelect = document.getElementById("location-select");
-
 
       function renderInventory() {
         inventoryUl.innerHTML = "";
@@ -100,6 +98,5 @@
 
       renderInventory();
     </script>
-
   </body>
 </html>

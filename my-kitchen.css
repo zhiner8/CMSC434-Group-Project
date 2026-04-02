@@ -1,33 +1,33 @@
 #inventory-container {
-        margin: 20px;
-      }
+  margin: 20px;
+}
 
-      #inventory-container input,
-      #inventory-container select,
-      #inventory-container button {
-        padding: 5px;
-        margin: 5px 0;
-      }
+#inventory-container input,
+#inventory-container select,
+#inventory-container button {
+  padding: 5px;
+  margin: 5px 0;
+}
 
-      ul#inventory-ul {
-        list-style-type: none;
-        color: var(--dark-text);
-        padding: 0;
-      }
+ul#inventory-ul {
+  list-style-type: none;
+  color: var(--dark-text);
+  padding: 0;
+}
 
-      ul#inventory-ul li {
-        padding: 8px;
-        border-bottom: 1px solid #ddd;
-        display: flex;
-        color: var(--dark-text);
-        justify-content: space-between;
-        align-items: center;
-      }
+ul#inventory-ul li {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  color: var(--dark-text);
+  justify-content: space-between;
+  align-items: center;
+}
 
-      .inventory-item span {
-        font-weight: 500;
-      }
+.inventory-item span {
+  font-weight: 500;
+}
 
-      .inventory-buttons button {
-        margin-left: 5px;
-      }
+.inventory-buttons button {
+  margin-left: 5px;
+}
