@@ -33,6 +33,7 @@ body {
 
 /* This is the actual UI area */
 #screen {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
