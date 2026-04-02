@@ -10,82 +10,144 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
       rel="stylesheet"
     />
-
     <script
       src="https://kit.fontawesome.com/75ab6db391.js"
       crossorigin="anonymous"
     ></script>
-
     <script src="../App.js"></script>
-
-    <style></style>
   </head>
 
   <body>
     <div id="device">
       <div id="screen">
         <div id="header">
-          <h1>Kitchen Kompanion</h1>
+          <h1>My Kitchen</h1>
         </div>
+
         <div id="inventory-container">
-          <h2>My Kitchen Inventory</h2>
-          <div id="inventory-input">
-            <input
-              type="text"
-              id="inventory-item-input"
-              placeholder="Add new item..."
-            />
-            <select id="location-select">
+          <div id="inventory-toolbar">
+            <div id="search-wrapper">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input
+                type="text"
+                id="search-input"
+                placeholder="Search items..."
+              />
+            </div>
+
+            <select id="location-filter">
+              <option value="All">Locations: All</option>
               <option value="Fridge">Fridge</option>
               <option value="Pantry">Pantry</option>
               <option value="Freezer">Freezer</option>
               <option value="Other">Other</option>
             </select>
-            <button id="add-inventory-item">Add</button>
+
+            <div id="toolbar-buttons">
+              <button id="edit-button">Edit</button>
+              <button id="add-button">Add</button>
+            </div>
           </div>
 
-          <ul id="inventory-ul"></ul>
+          <div id="inventory-table-wrapper">
+            <table id="inventory-table">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Location</th>
+                  <th>Added</th>
+                  <th class="edit-column hidden">Action</th>
+                </tr>
+              </thead>
+              <tbody id="inventory-body"></tbody>
+            </table>
+          </div>
         </div>
-        </div>
-        <div id="nav-bar">
-          <a href="my-kitchen.html" class="nav-buttons" id="selected"
-            >My Kitchen</a
-          >
-          <a href="recipe-book.html" class="nav-buttons">Recipe Book</a>
-          <a href="shopping.html" class="nav-buttons">Shopping Lists</a>
-        </div>
-    </div>
-    
-    <script>
-      const inventoryInput = document.getElementById("inventory-item-input");
-      const addInventoryButton = document.getElementById("add-inventory-item");
-      const inventoryUl = document.getElementById("inventory-ul");
-      const locationSelect = document.getElementById("location-select");
+      </div>
 
+      <div id="nav-bar">
+        <a href="my-kitchen.html" class="nav-buttons" id="selected"
+          >My Kitchen</a
+        >
+        <a href="recipe-book.html" class="nav-buttons">Recipe Book</a>
+        <a href="shopping.html" class="nav-buttons">Shopping Lists</a>
+      </div>
+    </div>
+
+    <script>
+      const inventoryBody = document.getElementById("inventory-body");
+      const searchInput = document.getElementById("search-input");
+      const locationFilter = document.getElementById("location-filter");
+      const editButton = document.getElementById("edit-button");
+      const addButton = document.getElementById("add-button");
+
+      let editMode = false;
+
+      function getTodayDate() {
+        const today = new Date();
+        const mm = String(today.getMonth() + 1).padStart(2, "0");
+        const dd = String(today.getDate()).padStart(2, "0");
+        const yy = String(today.getFullYear()).slice(-2);
+        return `${mm}/${dd}/${yy}`;
+      }
 
       function renderInventory() {
-        inventoryUl.innerHTML = "";
-        inventory.forEach((item, index) => {
-          const li = document.createElement("li");
-          li.className = "inventory-item";
-          li.innerHTML = `
-            <span class="inventory-item">${item.name} (${item.location})</span>
-            <div class="inventory-buttons">
-              <button onclick="removeInventoryItem(${index})">Used/Remove</button>
-            </div>
+        inventoryBody.innerHTML = "";
+
+        const searchValue = searchInput.value.toLowerCase().trim();
+        const selectedLocation = locationFilter.value;
+
+        const filteredItems = inventory.filter((item) => {
+          const matchesSearch = item.name.toLowerCase().includes(searchValue);
+          const matchesLocation =
+            selectedLocation === "All" || item.location === selectedLocation;
+
+          return matchesSearch && matchesLocation;
+        });
+
+        filteredItems.forEach((item) => {
+          const originalIndex = inventory.indexOf(item);
+          const row = document.createElement("tr");
+
+          row.innerHTML = `
+            <td>${item.name}</td>
+            <td>${item.location}</td>
+            <td>${item.dateAdded || "--"}</td>
+            <td class="edit-column ${editMode ? "" : "hidden"}">
+              <button class="remove-btn" onclick="removeInventoryItem(${originalIndex})">
+                Remove
+              </button>
+            </td>
           `;
-          inventoryUl.appendChild(li);
+
+          inventoryBody.appendChild(row);
+        });
+
+        document.querySelectorAll(".edit-column").forEach((cell) => {
+          if (editMode) {
+            cell.classList.remove("hidden");
+          } else {
+            cell.classList.add("hidden");
+          }
         });
       }
 
       function addInventoryItem() {
-        const itemName = inventoryInput.value.trim();
-        const location = locationSelect.value;
-        if (itemName) {
-          inventory.push({ name: itemName, location });
-          inventoryInput.value = "";
-          renderInventory();
-        }
+        const itemName = prompt("Enter item name:");
+        if (!itemName || !itemName.trim()) return;
+
+        const location = prompt(
+          "Enter location: Fridge, Pantry, Freezer, or Other"
+        );
+        if (!location || !location.trim()) return;
+
+        inventory.push({
+          name: itemName.trim(),
+          location: location.trim(),
+          dateAdded: getTodayDate(),
+        });
+
+        renderInventory();
       }
 
       function removeInventoryItem(index) {
@@ -93,13 +155,17 @@
         renderInventory();
       }
 
-      addInventoryButton.addEventListener("click", addInventoryItem);
-      inventoryInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") addInventoryItem();
+      editButton.addEventListener("click", () => {
+        editMode = !editMode;
+        editButton.textContent = editMode ? "Done" : "Edit";
+        renderInventory();
       });
+
+      addButton.addEventListener("click", addInventoryItem);
+      searchInput.addEventListener("input", renderInventory);
+      locationFilter.addEventListener("change", renderInventory);
 
       renderInventory();
     </script>
-
   </body>
 </html>
