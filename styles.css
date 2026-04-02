@@ -210,3 +210,61 @@ table {
   margin-left: 20px;
   margin-right: 20px;
 }
+#create-button {
+  position: absolute;
+  right: 16px;
+  color: var(--off-white);
+  font-size: 28px;
+  text-decoration: none;
+}
+#shopping-list-container {
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#shopping-input-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+#item-input {
+  flex: 1;
+  height: 56px;
+  padding: 0 18px;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  background-color: white;
+  color: var(--dark-text);
+  font-family: "Roboto", sans-serif;
+  font-size: 24px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+#item-input::placeholder {
+  color: #8a8a8a;
+}
+
+#item-input:focus {
+  border-color: var(--accent-blue-2);
+}
+
+#add-item {
+  height: 56px;
+  padding: 0 24px;
+  border: none;
+  border-radius: 14px;
+  background-color: var(--accent-blue-2);
+  color: var(--off-white);
+  font-family: "Roboto", sans-serif;
+  font-size: 24px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#add-item:hover {
+  background-color: var(--accent-blue-1);
+}
