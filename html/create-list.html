@@ -16,7 +16,9 @@
       crossorigin="anonymous"
     ></script>
 
-    <script> src="App.js"</script>
+    <script>
+      src = "App.js";
+    </script>
 
     <style></style>
   </head>
@@ -25,25 +27,31 @@
     <div id="device">
       <div id="screen">
         <div id="header">
-            <a href="shopping.html" id="back-button"><i class="fa-solid fa-arrow-left"></i></a>
+          <a href="shopping.html" id="back-button">
+            <i class="fa-solid fa-arrow-left"></i>
+          </a>
           <h1>Create List</h1>
         </div>
+
         <div id="shopping-list-container">
-            <div id="shopping-input-row">
-              <input type="text" id="item-input" placeholder="Add new item..." />
-              <button id="add-item">Add</button>
-            </div>
-          
-            <ul id="items-ul"></ul>
-          
+          <div id="shopping-input-row">
+            <input type="text" id="item-input" placeholder="Add new item..." />
+            <button id="add-item">Add</button>
           </div>
+
+          <ul id="items-ul"></ul>
+
+          <button id="create-list-button">Create List</button>
+        </div>
+
         <div id="nav-bar">
-            <a href="my-kitchen.html" class="nav-buttons" id="selected"
-              >My Kitchen</a
-            >
-            <a href="recipe-book.html" class="nav-buttons">Recipe Book</a>
-            <a href="shopping.html" class="nav-buttons">Shopping Lists</a>
-          </div>
+          <a href="my-kitchen.html" class="nav-buttons">My Kitchen</a>
+          <a href="recipe-book.html" class="nav-buttons">Recipe Book</a>
+          <a href="shopping.html" class="nav-buttons" id="selected"
+            >Shopping Lists</a
+          >
+        </div>
+      </div>
     </div>
     <!---
            const inventoryInput = document.getElementById("inventory-item-input");
@@ -89,6 +97,79 @@
       });
 
       renderInventory();-->
+    <script>
+      const itemInput = document.getElementById("item-input");
+      const addItemButton = document.getElementById("add-item");
+      const itemsUl = document.getElementById("items-ul");
+      const createListButton = document.getElementById("create-list-button");
 
+      let draftList = [];
+
+      function renderList() {
+        itemsUl.innerHTML = "";
+
+        draftList.forEach((item, index) => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+              <span>${item}</span>
+              <button onclick="removeItem(${index})">Remove</button>
+            `;
+          itemsUl.appendChild(li);
+        });
+      }
+
+      function addItem() {
+        const itemName = itemInput.value.trim();
+
+        if (itemName !== "") {
+          draftList.push(itemName);
+          itemInput.value = "";
+          renderList();
+        }
+      }
+
+      function removeItem(index) {
+        draftList.splice(index, 1);
+        renderList();
+      }
+
+      function createList() {
+        if (draftList.length === 0) {
+          alert("Add at least one item before creating a list.");
+          return;
+        }
+
+        const savedLists =
+          JSON.parse(localStorage.getItem("shoppingLists")) || [];
+
+        const newList = {
+          id: Date.now(),
+          name: `List ${savedLists.length + 1}`,
+          items: [...draftList],
+        };
+
+        savedLists.push(newList);
+        localStorage.setItem("shoppingLists", JSON.stringify(savedLists));
+
+        alert("List created!");
+
+        draftList = [];
+        renderList();
+
+        window.location.href = "shopping.html";
+      }
+
+      addItemButton.addEventListener("click", addItem);
+
+      itemInput.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          addItem();
+        }
+      });
+
+      createListButton.addEventListener("click", createList);
+
+      renderList();
+    </script>
   </body>
 </html>

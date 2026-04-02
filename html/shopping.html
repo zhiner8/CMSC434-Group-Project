@@ -72,6 +72,9 @@
             <i class="fa-solid fa-plus"></i>
           </a>
         </div>
+        <div id="saved-lists-container">
+          <div id="lists-wrapper"></div>
+        </div>
 
         <div id="nav-bar">
           <a href="my-kitchen.html" class="nav-buttons">My Kitchen</a>
@@ -83,7 +86,7 @@
       </div>
     </div>
 
-    <script>
+    <!-- <script>
       const itemInput = document.getElementById("item-input");
       const addItemButton = document.getElementById("add-item");
       const itemsUl = document.getElementById("items-ul");
@@ -149,6 +152,42 @@
       moveButton.addEventListener("click", moveUnchecked);
 
       renderList();
+    </script> -->
+    <script>
+      const listsWrapper = document.getElementById("lists-wrapper");
+
+      const savedLists =
+        JSON.parse(localStorage.getItem("shoppingLists")) || [];
+
+      function renderSavedLists() {
+        listsWrapper.innerHTML = "";
+
+        if (savedLists.length === 0) {
+          listsWrapper.innerHTML = "<p>No shopping lists yet.</p>";
+          return;
+        }
+
+        savedLists.forEach((list, index) => {
+          const listCard = document.createElement("div");
+          listCard.className = "saved-list-card";
+
+          let itemsHTML = "";
+          list.items.forEach((item) => {
+            itemsHTML += `<li>${item}</li>`;
+          });
+
+          listCard.innerHTML = `
+            <h2>List #${index + 1}</h2>
+            <ul class="saved-items-list">
+              ${itemsHTML}
+            </ul>
+          `;
+
+          listsWrapper.appendChild(listCard);
+        });
+      }
+
+      renderSavedLists();
     </script>
   </body>
 </html>
