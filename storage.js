@@ -34,23 +34,6 @@ class ShoppingList {
 
 // this is what Yosh had initially but I couldn't define the other storage arrays in here
 // due to their initializations being based on previous list initializations
-const DEFAULTS = {
-  ingredientMemory: [
-    // ingredients in our demo kitchen
-    new Ingredient("i1", "spaghetti noodles", "", new Date("2028-01-01"), "Pantry", 2),
-    new Ingredient("i2", "tomato sauce", "", new Date("2026-06-02"), "Fridge", 1),
-    new Ingredient("i3", "firm tofu", "", new Date("2026-05-02"), "Fridge", 1),
-    new Ingredient("i4", "spinach (frozen)", "", new Date("2027-01-16"), "Pantry", 1),
-    new Ingredient("i5", "rice (frozen)", "", new Date("2029-01-01"), "Pantry", 1),
-    new Ingredient("i6", "peanut butter", "", new Date("2027-01-01"), "Fridge", 1),
-    new Ingredient("i7", "apricot jam", "", new Date("2026-11-01"), "Fridge", 1),
-    new Ingredient("i8", "almond milk", "", new Date("2026-05-01"), "Fridge", 1),
-    new Ingredient("i9", "chocolate protein powder", "", new Date("2028-05-01"), "Pantry", 1),
-    // ingredients in our demo shopping list
-    new Ingredient("i10","banana", "", null, "Pantry", 4),
-    new Ingredient("i11", "sandwich bread", "", null, "Pantry", 1),
-  ]
-};
 
 function _get(key) {
   const raw = localStorage.getItem(key);
@@ -61,30 +44,63 @@ function _set(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
 }
 
+//Initializes the dstorage for the different pages. ()
 function initStorage() {
+  //If the field already exists, no need to initialize
+  if (_get("defaultIngredients") !== null) return;
 
-  console.log("okay");
-  // Do we actually need this DEFAULTS dictionary?
-  for (const [key, value] of Object.entries(DEFAULTS)) {
-    if (_get(key) === null) _set(key, value);
-  }
-
-  DEFAULTS["inventory"] = DEFAULTS["ingredientMemory"].slice(0,8);
-  DEFAULTS["exampleWeeklyList"] = DEFAULTS["ingredientMemory"].slice(9,-1);
-  DEFAULTS["recipes"] =  [
-    new Recipe("r1",
-      "Tofu Bolognese", "", "Italian, Nut-Free", new Array(DEFAULTS["inventory"][0], DEFAULTS["inventory"][1])),
-    new Recipe("r2", "Protein Shake","","High-Protein, Gluten-Free", new Array(DEFAULTS["inventory"][7], DEFAULTS["inventory"][8], DEFAULTS["inventory"][5])
-      ),
+  // Default Satrter Ingredients
+  const defaultIngredients = [
+    new Ingredient("i1", "spaghetti noodles", "", "2028-01-01", "Pantry", 2),
+    new Ingredient("i2", "tomato sauce", "", "2026-06-02", "Fridge", 1),
+    new Ingredient("i3", "firm tofu", "", "2026-05-02", "Fridge", 1),
+    new Ingredient("i4", "spinach (frozen)", "", "2027-01-16", "Pantry", 1),
+    new Ingredient("i5", "rice (frozen)", "", "2029-01-01", "Pantry", 1),
+    new Ingredient("i6", "peanut butter", "", "2027-01-01", "Fridge", 1),
+    new Ingredient("i7", "apricot jam", "", "2026-11-01", "Fridge", 1),
+    new Ingredient("i8", "almond milk", "", "2026-05-01", "Fridge", 1),
+    new Ingredient("i9", "chocolate protein powder", "", "2028-05-01", "Pantry", 1),
+    new Ingredient("i10", "banana", "", null, "Pantry", 4),
+    new Ingredient("i11", "sandwich bread", "", null, "Pantry", 1),
   ];
-  DEFAULTS["shoppingLists"] = [
-     new ShoppingList("l1", "04-01 Shopping List", "", "weekly", new Date("2026-04-01"), [DEFAULTS["exampleWeeklyList"]], false)
-  ];
- // It stops working if this isn't repeated twice :((( not sure why rn
-  for (const [key, value] of Object.entries(DEFAULTS)) {
-    if (_get(key) === null) _set(key, value);
-  }
 
+  const inventory = defaultIngredients.slice(0, 8);
+  const exampleWeeklyList = defaultIngredients.slice(9);
+
+  const recipes = [
+    new Recipe(
+      "r1",
+      "Tofu Bolognese",
+      "",
+      "Italian, Nut-Free",
+      [inventory[0], inventory[1]]
+    ),
+    new Recipe(
+      "r2",
+      "Protein Shake",
+      "",
+      "High-Protein, Gluten-Free",
+      [inventory[7], inventory[8], inventory[5]]
+    ),
+  ];
+
+  const shoppingLists = [
+    new ShoppingList(
+      "l1",
+      "04-01 Shopping List",
+      "",
+      "weekly",
+      "2026-04-01",
+      exampleWeeklyList,
+      false
+    ),
+  ];
+
+  // Store everything
+  _set("defaultIngredients", defaultIngredients);
+  _set("inventory", inventory);
+  _set("recipes", recipes);
+  _set("shoppingLists", shoppingLists);
 }
 
 function getRecipes() {
@@ -131,7 +147,6 @@ function addInventoryItem(item) {
   return item;
 }
 
-// does this acc remove it??????
 function removeInventoryItem(id) {
   saveInventory(getInventory().filter(i => i.id != id));
 }
@@ -148,7 +163,7 @@ function addShoppingList(shoppingList) {
   const lists = getShoppingLists();
   lists.push(shoppingList);
   saveShoppingLists(lists);
-  return list;
+  return lists;
 }
 
 function addItemToShoppingList(listId, itemName) {

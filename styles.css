@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
 
-/* style guide */
+/* ── style guide ── */
 :root {
   --off-white: #f4f7f5;
   --dark-text: #011627;
@@ -9,10 +9,9 @@
   font-family: "Roboto", sans-serif;
   font-size: 25px;
   border: 2px solid var(--dark-text);
-  border-radius: 20px; /* why isn't this working :( */
+  border-radius: 20px;
 }
 
-/* does this block do anything? */
 body {
   background: #333;
   display: flex;
@@ -23,7 +22,7 @@ body {
   color: var(--off-white);
 }
 
-/* THIS is the tablet */
+/* ── device & screen ── */
 #device {
   position: relative;
   width: 640px;
@@ -34,9 +33,6 @@ body {
   overflow: hidden;
 }
 
-/* holds everything inside 
-- posiiton relative bug had the modals tweaking out, fixed with position relative
-*/
 #screen {
   position: relative;
   display: flex;
@@ -46,7 +42,8 @@ body {
   width: 100%;
   background: #f4f7f5;
 }
-/* our main header at the top of the page*/
+
+/* ── typography ── */
 h1 {
   font-size: 46px;
   color: var(--off-white);
@@ -55,18 +52,18 @@ h1 {
   margin: 0;
   top: 20px;
 }
-/*is this ever used????*/
+
 h2 {
   font-size: 40px;
   color: var(--dark-text);
 }
 
-/* can prolly remove, border-collapse w3schools */
 table {
   border-collapse: collapse;
   border-radius: 20px;
 }
-/* CAN WE REMOVE*/
+
+/* ── header ── */
 #header {
   position: relative;
   display: flex;
@@ -77,7 +74,56 @@ table {
   background-color: var(--accent-blue-1);
   color: var(--off-white);
 }
-/*navvv barr*/
+
+#back-button {
+  position: absolute;
+  left: 16px;
+  color: var(--off-white);
+  font-size: 28px;
+  text-decoration: none;
+}
+
+#create-button {
+  position: absolute;
+  right: 16px;
+  color: var(--off-white);
+  font-size: 28px;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+#header-actions {
+  position: absolute;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+#header-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 26px;
+  color: var(--off-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#star-btn.starred i {
+  color: #f5c842;
+}
+
+#delete-btn:hover i {
+  color: #ff6b6b;
+}
+
+/* ── nav bar ── */
 #nav-bar {
   border-radius: 15px 15px 0px 0px;
   border-width: 0% 0% 10px 10px;
@@ -90,7 +136,7 @@ table {
   align-items: center;
   margin-top: auto;
 }
-/* the tabs in the bar*/
+
 .nav-buttons {
   font-family: "Roboto";
   font-weight: 300;
@@ -103,14 +149,14 @@ table {
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  color: var(--off-white);
   background-color: var(--accent-blue-1);
 }
-/* is the tab selected */
+
 #selected {
   background-color: var(--accent-blue-2);
 }
 
+/* ── layout helpers ── */
 #button-area {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -125,57 +171,8 @@ table {
 #second-row {
   display: contents;
 }
-/* the back arrow */
-#back-button {
-  position: absolute;
-  left: 16px;
-  color: var(--off-white);
-  font-size: 28px;
-  text-decoration: none;
-}
-/* recipe css stuff*/
-#add-recipe-container {
-  display: flex;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: 20px;
-}
 
-#add-recipe-button {
-  padding: 12px 24px;
-  font-size: 20px;
-  font-family: "Roboto", sans-serif;
-  background-color: var(--accent-blue-2);
-  color: var(--off-white);
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-#add-recipe-button:hover {
-  background-color: var(--accent-blue-1);
-}
-.styled-table {
-  margin-left: 20px;
-  margin-right: 20px;
-}
-#create-button {
-  position: absolute;
-  right: 16px;
-  color: var(--off-white);
-  font-size: 28px;
-  text-decoration: none;
-}
-/* shopping list creation css*/
-#shopping-list-container {
-  padding: 24px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  overflow-y: auto;
-}
-
+/* ── shared form elements ── */
 .field-label {
   font-size: 18px;
   font-weight: 500;
@@ -220,6 +217,101 @@ table {
   border: none;
   border-top: 1px solid #d3d3d3;
   margin: 4px 0;
+}
+
+/* ── shared tags & pills ── */
+.tag-pill {
+  padding: 4px 14px;
+  background: var(--accent-blue-2);
+  color: var(--off-white);
+  border-radius: 999px;
+  font-size: 16px;
+}
+
+.list-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ── shared empty state ── */
+.empty-message {
+  font-size: 18px;
+  color: #aaa;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* ── shared item action buttons ── */
+.item-action-buttons {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.item-action-buttons button {
+  border: none;
+  border-radius: 10px;
+  padding: 6px 14px;
+  background-color: var(--accent-blue-2);
+  color: var(--off-white);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.item-action-buttons button:hover {
+  background-color: var(--accent-blue-1);
+}
+
+.edit-inline-input {
+  flex: 1;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--accent-blue-2);
+  border-radius: 10px;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  color: var(--dark-text);
+  box-sizing: border-box;
+  margin-right: 10px;
+}
+
+.edit-btn {
+  background: none !important;
+  color: var(--accent-blue-2) !important;
+  font-size: 20px !important;
+  padding: 0 4px !important;
+}
+
+.edit-btn:hover {
+  background: none !important;
+  color: var(--accent-blue-1) !important;
+}
+
+.delete-item-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+  font-size: 18px;
+  color: #bbb;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: color 0.15s ease;
+}
+
+.delete-item-btn:hover {
+  color: #ff6b6b;
+}
+
+/* ── create list page ── */
+#shopping-list-container {
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
 }
 
 #shopping-input-row {
@@ -292,7 +384,139 @@ table {
 #items-ul li button:hover {
   background-color: var(--accent-blue-1);
 }
-/*displaying shipping lists*/
+
+/* ── display list page ── */
+#list-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.list-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.list-meta h2 {
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--accent-blue-1);
+  margin: 0;
+}
+
+.list-meta p {
+  font-size: 18px;
+  color: #555;
+  margin: 0;
+}
+
+#add-item-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+#new-item-input {
+  flex: 1;
+  height: 52px;
+  padding: 0 16px;
+  border: 1px solid #d3d3d3;
+  border-radius: 14px;
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  color: var(--dark-text);
+  box-sizing: border-box;
+}
+
+#add-item-btn {
+  height: 52px;
+  padding: 0 22px;
+  border: none;
+  border-radius: 14px;
+  background-color: var(--accent-blue-2);
+  color: var(--off-white);
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+#add-item-btn:hover {
+  background-color: var(--accent-blue-1);
+}
+
+#checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#checklist li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: white;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 20px;
+  color: var(--dark-text);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+#checklist li:hover {
+  background-color: #e8eef2;
+}
+
+#checklist li.checked {
+  background-color: #f0f0f0;
+}
+
+#checklist li.checked .item-name {
+  text-decoration: line-through;
+  color: #aaa;
+}
+
+.check-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-blue-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+li.checked .check-circle {
+  background-color: var(--accent-blue-2);
+  border-color: var(--accent-blue-2);
+}
+
+.check-circle i {
+  color: var(--off-white);
+  font-size: 13px;
+  display: none;
+}
+
+li.checked .check-circle i {
+  display: block;
+}
+
+.item-name {
+  flex: 1;
+}
+
+/* ── shopping lists page ── */
 #saved-lists-container {
   padding: 24px 20px;
   overflow-y: auto;
@@ -331,4 +555,77 @@ table {
 
 .saved-items-list li:last-child {
   border-bottom: none;
+}
+
+/* ── recipe page ── */
+#add-recipe-container {
+  display: flex;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+}
+
+#add-recipe-button {
+  padding: 12px 24px;
+  font-size: 20px;
+  font-family: "Roboto", sans-serif;
+  background-color: var(--accent-blue-2);
+  color: var(--off-white);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#add-recipe-button:hover {
+  background-color: var(--accent-blue-1);
+}
+
+.styled-table {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+/* ── toolbar ── */
+#toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 12px;
+  background-color: var(--off-white);
+  border-bottom: 1px solid var(--accent-blue-1);
+}
+
+#search-input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--accent-blue-2);
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  background-color: var(--off-white);
+  color: var(--dark-text);
+}
+
+#toolbar-right {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.toolbar-button {
+  padding: 12px 40px;
+  border-radius: 8px;
+  border: 1px solid var(--accent-blue-2);
+  background-color: var(--accent-blue-2);
+  color: var(--off-white);
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.toolbar-button:hover {
+  background-color: var(--accent-blue-1);
+  color: var(--off-white);
 }

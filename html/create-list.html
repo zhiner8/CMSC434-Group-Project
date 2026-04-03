@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create List</title>
     <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="../create-list.css" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/75ab6db391.js" crossorigin="anonymous"></script>
     <script src="../storage.js"></script>
@@ -27,9 +28,7 @@
           </div>
 
           <div class="field-group">
-            <label class="field-label" for="description-input">
-              Description
-            </label>
+            <label class="field-label" for="description-input">Description</label>
             <textarea id="description-input" placeholder="e.g. Everything for the week's meals"></textarea>
           </div>
 
@@ -65,6 +64,8 @@
     </div>
 
     <script>
+      initStorage();
+
       const itemInput = document.getElementById("item-input");
       const addItemButton = document.getElementById("add-item");
       const itemsUl = document.getElementById("items-ul");
@@ -75,14 +76,51 @@
 
       let draftList = [];
 
+      const params = new URLSearchParams(window.location.search);
+
+      if (params.get("prefillName")) {
+        listNameInput.value = params.get("prefillName");
+      }
+
+      if (params.get("prefillDescription")) {
+        descriptionInput.value = params.get("prefillDescription");
+      }
+
+      if (params.get("prefillTags")) {
+        tagsInput.value = params.get("prefillTags");
+      }
+      
+      if (params.get("prefillItems")) {
+        const prefillItems = JSON.parse(params.get("prefillItems"));
+        prefillItems.forEach((name) => {
+          draftList.push(new Ingredient("i-" + Date.now() + Math.random(), name, "", null, "Pantry", 1));
+        });
+      }
+
       function renderList() {
         itemsUl.innerHTML = "";
         draftList.forEach((item, index) => {
           const li = document.createElement("li");
-          li.innerHTML = `
-            <span>${item}</span>
-            <button onclick="removeItem(${index})">Remove</button>
-          `;
+
+          if (item._editing) {
+            li.innerHTML = `
+              <input class="edit-inline-input" type="text" value="${item.name}" id="edit-input-${index}" />
+              <div class="item-action-buttons">
+                <button onclick="saveEdit(${index})">Save</button>
+                <button onclick="cancelEdit(${index})">Cancel</button>
+              </div>
+            `;
+          } else {
+            li.innerHTML = `
+              <span>${item.name}</span>
+              <div class="item-action-buttons">
+                <button onclick="startEdit(${index})">Edit</button>
+                <button onclick="removeItem(${index})">Remove</button>
+              </div>
+            `;
+          }
+          // ────────────────────────────────────────────────────────────────
+
           itemsUl.appendChild(li);
         });
       }
@@ -90,7 +128,15 @@
       function addItem() {
         const itemName = itemInput.value.trim();
         if (itemName !== "") {
-          draftList.push(itemName);
+          const newIngredient = new Ingredient(
+            "i-" + Date.now(),
+            itemName,
+            "",
+            null,
+            "Pantry",
+            1
+          );
+          draftList.push(newIngredient);
           itemInput.value = "";
           renderList();
         }
@@ -101,24 +147,44 @@
         renderList();
       }
 
+      function startEdit(index) {
+        draftList[index]._editing = true;
+        renderList();
+        document.getElementById(`edit-input-${index}`).focus();
+      }
+
+      function saveEdit(index) {
+        const input = document.getElementById(`edit-input-${index}`);
+        const newName = input.value.trim();
+        if (newName !== "") {
+          draftList[index].name = newName;
+        }
+        draftList[index]._editing = false;
+        renderList();
+      }
+
+      function cancelEdit(index) {
+        draftList[index]._editing = false;
+        renderList();
+      }
+      
       function createList() {
         if (draftList.length === 0) {
           alert("Add at least one item before creating a list.");
           return;
         }
 
-        const savedLists = JSON.parse(localStorage.getItem("shoppingLists")) || [];
+        const newList = new ShoppingList(
+          "l-" + Date.now(),
+          listNameInput.value.trim() || "New List",
+          descriptionInput.value.trim(),
+          tagsInput.value.trim(),
+          new Date().toISOString(),
+          draftList,
+          false
+        );
 
-        const newList = {
-          id: Date.now(),
-          name: listNameInput.value.trim() || `List ${savedLists.length + 1}`,
-          description: descriptionInput.value.trim(),
-          tags: tagsInput.value.trim(),
-          items: [...draftList],
-        };
-
-        savedLists.push(newList);
-        localStorage.setItem("shoppingLists", JSON.stringify(savedLists));
+        addShoppingList(newList);
         window.location.href = "shopping.html";
       }
 
