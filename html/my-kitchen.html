@@ -125,7 +125,7 @@
     </div>
 
     <script>
-     
+      initStorage();
       const inventoryBody = document.getElementById("inventory-body");
       const searchInput = document.getElementById("search-input");
       const locationFilter = document.getElementById("location-filter");
@@ -150,6 +150,7 @@
       );
       const cancelBtn = document.getElementById("cancel-btn");
       const saveItemBtn = document.getElementById("save-item-btn");
+      
 
       let editMode = false;
 
@@ -186,7 +187,7 @@
             <td>${item.location}</td>
             <td>${formatDate(item.useBy)}</td>
             <td class="edit-column ${editMode ? "" : "hidden"}">
-              <button class="remove-btn" onclick="removeInventoryItem(${originalIndex})">
+              <button class="remove-btn" onclick="removeItem(${item.id})">
                 Remove
               </button>
             </td>
@@ -228,6 +229,8 @@
       }
 
       function saveInventoryItem() {
+
+        const id = "i" + Date.now();
         const name = inventoryNameInput.value.trim();
         const location = inventoryLocationInput.value;
         const description = inventoryDescriptionInput.value;
@@ -247,7 +250,7 @@
         }
 
         // need to add 
-        item = new Ingredient(name, description, useBy, location, quantity);
+        item = new Ingredient(id, name, description, useBy, location, quantity);
         addInventoryItem(item);
 
         closeModal();
@@ -256,8 +259,8 @@
         renderInventory();
       }
 
-      function removeInventoryItem(index) {
-        inventory.splice(index, 1);
+      function removeItem(id) {
+        removeInventoryItem(id);
         renderInventory();
       }
 

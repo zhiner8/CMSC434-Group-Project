@@ -1,5 +1,6 @@
 class Ingredient {
-  constructor(name, description, useBy, location, quantity) {
+  constructor(id, name, description, useBy, location, quantity) {
+    this.id = id;
     this.name = name;
     this.description = description;
     this.useBy = useBy;
@@ -9,7 +10,8 @@ class Ingredient {
 }
 
 class Recipe {
-  constructor(name, description, tags, ingredients) {
+  constructor(id, name, description, tags, ingredients) {
+    this.id = id;
     this.name = name;
     this.description = description;
     this.tags = tags;
@@ -18,12 +20,14 @@ class Recipe {
 }
 
 class ShoppingList {
-  constructor(name, description, tags, date, list) {
+  constructor(id, name, description, tags, date, ingredientList, isStarter) {
+    this.id = id;
     this.name = name;
     this.description = description;
     this.tags = tags;
     this.date = date; // date list was created
-    this.list = list;
+    this.ingredientList = ingredientList;
+    this.isStarter = isStarter;
   }
 }
 
@@ -33,18 +37,18 @@ class ShoppingList {
 const DEFAULTS = {
   ingredientMemory: [
     // ingredients in our demo kitchen
-    new Ingredient("spaghetti noodles", "", new Date("2028-01-01"), "Pantry", 2),
-    new Ingredient("tomato sauce", "", new Date("2026-06-02"), "Fridge", 1),
-    new Ingredient("firm tofu", "", new Date("2026-05-02"), "Fridge", 1),
-    new Ingredient("spinach (frozen)", "", new Date("2027-01-16"), "Pantry", 1),
-    new Ingredient("rice (frozen)", "", new Date("2029-01-01"), "Pantry", 1),
-    new Ingredient("peanut butter", "", new Date("2027-01-01"), "Fridge", 1),
-    new Ingredient("apricot jam", "", new Date("2026-11-01"), "Fridge", 1),
-    new Ingredient("almond milk", "", new Date("2026-05-01"), "Fridge", 1),
-    new Ingredient("chocolate protein powder", "", new Date("2028-05-01"), "Pantry", 1),
+    new Ingredient("i1", "spaghetti noodles", "", new Date("2028-01-01"), "Pantry", 2),
+    new Ingredient("i2", "tomato sauce", "", new Date("2026-06-02"), "Fridge", 1),
+    new Ingredient("i3", "firm tofu", "", new Date("2026-05-02"), "Fridge", 1),
+    new Ingredient("i4", "spinach (frozen)", "", new Date("2027-01-16"), "Pantry", 1),
+    new Ingredient("i5", "rice (frozen)", "", new Date("2029-01-01"), "Pantry", 1),
+    new Ingredient("i6", "peanut butter", "", new Date("2027-01-01"), "Fridge", 1),
+    new Ingredient("i7", "apricot jam", "", new Date("2026-11-01"), "Fridge", 1),
+    new Ingredient("i8", "almond milk", "", new Date("2026-05-01"), "Fridge", 1),
+    new Ingredient("i9", "chocolate protein powder", "", new Date("2028-05-01"), "Pantry", 1),
     // ingredients in our demo shopping list
-    new Ingredient("banana", "", null, "Pantry", 4),
-    new Ingredient("sandwich bread", "", null, "Pantry", 1),
+    new Ingredient("i10","banana", "", null, "Pantry", 4),
+    new Ingredient("i11", "sandwich bread", "", null, "Pantry", 1),
   ]
 };
 
@@ -68,13 +72,13 @@ function initStorage() {
   DEFAULTS["inventory"] = DEFAULTS["ingredientMemory"].slice(0,8);
   DEFAULTS["exampleWeeklyList"] = DEFAULTS["ingredientMemory"].slice(9,-1);
   DEFAULTS["recipes"] =  [
-    new Recipe(
+    new Recipe("r1",
       "Tofu Bolognese", "", "Italian, Nut-Free", new Array(DEFAULTS["inventory"][0], DEFAULTS["inventory"][1])),
-    new Recipe("Protein Shake","","High-Protein, Gluten-Free", new Array(DEFAULTS["inventory"][7], DEFAULTS["inventory"][8], DEFAULTS["inventory"][5])
+    new Recipe("r2", "Protein Shake","","High-Protein, Gluten-Free", new Array(DEFAULTS["inventory"][7], DEFAULTS["inventory"][8], DEFAULTS["inventory"][5])
       ),
   ];
   DEFAULTS["shoppingLists"] = [
-     new ShoppingList("04-01 Shopping List", "", "weekly", new Date("2026-04-01"), [DEFAULTS["exampleWeeklyList"]])
+     new ShoppingList("l1", "04-01 Shopping List", "", "weekly", new Date("2026-04-01"), [DEFAULTS["exampleWeeklyList"]], false)
   ];
  // It stops working if this isn't repeated twice :((( not sure why rn
   for (const [key, value] of Object.entries(DEFAULTS)) {
@@ -103,6 +107,7 @@ function updateRecipe(id, changes) {
   saveRecipes(recipes);
 }
 
+
 function deleteRecipe(id) {
   saveRecipes(getRecipes().filter(r => r.id !== id));
 }
@@ -126,8 +131,9 @@ function addInventoryItem(item) {
   return item;
 }
 
+// does this acc remove it??????
 function removeInventoryItem(id) {
-  saveInventory(getInventory().filter(i => i.id !== id));
+  saveInventory(getInventory().filter(i => i.id != id));
 }
 
 function getShoppingLists() {

@@ -206,11 +206,15 @@
       initStorage();
 
       const params = new URLSearchParams(window.location.search);
-      const listId = parseInt(params.get("id"));
+      console.log(params);
+      const listId = params.get("id")
+      console.log(listId);
 
-      let savedLists = JSON.parse(localStorage.getItem("shoppingLists")) || [];
+      let savedLists = getShoppingLists();
+      console.log(savedLists);
       let listIndex = savedLists.findIndex((l) => l.id === listId);
       let list = savedLists[listIndex];
+      console.log(list.name);
 
       if (!list) {
         document.getElementById("list-content").innerHTML =
@@ -250,6 +254,7 @@
 
         updateStar();
 
+        // NEEDS TO BE UPDATED
         starBtn.addEventListener("click", () => {
           list.isStarter = !list.isStarter;
           savedLists[listIndex] = list;
@@ -269,10 +274,10 @@
 
         const checklist = document.getElementById("checklist");
 
-        if (!list.items || list.items.length === 0) {
+        if (!list.ingredientList || list.ingredientList.length === 0) {
           checklist.innerHTML = "<p class='empty-message'>No items in this list.</p>";
         } else {
-          list.items.forEach((item, index) => {
+          list.ingredientList.forEach((item, index) => {
             const name = typeof item === "object" ? item.name : item;
             const checked = typeof item === "object" ? item.checked : false;
 
