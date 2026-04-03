@@ -3,26 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Kitchen</title>
+    <title>Create List</title>
     <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="../my-kitchen.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
-      rel="stylesheet"
-    />
-
-    <script
-      src="https://kit.fontawesome.com/75ab6db391.js"
-      crossorigin="anonymous"
-    ></script>
-
-    <script>
-      src = "App.js";
-    </script>
-
-    <style></style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/75ab6db391.js" crossorigin="anonymous"></script>
+    <script src="../storage.js"></script>
   </head>
-
   <body>
     <div id="device">
       <div id="screen">
@@ -34,93 +20,75 @@
         </div>
 
         <div id="shopping-list-container">
-          <div id="shopping-input-row">
-            <input type="text" id="item-input" placeholder="Add new item..." />
-            <button id="add-item">Add</button>
+
+          <div class="field-group">
+            <label class="field-label" for="list-name-input">Name</label>
+            <input class="text-input" type="text" id="list-name-input" placeholder="e.g. Weekly Groceries" />
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="description-input">
+              Description
+            </label>
+            <textarea id="description-input" placeholder="e.g. Everything for the week's meals"></textarea>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="tags-input">
+              Tags <span style="font-weight:400; font-size:16px;">(comma separated)</span>
+            </label>
+            <input class="text-input" type="text" id="tags-input" placeholder="e.g. Weekly, Produce, Meals" />
+          </div>
+
+          <hr class="divider" />
+
+          <div class="field-group">
+            <label class="field-label">Items</label>
+            <div id="shopping-input-row">
+              <input type="text" id="item-input" placeholder="Add new item..." />
+              <button id="add-item">Add</button>
+            </div>
           </div>
 
           <ul id="items-ul"></ul>
 
           <button id="create-list-button">Create List</button>
+
         </div>
 
         <div id="nav-bar">
           <a href="my-kitchen.html" class="nav-buttons">My Kitchen</a>
           <a href="recipe-book.html" class="nav-buttons">Recipe Book</a>
-          <a href="shopping.html" class="nav-buttons" id="selected"
-            >Shopping Lists</a
-          >
+          <a href="shopping.html" class="nav-buttons" id="selected">Shopping Lists</a>
         </div>
       </div>
     </div>
-    <!---
-           const inventoryInput = document.getElementById("inventory-item-input");
-      const addInventoryButton = document.getElementById("add-inventory-item");
-      const inventoryUl = document.getElementById("inventory-ul");
-      const locationSelect = document.getElementById("location-select");
 
-      let inventoryList = inventory;
-
-      function renderInventory() {
-        inventoryUl.innerHTML = "";
-        inventoryList.forEach((item, index) => {
-          const li = document.createElement("li");
-          li.className = "inventory-item";
-          li.innerHTML = `
-            <span>${item.name} (${item.location})</span>
-            <div class="inventory-buttons">
-              <button onclick="removeInventoryItem(${index})">Used/Remove</button>
-            </div>
-          `;
-          inventoryUl.appendChild(li);
-        });
-      }
-
-      function addInventoryItem() {
-        const itemName = inventoryInput.value.trim();
-        const location = locationSelect.value;
-        if (itemName) {
-          inventoryList.push({ name: itemName, location });
-          inventoryInput.value = "";
-          renderInventory();
-        }
-      }
-
-      function removeInventoryItem(index) {
-        inventoryList.splice(index, 1);
-        renderInventory();
-      }
-
-      addInventoryButton.addEventListener("click", addInventoryItem);
-      inventoryInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") addInventoryItem();
-      });
-
-      renderInventory();-->
     <script>
       const itemInput = document.getElementById("item-input");
       const addItemButton = document.getElementById("add-item");
       const itemsUl = document.getElementById("items-ul");
       const createListButton = document.getElementById("create-list-button");
+      const listNameInput = document.getElementById("list-name-input");
+      const descriptionInput = document.getElementById("description-input");
+      const tagsInput = document.getElementById("tags-input");
 
       let draftList = [];
 
       function renderList() {
         itemsUl.innerHTML = "";
-
         draftList.forEach((item, index) => {
           const li = document.createElement("li");
           li.innerHTML = `
-              <span>${item}</span>
-              <button onclick="removeItem(${index})">Remove</button>
-            `;
+            <span>${item}</span>
+            <button onclick="removeItem(${index})">Remove</button>
+          `;
           itemsUl.appendChild(li);
         });
       }
 
       function addItem() {
         const itemName = itemInput.value.trim();
-
         if (itemName !== "") {
           draftList.push(itemName);
           itemInput.value = "";
@@ -139,34 +107,25 @@
           return;
         }
 
-        const savedLists =
-          JSON.parse(localStorage.getItem("shoppingLists")) || [];
+        const savedLists = JSON.parse(localStorage.getItem("shoppingLists")) || [];
 
         const newList = {
           id: Date.now(),
-          name: `List ${savedLists.length + 1}`,
+          name: listNameInput.value.trim() || `List ${savedLists.length + 1}`,
+          description: descriptionInput.value.trim(),
+          tags: tagsInput.value.trim(),
           items: [...draftList],
         };
 
         savedLists.push(newList);
         localStorage.setItem("shoppingLists", JSON.stringify(savedLists));
-
-        alert("List created!");
-
-        draftList = [];
-        renderList();
-
         window.location.href = "shopping.html";
       }
 
       addItemButton.addEventListener("click", addItem);
-
-      itemInput.addEventListener("keypress", function (e) {
-        if (e.key === "Enter") {
-          addItem();
-        }
+      itemInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") addItem();
       });
-
       createListButton.addEventListener("click", createList);
 
       renderList();
