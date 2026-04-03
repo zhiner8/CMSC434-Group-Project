@@ -180,8 +180,10 @@ function getMissingIngredients(recipeId) {
   const inStock = new Set(getInventory().map(i => i.name.toLowerCase()));
   return recipe.ingredients
     .filter(ing => {
-      const name = typeof ing === "object" ? ing.name : ing;
-      return !inStock.has(name.toLowerCase());
+      if(ing !== null) {
+        const name = typeof ing === "object" ? ing.name : ing;
+        return !inStock.has(name.toLowerCase());
+      } 
     })
     .map(ing => typeof ing === "object" ? ing.name : String(ing));
 }
@@ -189,7 +191,13 @@ function getMissingIngredients(recipeId) {
 function getAvailableRecipes() {
   const inStock = new Set(getInventory().map(i => i.name.toLowerCase()));
   return getRecipes().filter(r =>
-    r.ingredients.every(ing => inStock.has(ing.toLowerCase()))
+    r.ingredients.every(ing => {
+      if(ing !== null){
+        return inStock.has(ing.name.toLowerCase())
+      } else {
+        return true;
+      }
+    })
   );
 }
 
