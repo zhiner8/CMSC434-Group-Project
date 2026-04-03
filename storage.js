@@ -31,22 +31,21 @@ class ShoppingList {
 // this is what Yosh had initially but I couldn't define the other storage arrays in here
 // due to their initializations being based on previous list initializations
 const DEFAULTS = {
-  recipes: [
-    {
-      id: "r1",
-      name: "Spaghetti",
-      description: "",
-      tags: ["Italian", "Nut-Free"],
-      ingredients: ["spaghetti noodles", "tomato sauce"],
-    }
-  ],
-  inventory: [
-    { id: "i1", name: "spaghetti noodles", location: "pantry", useBy: "2028-01-01" },
-    { id: "i2", name: "tomato sauce",       location: "fridge", useBy: "2026-06-02" },
-    { id: "i3", name: "firm tofu",          location: "fridge", useBy: "2026-05-02" },
-  ],
-  shoppingLists: [],
-  starterLists: []
+  ingredientMemory: [
+    // ingredients in our demo kitchen
+    new Ingredient("spaghetti noodles", "", new Date("2028-01-01"), "Pantry", 2),
+    new Ingredient("tomato sauce", "", new Date("2026-06-02"), "Fridge", 1),
+    new Ingredient("firm tofu", "", new Date("2026-05-02"), "Fridge", 1),
+    new Ingredient("spinach (frozen)", "", new Date("2027-01-16"), "Pantry", 1),
+    new Ingredient("rice (frozen)", "", new Date("2029-01-01"), "Pantry", 1),
+    new Ingredient("peanut butter", "", new Date("2027-01-01"), "Fridge", 1),
+    new Ingredient("apricot jam", "", new Date("2026-11-01"), "Fridge", 1),
+    new Ingredient("almond milk", "", new Date("2026-05-01"), "Fridge", 1),
+    new Ingredient("chocolate protein powder", "", new Date("2028-05-01"), "Pantry", 1),
+    // ingredients in our demo shopping list
+    new Ingredient("banana", "", null, "Pantry", 4),
+    new Ingredient("sandwich bread", "", null, "Pantry", 1),
+  ]
 };
 
 function _get(key) {
