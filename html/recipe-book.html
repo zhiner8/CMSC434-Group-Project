@@ -23,29 +23,33 @@
         <div id="header">
           <h1>Recipe Book</h1>
         </div>
-        <div id="recipe-book-tab">
-          <div id="recipe-toolbar>
-            <button id="new-recipe">+</button>
-
-            <div id="search-sort-bar">
+        <div id="recipe-container">
+          <div id="recipe-toolbar">
+           <div id="search-wrapper">
+              <i class="fa-solid fa-magnifying-glass"></i>
               <input
                 type="text"
                 id="search-input"
-                placeholder="Search recipes..."
+                placeholder="Search items..."
               />
-              <select id="sort-select">
-                <option value="none">Sort by...</option>
-                <option value="name-asc">Name (A–Z)</option>
-                <option value="name-desc">Name (Z–A)</option>
-                <option value="tag">Tag</option>
-              </select>
             </div>
-            <div id="filter-bar">
-              <input type="checkbox" id="available-toggle" />
-              <label id="filter-label" for="available-toggle"
-                >Show only recipes I can make</label
-              >
+            <select id="sort-select">
+              <option value="none">Sort by...</option>
+              <option value="name-asc">Name (A–Z)</option>
+              <option value="name-desc">Name (Z–A)</option>
+              <option value="tag">Tag</option>
+            </select>
+             <div id="toolbar-buttons">
+              <button id="edit-button">Edit</button>
+              <button id="add-button">Add</button>
             </div>
+          </div>
+
+          <div id="filter-bar">
+            <input type="checkbox" id="available-toggle" />
+            <label id="filter-label" for="available-toggle"
+              >Show only recipes I can make</label
+            >
           </div>
 
           <div id="recipe-table-wrapper">
