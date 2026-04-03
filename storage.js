@@ -66,7 +66,7 @@ function initStorage() {
   }
 
   DEFAULTS["inventory"] = DEFAULTS["ingredientMemory"].slice(0,8);
-  DEFAULTS["exampleWeeklyList"] = DEFAULTS["ingredientMemory".slice(9,-1)];
+  DEFAULTS["exampleWeeklyList"] = DEFAULTS["ingredientMemory"].slice(9,-1);
   DEFAULTS["recipes"] =  [
     new Recipe(
       "Tofu Bolognese", "", "Italian, Nut-Free", new Array(DEFAULTS["inventory"][0], DEFAULTS["inventory"][1])),
@@ -138,11 +138,9 @@ function saveShoppingLists(lists) {
   _set("shoppingLists", lists);
 }
 
-function addShoppingList(list) {
-  list.id = "sl" + Date.now();
-  list.items = list.items || [];
+function addShoppingList(shoppingList) {
   const lists = getShoppingLists();
-  lists.push(list);
+  lists.push(shoppingList);
   saveShoppingLists(lists);
   return list;
 }

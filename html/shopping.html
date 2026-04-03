@@ -178,6 +178,7 @@
 
       function renderSavedLists() {
         const savedLists = getShoppingLists();
+        console.log(savedLists);
         listsWrapper.innerHTML = "";
 
         if (savedLists.length === 0) {
