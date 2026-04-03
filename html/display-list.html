@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping List</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="../display-list.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/75ab6db391.js" crossorigin="anonymous"></script>
+    <script src="../storage.js"></script>
+
+    <style>
+        #list-content {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        overflow-y: auto;
+        flex: 1;
+        }
+
+        .list-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        }
+
+        .list-meta h2 {
+        font-size: 32px;
+        font-weight: 500;
+        color: var(--accent-blue-1);
+        margin: 0;
+        }
+
+        .list-meta p {
+        font-size: 18px;
+        color: #555;
+        margin: 0;
+        }
+
+        .list-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        }
+
+        .tag-pill {
+        padding: 4px 14px;
+        background: var(--accent-blue-2);
+        color: var(--off-white);
+        border-radius: 999px;
+        font-size: 16px;
+        }
+
+        .divider {
+        border: none;
+        border-top: 1px solid #d3d3d3;
+        margin: 4px 0;
+        }
+
+        #checklist {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        }
+
+        #checklist li {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: white;
+        border-radius: 12px;
+        padding: 14px 16px;
+        font-size: 20px;
+        color: var(--dark-text);
+        cursor: pointer;
+        transition: background-color 0.15s ease;
+        }
+
+        #checklist li:hover {
+        background-color: #e8eef2;
+        }
+
+        #checklist li.checked {
+        background-color: #f0f0f0;
+        }
+
+        #checklist li.checked .item-name {
+        text-decoration: line-through;
+        color: #aaa;
+        }
+
+        .check-circle {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 2px solid var(--accent-blue-2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: background-color 0.15s ease;
+        }
+
+        li.checked .check-circle {
+        background-color: var(--accent-blue-2);
+        border-color: var(--accent-blue-2);
+        }
+
+        .check-circle i {
+        color: var(--off-white);
+        font-size: 13px;
+        display: none;
+        }
+
+        li.checked .check-circle i {
+        display: block;
+        }
+
+        .item-name {
+        flex: 1;
+        }
+
+        .empty-message {
+        font-size: 18px;
+        color: #aaa;
+        text-align: center;
+        margin-top: 20px;
+        }
+
+        #header-actions {
+        position: absolute;
+        right: 16px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        }
+
+        #header-actions button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        font-size: 26px;
+        color: var(--off-white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        }
+
+        #star-btn.starred i {
+        color: #f5c842;
+        }
+
+        #delete-btn:hover i {
+        color: #ff6b6b;
+        }
+    </style>
+</head>
+  <body>
+    <div id="device">
+      <div id="screen">
+
+        <div id="header">
+          <a href="shopping.html" id="back-button">
+            <i class="fa-solid fa-arrow-left"></i>
+          </a>
+          <h1 id="header-title">List</h1>
+          <div id="header-actions">
+            <button id="star-btn" title="Save as starter list">
+              <i class="fa-regular fa-star"></i>
+            </button>
+            <button id="delete-btn" title="Delete list">
+              <i class="fa-regular fa-trash-can"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="list-content">
+          <div class="list-meta">
+            <h2 id="list-name"></h2>
+            <p id="list-description"></p>
+          </div>
+
+          <div class="list-tags" id="list-tags"></div>
+
+          <hr class="divider" />
+
+          <ul id="checklist"></ul>
+        </div>
+
+        <div id="nav-bar">
+          <a href="my-kitchen.html" class="nav-buttons">My Kitchen</a>
+          <a href="recipe-book.html" class="nav-buttons">Recipe Book</a>
+          <a href="shopping.html" class="nav-buttons" id="selected">Shopping Lists</a>
+        </div>
+
+      </div>
+    </div>
+
+    <script>
+      initStorage();
+
+      const params = new URLSearchParams(window.location.search);
+      const listId = parseInt(params.get("id"));
+
+      let savedLists = JSON.parse(localStorage.getItem("shoppingLists")) || [];
+      let listIndex = savedLists.findIndex((l) => l.id === listId);
+      let list = savedLists[listIndex];
+
+      if (!list) {
+        document.getElementById("list-content").innerHTML =
+          "<p class='empty-message'>List not found.</p>";
+      } else {
+
+        document.getElementById("header-title").textContent = list.name || "List";
+        document.getElementById("list-name").textContent = list.name || "List";
+
+        const descEl = document.getElementById("list-description");
+        descEl.textContent = list.description || "";
+        if (!list.description) descEl.style.display = "none";
+
+        const tagsEl = document.getElementById("list-tags");
+        if (list.tags && list.tags.trim() !== "") {
+          list.tags.split(",").forEach((tag) => {
+            const pill = document.createElement("span");
+            pill.className = "tag-pill";
+            pill.textContent = tag.trim();
+            tagsEl.appendChild(pill);
+          });
+        } else {
+          tagsEl.style.display = "none";
+        }
+
+        const starBtn = document.getElementById("star-btn");
+
+        function updateStar() {
+          if (list.isStarter) {
+            starBtn.classList.add("starred");
+            starBtn.querySelector("i").className = "fa-solid fa-star";
+          } else {
+            starBtn.classList.remove("starred");
+            starBtn.querySelector("i").className = "fa-regular fa-star";
+          }
+        }
+
+        updateStar();
+
+        starBtn.addEventListener("click", () => {
+          list.isStarter = !list.isStarter;
+          savedLists[listIndex] = list;
+          localStorage.setItem("shoppingLists", JSON.stringify(savedLists));
+          updateStar();
+        });
+
+        const deleteBtn = document.getElementById("delete-btn");
+
+        deleteBtn.addEventListener("click", () => {
+          if (confirm(`Delete "${list.name || "this list"}"?`)) {
+            savedLists.splice(listIndex, 1);
+            localStorage.setItem("shoppingLists", JSON.stringify(savedLists));
+            window.location.href = "shopping.html";
+          }
+        });
+
+        const checklist = document.getElementById("checklist");
+
+        if (!list.items || list.items.length === 0) {
+          checklist.innerHTML = "<p class='empty-message'>No items in this list.</p>";
+        } else {
+          list.items.forEach((item, index) => {
+            const name = typeof item === "object" ? item.name : item;
+            const checked = typeof item === "object" ? item.checked : false;
+
+            const li = document.createElement("li");
+            li.className = checked ? "checked" : "";
+            li.innerHTML = `
+              <div class="check-circle">
+                <i class="fa-solid fa-check"></i>
+              </div>
+              <span class="item-name">${name}</span>
+            `;
+
+            li.addEventListener("click", () => {
+              const isChecked = li.classList.toggle("checked");
+              list.items[index] = { name, checked: isChecked };
+              savedLists[listIndex] = list;
+              localStorage.setItem("shoppingLists", JSON.stringify(savedLists));
+            });
+
+            checklist.appendChild(li);
+          });
+        }
+      }
+    </script>
+  </body>
+</html>
