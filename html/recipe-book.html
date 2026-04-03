@@ -262,6 +262,9 @@
             <label>Name</label>
             <input type="text" id="recipe-name-input" placeholder="e.g. Spaghetti Bolognese" />
 
+            <label>Description</label>
+            <input type="text" id="recipe-description-input" placeholder="good weeknight dinner" />
+
             <label>Tags <span style="font-weight:400;font-size:14px;">(comma separated)</span></label>
             <input type="text" id="recipe-tags-input" placeholder="e.g. Italian, Dinner" />
 
@@ -288,7 +291,7 @@
     </div>
 
     <script>
-      initStorage();
+      initStorage(); // Do we need this line???
 
       const recipeTableBody = document.getElementById("recipe-table-body");
       const modalOverlay = document.getElementById("modal-overlay");
@@ -296,6 +299,7 @@
       const cancelBtn = document.getElementById("cancel-btn");
       const saveRecipeBtn = document.getElementById("save-recipe-btn");
       const recipeNameInput = document.getElementById("recipe-name-input");
+      const recipeDescriptionInput = document.getElementById("recipe-description-input");
       const recipeTagsInput = document.getElementById("recipe-tags-input");
       const ingredientInput = document.getElementById("ingredient-input");
       const addIngredientBtn = document.getElementById("add-ingredient-btn");
@@ -310,6 +314,8 @@
         let recipes = availableToggle.checked
           ? getAvailableRecipes()
           : getRecipes();
+
+        console.log(recipes);
 
         const query = searchInput.value.trim().toLowerCase();
         if (query) {
@@ -352,9 +358,10 @@
           tr.style.cursor = "pointer";
           tr.innerHTML = `
             <td>${recipe.name}</td>
-            <td>${recipe.ingredients.join(", ")}</td>
+            <td>${recipe.ingredients}</td> 
             <td>${recipe.tags}</td>
-          `;
+          `; // rn not populating ingredients right lol  
+          console.log(recipe.ingredients);
           tr.addEventListener("click", () => {
             window.location.href = `recipe-detail.html?id=${recipe.id}`;
           });
@@ -380,7 +387,7 @@
         currentIngredients.forEach((ing, index) => {
           const li = document.createElement("li");
           li.innerHTML = `
-            <span>${ing}</span>
+            <span>${ing.name}</span>
             <button onclick="removeIngredient(${index})">✕</button>
           `;
           ingredientList.appendChild(li);
@@ -388,9 +395,12 @@
       }
 
       function addIngredient() {
-        const val = ingredientInput.value.trim();
+        const val = new Ingredient(ingredientInput.value.trim(), "", "2026-01-01", "pantry", 1);
         if (!val) return;
+        
         currentIngredients.push(val);
+
+        // ALSO NEED TO ADD TO THE GLOBAL INGREDIENTS STORAGE 
         ingredientInput.value = "";
         renderIngredientList();
       }
@@ -402,6 +412,9 @@
 
       function saveRecipe() {
         const name = recipeNameInput.value.trim();
+        const description = recipeDescriptionInput.value; // is the trim() important?
+        const tags = recipeTagsInput.value.trim();
+        const ingredients = currentIngredients;
         if (!name) {
           alert("Please enter a recipe name.");
           return;
@@ -411,12 +424,9 @@
           return;
         }
 
-        addRecipe({
-          name: name,
-          description: "",
-          tags: recipeTagsInput.value.trim(),
-          ingredients: currentIngredients,
-        });
+        let recipe = new Recipe(name, description, tags, ingredients);
+        addRecipe(recipe);
+
 
         closeModal();
         renderRecipes();

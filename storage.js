@@ -69,8 +69,8 @@ function initStorage() {
   DEFAULTS["exampleWeeklyList"] = DEFAULTS["ingredientMemory".slice(9,-1)];
   DEFAULTS["recipes"] =  [
     new Recipe(
-      "Tofu Bolognese", "", "Italian, Nut-Free", new Array(DEFAULTS["inventory"][0])),
-    new Recipe("Protein Shake","","Italian, Nut-Free", new Array(DEFAULTS["inventory"][0])
+      "Tofu Bolognese", "", "Italian, Nut-Free", new Array(DEFAULTS["inventory"][0], DEFAULTS["inventory"][1])),
+    new Recipe("Protein Shake","","High-Protein, Gluten-Free", new Array(DEFAULTS["inventory"][7], DEFAULTS["inventory"][8], DEFAULTS["inventory"][5])
       ),
   ];
   DEFAULTS["shoppingLists"] = [
@@ -92,10 +92,6 @@ function saveRecipes(recipes) {
 }
 
 function addRecipe(recipe) {
-  recipe.name = "r" + Date.now(); // to change to be the name the user typed in
-  recipe.description = "dummy description";
-  recipe.tags = "tag";
-  recipe.ingredients = "ingredient, ingredient, ingredient";
   const recipes = getRecipes();
   recipes.push(recipe);
   saveRecipes(recipes);
