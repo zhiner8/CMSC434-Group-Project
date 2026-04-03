@@ -34,6 +34,9 @@ body {
   overflow: hidden;
 }
 
+/* holds everything inside 
+- posiiton relative bug had the modals tweaking out, fixed with position relative
+*/
 #screen {
   position: relative;
   display: flex;
@@ -43,7 +46,7 @@ body {
   width: 100%;
   background: #f4f7f5;
 }
-
+/* our main header at the top of the page*/
 h1 {
   font-size: 46px;
   color: var(--off-white);
@@ -52,17 +55,18 @@ h1 {
   margin: 0;
   top: 20px;
 }
-
+/*is this ever used????*/
 h2 {
   font-size: 40px;
   color: var(--dark-text);
 }
 
+/* can prolly remove, border-collapse w3schools */
 table {
   border-collapse: collapse;
   border-radius: 20px;
 }
-
+/* CAN WE REMOVE*/
 #header {
   position: relative;
   display: flex;
@@ -86,7 +90,7 @@ table {
   align-items: center;
   margin-top: auto;
 }
-
+/* the tabs in the bar*/
 .nav-buttons {
   font-family: "Roboto";
   font-weight: 300;
@@ -95,19 +99,18 @@ table {
   border-radius: 8px;
   height: 90%;
   width: 32%;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   text-decoration: none;
   color: var(--off-white);
   background-color: var(--accent-blue-1);
 }
-
+/* is the tab selected */
 #selected {
   background-color: var(--accent-blue-2);
 }
+
 #button-area {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -122,67 +125,7 @@ table {
 #second-row {
   display: contents;
 }
-
-.landing-page-button {
-  width: 100%;
-  height: 100%;
-  background-color: var(--accent-blue-2);
-  color: var(--off-white);
-  border: none;
-  border-radius: 16px;
-  font-family: "Roboto", sans-serif;
-  font-size: 28px;
-  cursor: pointer;
-  transition: background-color 0.15s ease;
-}
-
-.landing-page-button:hover {
-  background-color: var(--accent-blue-1);
-}
-/* tool bar to edit and add to storage*/
-
-#toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  gap: 12px;
-  background-color: var(--off-white);
-  border-bottom: 1px solid var(--accent-blue-1);
-}
-
-#search-input {
-  flex: 1;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--accent-blue-2);
-  font-family: "Roboto", sans-serif;
-  font-size: 20px;
-  background-color: var(--off-white);
-  color: var(--dark-text);
-}
-
-#toolbar-right {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.toolbar-button {
-  padding: 12px 40px;
-  border-radius: 8px;
-  border: 1px solid var(--accent-blue-2);
-  background-color: var(--accent-blue-2);
-  color: var(--off-white);
-  font-family: "Roboto", sans-serif;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.toolbar-button:hover {
-  background-color: var(--accent-blue-1);
-  color: var(--off-white);
-}
+/* the back arrow */
 #back-button {
   position: absolute;
   left: 16px;
