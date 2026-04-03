@@ -1,19 +1,51 @@
+class Ingredient {
+  constructor(name, description, useBy, location, quantity) {
+    this.name = name;
+    this.description = description;
+    this.useBy = useBy;
+    this.location = location;
+    this.quantity = quantity;
+  }
+}
+
+class Recipe {
+  constructor(name, description, tags, ingredients) {
+    this.name = name;
+    this.description = description;
+    this.tags = tags;
+    this.ingredients = ingredients;
+  }
+}
+
+class ShoppingList {
+  constructor(name, description, tags, date, list) {
+    this.name = name;
+    this.description = description;
+    this.tags = tags;
+    this.date = date; // date list was created
+    this.list = list;
+  }
+}
+
+
+// this is what Yosh had initially but I couldn't define the other storage arrays in here
+// due to their initializations being based on previous list initializations
 const DEFAULTS = {
-  recipes: [
-    {
-      id: "r1",
-      name: "Spaghetti",
-      description: "",
-      tags: ["Italian", "Nut-Free"],
-      ingredients: ["spaghetti noodles", "tomato sauce"],
-    }
-  ],
-  inventory: [
-    { id: "i1", name: "spaghetti noodles", location: "pantry", useBy: "2028-01-01" },
-    { id: "i2", name: "tomato sauce",       location: "fridge", useBy: "2026-06-02" },
-    { id: "i3", name: "firm tofu",          location: "fridge", useBy: "2026-05-02" },
-  ],
-  shoppingLists: []
+  ingredientMemory: [
+    // ingredients in our demo kitchen
+    new Ingredient("spaghetti noodles", "", new Date("2028-01-01"), "Pantry", 2),
+    new Ingredient("tomato sauce", "", new Date("2026-06-02"), "Fridge", 1),
+    new Ingredient("firm tofu", "", new Date("2026-05-02"), "Fridge", 1),
+    new Ingredient("spinach (frozen)", "", new Date("2027-01-16"), "Pantry", 1),
+    new Ingredient("rice (frozen)", "", new Date("2029-01-01"), "Pantry", 1),
+    new Ingredient("peanut butter", "", new Date("2027-01-01"), "Fridge", 1),
+    new Ingredient("apricot jam", "", new Date("2026-11-01"), "Fridge", 1),
+    new Ingredient("almond milk", "", new Date("2026-05-01"), "Fridge", 1),
+    new Ingredient("chocolate protein powder", "", new Date("2028-05-01"), "Pantry", 1),
+    // ingredients in our demo shopping list
+    new Ingredient("banana", "", null, "Pantry", 4),
+    new Ingredient("sandwich bread", "", null, "Pantry", 1),
+  ]
 };
 
 function _get(key) {
@@ -26,9 +58,29 @@ function _set(key, value) {
 }
 
 function initStorage() {
+
+  console.log("okay");
+  // Do we actually need this DEFAULTS dictionary?
   for (const [key, value] of Object.entries(DEFAULTS)) {
     if (_get(key) === null) _set(key, value);
   }
+
+  DEFAULTS["inventory"] = DEFAULTS["ingredientMemory"].slice(0,8);
+  DEFAULTS["exampleWeeklyList"] = DEFAULTS["ingredientMemory".slice(9,-1)];
+  DEFAULTS["recipes"] =  [
+    new Recipe(
+      "Tofu Bolognese", "", "Italian, Nut-Free", new Array(DEFAULTS["inventory"][0])),
+    new Recipe("Protein Shake","","Italian, Nut-Free", new Array(DEFAULTS["inventory"][0])
+      ),
+  ];
+  DEFAULTS["shoppingLists"] = [
+     new ShoppingList("04-01 Shopping List", "", "weekly", new Date("2026-04-01"), [DEFAULTS["exampleWeeklyList"]])
+  ];
+ // It stops working if this isn't repeated twice :((( not sure why rn
+  for (const [key, value] of Object.entries(DEFAULTS)) {
+    if (_get(key) === null) _set(key, value);
+  }
+
 }
 
 function getRecipes() {
@@ -40,8 +92,10 @@ function saveRecipes(recipes) {
 }
 
 function addRecipe(recipe) {
-  recipe.id = "r" + Date.now();
-  recipe.createdAt = new Date().toISOString();
+  recipe.name = "r" + Date.now(); // to change to be the name the user typed in
+  recipe.description = "dummy description";
+  recipe.tags = "tag";
+  recipe.ingredients = "ingredient, ingredient, ingredient";
   const recipes = getRecipes();
   recipes.push(recipe);
   saveRecipes(recipes);
@@ -70,7 +124,6 @@ function saveInventory(inventory) {
 }
 
 function addInventoryItem(item) {
-  item.id = "i" + Date.now();
   const inventory = getInventory();
   inventory.push(item);
   saveInventory(inventory);

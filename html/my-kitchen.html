@@ -14,7 +14,7 @@
       src="https://kit.fontawesome.com/75ab6db391.js"
       crossorigin="anonymous"
     ></script>
-    <script src="../App.js"></script>
+    <script src="../storage.js"></script>
   </head>
 
   <body>
@@ -71,14 +71,34 @@
           <div id="inventory-modal">
             <h3>New Item</h3>
 
-            <label for="inventory-name-input">Name</label>
+            <label for="inventory-name-input">Name*</label>
             <input
               type="text"
               id="inventory-name-input"
               placeholder="e.g. Lettuce"
             />
+            <label for="inventory-description-input">Description</label>
+            <input
+              type="text"
+              id="inventory-description-input"
+              placeholder="..."
+            />
 
-            <label for="inventory-location-input">Location</label>
+            <label for="inventory-useBy-input">Use-By</label>
+            <input
+              type="date"
+              id="inventory-useBy-input"
+              placeholder="..."
+            />
+
+            <label for="inventory-quantity-input">Quantity</label>
+            <input
+              type="number"
+              id="inventory-quantity-input"
+      
+            />
+
+            <label for="inventory-location-input">Location*</label>
             <select id="inventory-location-input">
               <option value="">Select a location</option>
               <option value="Fridge">Fridge</option>
@@ -105,6 +125,7 @@
     </div>
 
     <script>
+     
       const inventoryBody = document.getElementById("inventory-body");
       const searchInput = document.getElementById("search-input");
       const locationFilter = document.getElementById("location-filter");
@@ -117,6 +138,15 @@
       );
       const inventoryLocationInput = document.getElementById(
         "inventory-location-input"
+      );
+      const inventoryDescriptionInput = document.getElementById(
+        "inventory-location-input"
+      );
+      const inventoryUseByInput = document.getElementById(
+        "inventory-useBy-input"
+      );
+      const inventoryQuantityInput = document.getElementById(
+        "inventory-quantity-input"
       );
       const cancelBtn = document.getElementById("cancel-btn");
       const saveItemBtn = document.getElementById("save-item-btn");
@@ -136,6 +166,8 @@
 
         const searchValue = searchInput.value.toLowerCase().trim();
         const selectedLocation = locationFilter.value;
+
+        let inventory = getInventory();
 
         const filteredItems = inventory.filter((item) => {
           const matchesSearch = item.name.toLowerCase().includes(searchValue);
@@ -196,10 +228,15 @@
       }
 
       function saveInventoryItem() {
-        const itemName = inventoryNameInput.value.trim();
+        const name = inventoryNameInput.value.trim();
         const location = inventoryLocationInput.value;
+        const description = inventoryDescriptionInput.value;
+        const useBy = inventoryUseByInput.value;
+        const quantity = inventoryQuantityInput.quantity;
 
-        if (!itemName) {
+        // WHICH FIELDS SHOULD BE ABSOLUTELY REQUIRED?
+
+        if (!name) {
           alert("Please enter an item name.");
           return;
         }
@@ -209,13 +246,13 @@
           return;
         }
 
-        inventory.push({
-          name: itemName,
-          location: location,
-          dateAdded: getTodayDate(),
-        });
+        // need to add 
+        item = new Ingredient(name, description, useBy, location, quantity);
+        addInventoryItem(item);
 
         closeModal();
+
+        // rn if you reload or close the modal and re-open it keeps your input so we need to figure out how to fix that 
         renderInventory();
       }
 
