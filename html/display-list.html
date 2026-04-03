@@ -64,7 +64,6 @@
         const listId = params.get("id");
 
         let savedLists = getShoppingLists();
-        let starterLists = getStarterLists();
         let listIndex = savedLists.findIndex((l) => l.id === listId);
         let list = savedLists[listIndex];
 
