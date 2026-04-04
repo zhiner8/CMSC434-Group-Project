@@ -63,7 +63,6 @@ function _set(key, value) {
 
 function initStorage() {
 
-  console.log("okay");
   // Do we actually need this DEFAULTS dictionary?
   for (const [key, value] of Object.entries(DEFAULTS)) {
     if (_get(key) === null) _set(key, value);
