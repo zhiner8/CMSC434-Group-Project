@@ -46,8 +46,8 @@
             </select>
             <!-- edit and add buttons next to dropdown -->
             <div id="toolbar-buttons">
-              <button id="edit-button">Edit</button>
-              <button id="add-button">Add</button>
+              <button id="edit-button"><i class="fas fa-pen"></i></button>
+              <button id="add-button"><i class="fas fa-plus"></i></button>
             </div>
           </div>
           <!-- where table starts -->
@@ -184,7 +184,7 @@
 
           row.innerHTML = `
             <td>
-              <button class="remove-btn">
+              <button class="info-btn">
                <i class="fas fa-info-circle"></i>
               </button> 
                ${item.name} </td>
@@ -192,7 +192,7 @@
             <td>${formatDate(item.useBy)}</td>
             <td class="edit-column ${editMode ? "" : "hidden"}">
               <button class="remove-btn" onclick="removeItem(${item.id})">
-                Remove
+                <i class="fas fa-trash"></i>
               </button>
             </td>
           `;

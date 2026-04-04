@@ -163,19 +163,25 @@ ul#inventory-ul li {
   cursor: pointer;
 }
 
-#inventory-container .info-btn:hover{
-  padding: 10px 14px;
-  border: 0px solid var(--dark-text);
-  border-radius: 14px;
-  background: var(--off-white);
-  color: var(--off-white);
-  font-size: 15px;
-  cursor: pointer;
-}
-
 #inventory-container .remove-btn:hover {
   background: var(--accent-blue-1);
 }
+
+#inventory-container .info-btn{
+  padding: 10px 14px;
+  border: 0px solid var(--dark-text);
+  border-radius: 14px;
+  background: white;
+  color: var(--dark-text);
+  font-size: 25px;
+  cursor: pointer;
+}
+
+#inventory-container .info-btn:hover{
+  background: var(--off-white);
+}
+
+
 
 .hidden {
   display: none;
