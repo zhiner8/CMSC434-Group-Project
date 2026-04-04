@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Starter Lists</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/75ab6db391.js" crossorigin="anonymous"></script>
+    <script src="../storage.js"></script>
+    <style>
+        #starter-lists-container {
+        padding: 20px;
+        overflow-y: auto;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        }
+
+        #starter-lists-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        }
+
+        .starter-entry-button {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        padding: 18px 20px;
+        background: white;
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        cursor: pointer;
+        text-align: left;
+        gap: 8px;
+        transition: background-color 0.15s ease;
+        box-sizing: border-box;
+        }
+
+        .starter-entry-button:hover {
+        background-color: #e8eef2;
+        }
+
+        .starter-entry-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        gap: 10px;
+        }
+
+        .starter-entry-name {
+        font-size: 24px;
+        font-weight: 500;
+        color: var(--accent-blue-1);
+        margin: 0;
+        }
+
+        .starter-entry-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        }
+
+        .tag-pill {
+        padding: 3px 12px;
+        background: var(--accent-blue-2);
+        color: var(--off-white);
+        border-radius: 999px;
+        font-size: 14px;
+        }
+
+        .starter-entry-description {
+        font-size: 17px;
+        color: #555;
+        margin: 0;
+        }
+
+        .starter-entry-preview {
+        font-size: 15px;
+        color: #999;
+        margin: 0;
+        }
+
+        .empty-message {
+        font-size: 18px;
+        color: #aaa;
+        text-align: center;
+        margin-top: 40px;
+        }
+    </style>
+</head>
+  <body>
+    <div id="device">
+      <div id="screen">
+
+        <div id="header">
+          <a href="shopping.html" id="back-button">
+            <i class="fa-solid fa-arrow-left"></i>
+          </a>
+          <h1>Starter Lists</h1>
+        </div>
+
+        <div id="starter-lists-container">
+          <div id="starter-lists-wrapper"></div>
+        </div>
+
+        <div id="nav-bar">
+          <a href="my-kitchen.html" class="nav-buttons">My Kitchen</a>
+          <a href="recipe-book.html" class="nav-buttons">Recipe Book</a>
+          <a href="shopping.html" class="nav-buttons" id="selected">Shopping Lists</a>
+        </div>
+
+      </div>
+    </div>
+
+    <script>
+      initStorage();
+
+      const wrapper = document.getElementById("starter-lists-wrapper");
+
+      function renderStarterLists() {
+        const allLists = getShoppingLists();
+        const starterLists = allLists.filter((l) => l.isStarter);
+
+        wrapper.innerHTML = "";
+
+        if (starterLists.length === 0) {
+          wrapper.innerHTML = "<p class='empty-message'>No starter lists yet. Star a list to add it here.</p>";
+          return;
+        }
+
+        starterLists.forEach((list) => {
+          const btn = document.createElement("button");
+          btn.className = "starter-entry-button";
+
+          const tagHTML = list.tags
+            ? list.tags.split(",").map(t =>
+                `<span class="tag-pill">${t.trim()}</span>`
+              ).join("")
+            : "";
+
+          const itemPreview = list.ingredientList && list.ingredientList.length > 0
+            ? list.ingredientList
+                .slice(0, 4)
+                .map(i => (typeof i === "object" ? i.name : i))
+                .join(", ") + (list.ingredientList.length > 4 ? "…" : "")
+            : "No items";
+
+          btn.innerHTML = `
+            <div class="starter-entry-top">
+              <p class="starter-entry-name">${list.name}</p>
+              <div class="starter-entry-tags">${tagHTML}</div>
+            </div>
+            ${list.description ? `<p class="starter-entry-description">${list.description}</p>` : ""}
+            <p class="starter-entry-preview">${itemPreview}</p>
+          `;
+
+          btn.addEventListener("click", () => {
+            const params = new URLSearchParams({
+              prefillName: list.name,
+              prefillDescription: list.description || "",
+              prefillTags: list.tags || "",
+              prefillItems: JSON.stringify(
+                (list.ingredientList || []).map(i =>
+                  typeof i === "object" ? i.name : i
+                )
+              ),
+            });
+            window.location.href = `create-list.html?${params.toString()}`;
+          });
+
+          wrapper.appendChild(btn);
+        });
+      }
+
+      renderStarterLists();
+    </script>
+  </body>
+</html>

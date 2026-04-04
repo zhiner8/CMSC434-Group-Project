@@ -41,7 +41,7 @@
             </select>
              <div id="toolbar-buttons">
               <button id="edit-button">Edit</button>
-              <button id="add-button">Add</button>
+              <button id="new-recipe">Add</button>
             </div>
           </div>
 
@@ -198,10 +198,11 @@
           tr.style.cursor = "pointer";
           tr.innerHTML = `
             <td>${recipe.name}</td>
-            <td>${recipe.ingredients}</td> 
+            <td>${recipe.ingredients.reduce((acc, curr) => 
+              {if (curr !== null) return acc + curr.name + ", "; else return acc;}, "")}</td> 
             <td>${recipe.tags}</td>
           `; // rn not populating ingredients right lol
-          console.log(recipe.ingredients);
+          //console.log(recipe.ingredients);
           tr.addEventListener("click", () => {
             window.location.href = `recipe-detail.html?id=${recipe.id}`;
           });
