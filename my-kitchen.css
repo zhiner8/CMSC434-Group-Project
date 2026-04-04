@@ -109,11 +109,15 @@ ul#inventory-ul li {
   font-size: 22px;
   cursor: pointer;
 }
-
+/*
 #toolbar-buttons button:hover,
 .remove-btn:hover {
   background: var(--accent-blue-1);
 }
+.info-btn:hover {
+  background: var(--off-white);
+  border-radius: 0px;
+} */
 
 #inventory-table-wrapper {
   flex: 1;
@@ -158,6 +162,17 @@ ul#inventory-ul li {
   font-size: 22px;
   cursor: pointer;
 }
+
+#inventory-container .info-btn:hover{
+  padding: 10px 14px;
+  border: 0px solid var(--dark-text);
+  border-radius: 14px;
+  background: var(--off-white);
+  color: var(--off-white);
+  font-size: 15px;
+  cursor: pointer;
+}
+
 #inventory-container .remove-btn:hover {
   background: var(--accent-blue-1);
 }

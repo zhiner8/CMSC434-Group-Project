@@ -183,7 +183,11 @@
           const row = document.createElement("tr");
 
           row.innerHTML = `
-            <td>${item.name}</td>
+            <td>
+              <button class="remove-btn">
+               <i class="fas fa-info-circle"></i>
+              </button> 
+               ${item.name} </td>
             <td>${item.location}</td>
             <td>${formatDate(item.useBy)}</td>
             <td class="edit-column ${editMode ? "" : "hidden"}">
