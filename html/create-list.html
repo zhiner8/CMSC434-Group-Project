@@ -6,8 +6,14 @@
     <title>Create List</title>
     <link rel="stylesheet" href="../styles.css" />
     <link rel="stylesheet" href="../create-list.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
-    <script src="https://kit.fontawesome.com/75ab6db391.js" crossorigin="anonymous"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/75ab6db391.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="../storage.js"></script>
   </head>
   <body>
@@ -21,22 +27,39 @@
         </div>
 
         <div id="shopping-list-container">
-
           <div class="field-group">
             <label class="field-label" for="list-name-input">Name</label>
-            <input class="text-input" type="text" id="list-name-input" placeholder="e.g. Weekly Groceries" />
+            <input
+              class="text-input"
+              type="text"
+              id="list-name-input"
+              placeholder="e.g. Weekly Groceries"
+            />
           </div>
 
           <div class="field-group">
-            <label class="field-label" for="description-input">Description</label>
-            <textarea id="description-input" placeholder="e.g. Everything for the week's meals"></textarea>
+            <label class="field-label" for="description-input"
+              >Description</label
+            >
+            <textarea
+              id="description-input"
+              placeholder="e.g. Everything for the week's meals"
+            ></textarea>
           </div>
 
           <div class="field-group">
             <label class="field-label" for="tags-input">
-              Tags <span style="font-weight:400; font-size:16px;">(comma separated)</span>
+              Tags
+              <span style="font-weight: 400; font-size: 16px"
+                >(comma separated)</span
+              >
             </label>
-            <input class="text-input" type="text" id="tags-input" placeholder="e.g. Weekly, Produce, Meals" />
+            <input
+              class="text-input"
+              type="text"
+              id="tags-input"
+              placeholder="e.g. Weekly, Produce, Meals"
+            />
           </div>
 
           <hr class="divider" />
@@ -44,7 +67,11 @@
           <div class="field-group">
             <label class="field-label">Items</label>
             <div id="shopping-input-row">
-              <input type="text" id="item-input" placeholder="Add new item..." />
+              <input
+                type="text"
+                id="item-input"
+                placeholder="Add new item..."
+              />
               <button id="add-item">Add</button>
             </div>
           </div>
@@ -52,13 +79,18 @@
           <ul id="items-ul"></ul>
 
           <button id="create-list-button">Create List</button>
-
         </div>
 
         <div id="nav-bar">
-          <a href="my-kitchen.html" class="nav-buttons">My Kitchen</a>
-          <a href="recipe-book.html" class="nav-buttons">Recipe Book</a>
-          <a href="shopping.html" class="nav-buttons" id="selected">Shopping Lists</a>
+          <a href="my-kitchen.html" class="nav-buttons"
+            ><i class="fas fa-home"></i
+          ></a>
+          <a href="recipe-book.html" class="nav-buttons"
+            ><i class="fas fa-book"></i
+          ></a>
+          <a href="shopping.html" class="nav-buttons" id="selected"
+            ><i class="fas fa-list-ul"></i
+          ></a>
         </div>
       </div>
     </div>
@@ -89,11 +121,20 @@
       if (params.get("prefillTags")) {
         tagsInput.value = params.get("prefillTags");
       }
-      
+
       if (params.get("prefillItems")) {
         const prefillItems = JSON.parse(params.get("prefillItems"));
         prefillItems.forEach((name) => {
-          draftList.push(new Ingredient("i-" + Date.now() + Math.random(), name, "", null, "Pantry", 1));
+          draftList.push(
+            new Ingredient(
+              "i-" + Date.now() + Math.random(),
+              name,
+              "",
+              null,
+              "Pantry",
+              1
+            )
+          );
         });
       }
 
@@ -167,7 +208,7 @@
         draftList[index]._editing = false;
         renderList();
       }
-      
+
       function createList() {
         if (draftList.length === 0) {
           alert("Add at least one item before creating a list.");

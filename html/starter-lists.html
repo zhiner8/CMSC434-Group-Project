@@ -5,25 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Starter Lists</title>
     <link rel="stylesheet" href="../styles.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
-    <script src="https://kit.fontawesome.com/75ab6db391.js" crossorigin="anonymous"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/75ab6db391.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="../storage.js"></script>
     <style>
-        #starter-lists-container {
+      #starter-lists-container {
         padding: 20px;
         overflow-y: auto;
         flex: 1;
         display: flex;
         flex-direction: column;
-        }
+      }
 
-        #starter-lists-wrapper {
+      #starter-lists-wrapper {
         display: flex;
         flex-direction: column;
         gap: 12px;
-        }
+      }
 
-        .starter-entry-button {
+      .starter-entry-button {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -38,65 +44,64 @@
         gap: 8px;
         transition: background-color 0.15s ease;
         box-sizing: border-box;
-        }
+      }
 
-        .starter-entry-button:hover {
+      .starter-entry-button:hover {
         background-color: #e8eef2;
-        }
+      }
 
-        .starter-entry-top {
+      .starter-entry-top {
         display: flex;
         align-items: center;
         justify-content: space-between;
         width: 100%;
         gap: 10px;
-        }
+      }
 
-        .starter-entry-name {
+      .starter-entry-name {
         font-size: 24px;
         font-weight: 500;
         color: var(--accent-blue-1);
         margin: 0;
-        }
+      }
 
-        .starter-entry-tags {
+      .starter-entry-tags {
         display: flex;
         flex-wrap: wrap;
         gap: 6px;
-        }
+      }
 
-        .tag-pill {
+      .tag-pill {
         padding: 3px 12px;
         background: var(--accent-blue-2);
         color: var(--off-white);
         border-radius: 999px;
         font-size: 14px;
-        }
+      }
 
-        .starter-entry-description {
+      .starter-entry-description {
         font-size: 17px;
         color: #555;
         margin: 0;
-        }
+      }
 
-        .starter-entry-preview {
+      .starter-entry-preview {
         font-size: 15px;
         color: #999;
         margin: 0;
-        }
+      }
 
-        .empty-message {
+      .empty-message {
         font-size: 18px;
         color: #aaa;
         text-align: center;
         margin-top: 40px;
-        }
+      }
     </style>
-</head>
+  </head>
   <body>
     <div id="device">
       <div id="screen">
-
         <div id="header">
           <a href="shopping.html" id="back-button">
             <i class="fa-solid fa-arrow-left"></i>
@@ -109,11 +114,16 @@
         </div>
 
         <div id="nav-bar">
-          <a href="my-kitchen.html" class="nav-buttons">My Kitchen</a>
-          <a href="recipe-book.html" class="nav-buttons">Recipe Book</a>
-          <a href="shopping.html" class="nav-buttons" id="selected">Shopping Lists</a>
+          <a href="my-kitchen.html" class="nav-buttons"
+            ><i class="fas fa-home"></i
+          ></a>
+          <a href="recipe-book.html" class="nav-buttons"
+            ><i class="fas fa-book"></i
+          ></a>
+          <a href="shopping.html" class="nav-buttons" id="selected"
+            ><i class="fas fa-list-ul"></i
+          ></a>
         </div>
-
       </div>
     </div>
 
@@ -129,7 +139,8 @@
         wrapper.innerHTML = "";
 
         if (starterLists.length === 0) {
-          wrapper.innerHTML = "<p class='empty-message'>No starter lists yet. Star a list to add it here.</p>";
+          wrapper.innerHTML =
+            "<p class='empty-message'>No starter lists yet. Star a list to add it here.</p>";
           return;
         }
 
@@ -138,24 +149,30 @@
           btn.className = "starter-entry-button";
 
           const tagHTML = list.tags
-            ? list.tags.split(",").map(t =>
-                `<span class="tag-pill">${t.trim()}</span>`
-              ).join("")
+            ? list.tags
+                .split(",")
+                .map((t) => `<span class="tag-pill">${t.trim()}</span>`)
+                .join("")
             : "";
 
-          const itemPreview = list.ingredientList && list.ingredientList.length > 0
-            ? list.ingredientList
-                .slice(0, 4)
-                .map(i => (typeof i === "object" ? i.name : i))
-                .join(", ") + (list.ingredientList.length > 4 ? "…" : "")
-            : "No items";
+          const itemPreview =
+            list.ingredientList && list.ingredientList.length > 0
+              ? list.ingredientList
+                  .slice(0, 4)
+                  .map((i) => (typeof i === "object" ? i.name : i))
+                  .join(", ") + (list.ingredientList.length > 4 ? "…" : "")
+              : "No items";
 
           btn.innerHTML = `
             <div class="starter-entry-top">
               <p class="starter-entry-name">${list.name}</p>
               <div class="starter-entry-tags">${tagHTML}</div>
             </div>
-            ${list.description ? `<p class="starter-entry-description">${list.description}</p>` : ""}
+            ${
+              list.description
+                ? `<p class="starter-entry-description">${list.description}</p>`
+                : ""
+            }
             <p class="starter-entry-preview">${itemPreview}</p>
           `;
 
@@ -165,7 +182,7 @@
               prefillDescription: list.description || "",
               prefillTags: list.tags || "",
               prefillItems: JSON.stringify(
-                (list.ingredientList || []).map(i =>
+                (list.ingredientList || []).map((i) =>
                   typeof i === "object" ? i.name : i
                 )
               ),

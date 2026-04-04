@@ -140,7 +140,7 @@ table {
 .nav-buttons {
   font-family: "Roboto";
   font-weight: 300;
-  font-size: large;
+  font-size: 40px;
   color: var(--off-white);
   border-radius: 8px;
   height: 90%;

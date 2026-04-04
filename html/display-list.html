@@ -5,144 +5,157 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shopping List</title>
     <link rel="stylesheet" href="../styles.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
-    <script src="https://kit.fontawesome.com/75ab6db391.js" crossorigin="anonymous"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/75ab6db391.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="../storage.js"></script>
-
-    
   </head>
   <body>
-        <div id="device">
-        <div id="screen">
-
-            <div id="header">
-            <a href="shopping.html" id="back-button">
-                <i class="fa-solid fa-arrow-left"></i>
-            </a>
-            <h1 id="header-title">List</h1>
-            <div id="header-actions">
-                <button id="star-btn" title="Save as starter list">
-                <i class="fa-regular fa-star"></i>
-                </button>
-                <button id="delete-btn" title="Delete list">
-                <i class="fa-regular fa-trash-can"></i>
-                </button>
-            </div>
-            </div>
-
-            <div id="list-content">
-            <div class="list-meta">
-                <h2 id="list-name"></h2>
-                <p id="list-description"></p>
-            </div>
-
-            <div class="list-tags" id="list-tags"></div>
-
-            <hr class="divider" />
-
-            <div id="add-item-row">
-                <input type="text" id="new-item-input" placeholder="Add new item..." />
-                <button id="add-item-btn">Add</button>
-            </div>
-
-            <ul id="checklist"></ul>
-            </div>
-
-            <div id="nav-bar">
-            <a href="my-kitchen.html" class="nav-buttons">My Kitchen</a>
-            <a href="recipe-book.html" class="nav-buttons">Recipe Book</a>
-            <a href="shopping.html" class="nav-buttons" id="selected">Shopping Lists</a>
-            </div>
-
-        </div>
+    <div id="device">
+      <div id="screen">
+        <div id="header">
+          <a href="shopping.html" id="back-button">
+            <i class="fa-solid fa-arrow-left"></i>
+          </a>
+          <h1 id="header-title">List</h1>
+          <div id="header-actions">
+            <button id="star-btn" title="Save as starter list">
+              <i class="fa-regular fa-star"></i>
+            </button>
+            <button id="delete-btn" title="Delete list">
+              <i class="fa-regular fa-trash-can"></i>
+            </button>
+          </div>
         </div>
 
-        <script>
-        initStorage();
+        <div id="list-content">
+          <div class="list-meta">
+            <h2 id="list-name"></h2>
+            <p id="list-description"></p>
+          </div>
 
-        const params = new URLSearchParams(window.location.search);
-        const listId = params.get("id");
+          <div class="list-tags" id="list-tags"></div>
 
-        let savedLists = getShoppingLists();
-        let listIndex = savedLists.findIndex((l) => l.id === listId);
-        let list = savedLists[listIndex];
+          <hr class="divider" />
 
-        if (!list) {
-            document.getElementById("list-content").innerHTML =
-            "<p class='empty-message'>List not found.</p>";
+          <div id="add-item-row">
+            <input
+              type="text"
+              id="new-item-input"
+              placeholder="Add new item..."
+            />
+            <button id="add-item-btn">Add</button>
+          </div>
+
+          <ul id="checklist"></ul>
+        </div>
+
+        <div id="nav-bar">
+          <a href="my-kitchen.html" class="nav-buttons"
+            ><i class="fas fa-home"></i
+          ></a>
+          <a href="recipe-book.html" class="nav-buttons"
+            ><i class="fas fa-book"></i
+          ></a>
+          <a href="shopping.html" class="nav-buttons" id="selected"
+            ><i class="fas fa-list-ul"></i
+          ></a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      initStorage();
+
+      const params = new URLSearchParams(window.location.search);
+      const listId = params.get("id");
+
+      let savedLists = getShoppingLists();
+      let listIndex = savedLists.findIndex((l) => l.id === listId);
+      let list = savedLists[listIndex];
+
+      if (!list) {
+        document.getElementById("list-content").innerHTML =
+          "<p class='empty-message'>List not found.</p>";
+      } else {
+        document.getElementById("header-title").textContent =
+          list.name || "List";
+        document.getElementById("list-name").textContent = list.name || "List";
+
+        const descEl = document.getElementById("list-description");
+        descEl.textContent = list.description || "";
+        if (!list.description) descEl.style.display = "none";
+
+        const tagsEl = document.getElementById("list-tags");
+        if (list.tags && list.tags.trim() !== "") {
+          list.tags.split(",").forEach((tag) => {
+            const pill = document.createElement("span");
+            pill.className = "tag-pill";
+            pill.textContent = tag.trim();
+            tagsEl.appendChild(pill);
+          });
         } else {
+          tagsEl.style.display = "none";
+        }
 
-            document.getElementById("header-title").textContent = list.name || "List";
-            document.getElementById("list-name").textContent = list.name || "List";
+        const starBtn = document.getElementById("star-btn");
 
-            const descEl = document.getElementById("list-description");
-            descEl.textContent = list.description || "";
-            if (!list.description) descEl.style.display = "none";
+        function updateStar() {
+          if (list.isStarter) {
+            starBtn.classList.add("starred");
+            starBtn.querySelector("i").className = "fa-solid fa-star";
+          } else {
+            starBtn.classList.remove("starred");
+            starBtn.querySelector("i").className = "fa-regular fa-star";
+          }
+        }
 
-            const tagsEl = document.getElementById("list-tags");
-            if (list.tags && list.tags.trim() !== "") {
-                list.tags.split(",").forEach((tag) => {
-                    const pill = document.createElement("span");
-                    pill.className = "tag-pill";
-                    pill.textContent = tag.trim();
-                    tagsEl.appendChild(pill);
-            });
-            } else {
-                tagsEl.style.display = "none";
-            }
+        updateStar();
 
-            const starBtn = document.getElementById("star-btn");
+        starBtn.addEventListener("click", () => {
+          list.isStarter = !list.isStarter;
+          savedLists[listIndex] = list;
+          saveShoppingLists(savedLists);
+          updateStar();
+        });
 
-            function updateStar() {
-                if (list.isStarter) {
-                    starBtn.classList.add("starred");
-                    starBtn.querySelector("i").className = "fa-solid fa-star";
-                } else {
-                    starBtn.classList.remove("starred");
-                    starBtn.querySelector("i").className = "fa-regular fa-star";
-                }
-            }
+        const deleteBtn = document.getElementById("delete-btn");
+        deleteBtn.addEventListener("click", () => {
+          if (confirm(`Delete "${list.name || "this list"}"?`)) {
+            savedLists.splice(listIndex, 1);
+            saveShoppingLists(savedLists);
+            window.location.href = "shopping.html";
+          }
+        });
 
-            updateStar();
+        function saveItems() {
+          savedLists[listIndex] = list;
+          saveShoppingLists(savedLists);
+        }
 
-            starBtn.addEventListener("click", () => {
-                list.isStarter = !list.isStarter;
-                savedLists[listIndex] = list;
-                saveShoppingLists(savedLists);
-                updateStar();
-            });
+        const checklist = document.getElementById("checklist");
 
-            const deleteBtn = document.getElementById("delete-btn");
-            deleteBtn.addEventListener("click", () => {
-                if (confirm(`Delete "${list.name || "this list"}"?`)) {
-                    savedLists.splice(listIndex, 1);
-                    saveShoppingLists(savedLists);
-                    window.location.href = "shopping.html";
-                }
-            });
+        function renderChecklist() {
+          checklist.innerHTML = "";
 
-            function saveItems() {
-                savedLists[listIndex] = list;
-                saveShoppingLists(savedLists);
-            }
+          if (!list.ingredientList || list.ingredientList.length === 0) {
+            checklist.innerHTML =
+              "<p class='empty-message'>No items in this list.</p>";
+            return;
+          }
 
-            const checklist = document.getElementById("checklist");
+          list.ingredientList.forEach((item, index) => {
+            const name = typeof item === "object" ? item.name : item;
+            const checked = typeof item === "object" ? item.checked : false;
 
-            function renderChecklist() {
-                checklist.innerHTML = "";
-
-                if (!list.ingredientList || list.ingredientList.length === 0) {
-                    checklist.innerHTML = "<p class='empty-message'>No items in this list.</p>";
-                    return;
-                }
-
-                list.ingredientList.forEach((item, index) => {
-                    const name = typeof item === "object" ? item.name : item;
-                    const checked = typeof item === "object" ? item.checked : false;
-
-                    const li = document.createElement("li");
-                    li.className = checked ? "checked" : "";
-                    li.innerHTML = `
+            const li = document.createElement("li");
+            li.className = checked ? "checked" : "";
+            li.innerHTML = `
                     <div class="check-circle">
                         <i class="fa-solid fa-check"></i>
                     </div>
@@ -152,57 +165,60 @@
                     </button>
                     `;
 
-                    li.querySelector(".check-circle").addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    const isChecked = li.classList.toggle("checked");
-                    list.ingredientList[index] = {
-                        ...list.ingredientList[index],
-                        name,
-                        checked: isChecked
-                    };
-                    saveItems();
-                    });
-
-                    li.querySelector(".delete-item-btn").addEventListener("click", (e) => {
-                        e.stopPropagation();
-                        list.ingredientList.splice(index, 1);
-                        saveItems();
-                        renderChecklist();
-                    });
-
-                    checklist.appendChild(li);
-                });
-            }
-
-            const newItemInput = document.getElementById("new-item-input");
-            const addItemBtn = document.getElementById("add-item-btn");
-
-            function addItem() {
-            const name = newItemInput.value.trim();
-            if (!name) return;
-            // need to figure out how to get the missing info if we are connecting shopping lists to inventory.
-            const newIngredient = new Ingredient(
-                "i-" + Date.now(),
+            li.querySelector(".check-circle").addEventListener("click", (e) => {
+              e.stopPropagation();
+              const isChecked = li.classList.toggle("checked");
+              list.ingredientList[index] = {
+                ...list.ingredientList[index],
                 name,
-                "",
-                null,
-                "Pantry",
-                1
-            );
-            list.ingredientList = list.ingredientList || [];
-            list.ingredientList.push(newIngredient);
-            saveItems();
-            newItemInput.value = "";
-            renderChecklist();
-            }
-
-            addItemBtn.addEventListener("click", addItem);
-            newItemInput.addEventListener("keypress", (e) => {
-            if (e.key === "Enter") addItem();
+                checked: isChecked,
+              };
+              saveItems();
             });
 
-            renderChecklist();
+            li.querySelector(".delete-item-btn").addEventListener(
+              "click",
+              (e) => {
+                e.stopPropagation();
+                list.ingredientList.splice(index, 1);
+                saveItems();
+                renderChecklist();
+              }
+            );
+
+            checklist.appendChild(li);
+          });
         }
-        </script>
+
+        const newItemInput = document.getElementById("new-item-input");
+        const addItemBtn = document.getElementById("add-item-btn");
+
+        function addItem() {
+          const name = newItemInput.value.trim();
+          if (!name) return;
+          // need to figure out how to get the missing info if we are connecting shopping lists to inventory.
+          const newIngredient = new Ingredient(
+            "i-" + Date.now(),
+            name,
+            "",
+            null,
+            "Pantry",
+            1
+          );
+          list.ingredientList = list.ingredientList || [];
+          list.ingredientList.push(newIngredient);
+          saveItems();
+          newItemInput.value = "";
+          renderChecklist();
+        }
+
+        addItemBtn.addEventListener("click", addItem);
+        newItemInput.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") addItem();
+        });
+
+        renderChecklist();
+      }
+    </script>
   </body>
 </html>
