@@ -85,18 +85,10 @@
             />
 
             <label for="inventory-useBy-input">Use-By</label>
-            <input
-              type="date"
-              id="inventory-useBy-input"
-              placeholder="..."
-            />
+            <input type="date" id="inventory-useBy-input" placeholder="..." />
 
             <label for="inventory-quantity-input">Quantity</label>
-            <input
-              type="number"
-              id="inventory-quantity-input"
-      
-            />
+            <input type="number" id="inventory-quantity-input" />
 
             <label for="inventory-location-input">Location*</label>
             <select id="inventory-location-input">
@@ -112,27 +104,29 @@
               <button id="save-item-btn">Save</button>
             </div>
           </div>
-
         </div>
       </div>
 
       <div id="modal-overlay-info">
-      <div id="info-modal">
-        <h3>Item</h3>
-        <div class="modal-buttons">
-          <button id = "close-btn">Close</button>
+        <div id="info-modal">
+          <h3>Item</h3>
+          <div class="modal-buttons">
+            <button id="close-btn">Close</button>
+          </div>
         </div>
       </div>
-      </div>
-
 
       <!-- nav bar  -->
       <div id="nav-bar">
         <a href="my-kitchen.html" class="nav-buttons" id="selected"
-          ><i class="fas fa-home"></i></a
-        >
-        <a href="recipe-book.html" class="nav-buttons"><i class="fas fa-book"></i></a>
-        <a href="shopping.html" class="nav-buttons"><i class="fas fa-list-ul"></i></a>
+          ><i class="fas fa-home"></i
+        ></a>
+        <a href="recipe-book.html" class="nav-buttons"
+          ><i class="fas fa-book"></i
+        ></a>
+        <a href="shopping.html" class="nav-buttons"
+          ><i class="fas fa-list-ul"></i
+        ></a>
       </div>
     </div>
 
@@ -145,9 +139,9 @@
       const addButton = document.getElementById("add-button");
 
       // Info Modal Overlay
-     
+
       const modalOverlayInfo = document.getElementById("modal-overlay-info");
-      const closeButton = document.getElementById("close-btn")
+      const closeButton = document.getElementById("close-btn");
 
       // Add Item Modal Overlay
       const modalOverlay = document.getElementById("modal-overlay");
@@ -168,9 +162,6 @@
       );
       const cancelBtn = document.getElementById("cancel-btn");
       const saveItemBtn = document.getElementById("save-item-btn");
-
-      
-      
 
       let editMode = false;
 
@@ -262,7 +253,6 @@
       }
 
       function saveInventoryItem() {
-
         const id = "i" + Date.now();
         const name = inventoryNameInput.value.trim();
         const location = inventoryLocationInput.value;
@@ -282,13 +272,13 @@
           return;
         }
 
-        // need to add 
+        // need to add
         item = new Ingredient(id, name, description, useBy, location, quantity);
         addInventoryItem(item);
 
         closeModal();
 
-        // rn if you reload or close the modal and re-open it keeps your input so we need to figure out how to fix that 
+        // rn if you reload or close the modal and re-open it keeps your input so we need to figure out how to fix that
         renderInventory();
       }
 
@@ -299,7 +289,7 @@
 
       editButton.addEventListener("click", () => {
         editMode = !editMode;
-        editButton.textContent = editMode ? "Done" : "Edit"; // How to change this to the icons?
+        editButton.innerHTML = editMode ? "Done" : `<i class="fas fa-pen"></i>`;
         renderInventory();
       });
 
@@ -307,7 +297,6 @@
       cancelBtn.addEventListener("click", closeModal);
       saveItemBtn.addEventListener("click", saveInventoryItem);
 
-      
       closeButton.addEventListener("click", closeModalInfo);
 
       searchInput.addEventListener("input", renderInventory);
