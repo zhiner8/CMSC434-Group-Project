@@ -6,6 +6,10 @@
   --accent-blue-2: #225469;
   font-family: "Roboto", sans-serif;
 } */
+
+.icon{
+  filter: var(--off-white);
+}
 #inventory-container {
   flex: 1;
   min-height: 0;
