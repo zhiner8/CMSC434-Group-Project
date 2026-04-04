@@ -112,8 +112,20 @@
               <button id="save-item-btn">Save</button>
             </div>
           </div>
+
         </div>
       </div>
+
+      <div id="modal-overlay-info">
+      <div id="info-modal">
+        <h3>Item</h3>
+        <div class="modal-buttons">
+          <button id = "close-btn">Close</button>
+        </div>
+      </div>
+      </div>
+
+
       <!-- nav bar  -->
       <div id="nav-bar">
         <a href="my-kitchen.html" class="nav-buttons" id="selected"
@@ -132,6 +144,12 @@
       const editButton = document.getElementById("edit-button");
       const addButton = document.getElementById("add-button");
 
+      // Info Modal Overlay
+     
+      const modalOverlayInfo = document.getElementById("modal-overlay-info");
+      const closeButton = document.getElementById("close-btn")
+
+      // Add Item Modal Overlay
       const modalOverlay = document.getElementById("modal-overlay");
       const inventoryNameInput = document.getElementById(
         "inventory-name-input"
@@ -150,6 +168,8 @@
       );
       const cancelBtn = document.getElementById("cancel-btn");
       const saveItemBtn = document.getElementById("save-item-btn");
+
+      
       
 
       let editMode = false;
@@ -184,7 +204,7 @@
 
           row.innerHTML = `
             <td>
-              <button class="info-btn">
+              <button id="info-btn" onclick="openModalInfo()">
                <i class="fas fa-info-circle"></i>
               </button> 
                ${item.name} </td>
@@ -232,6 +252,15 @@
         modalOverlay.classList.remove("open");
       }
 
+      function openModalInfo() {
+        console.log("openModalInfo called");
+        modalOverlayInfo.classList.add("open");
+      }
+
+      function closeModalInfo() {
+        modalOverlayInfo.classList.remove("open");
+      }
+
       function saveInventoryItem() {
 
         const id = "i" + Date.now();
@@ -277,6 +306,9 @@
       addButton.addEventListener("click", openModal);
       cancelBtn.addEventListener("click", closeModal);
       saveItemBtn.addEventListener("click", saveInventoryItem);
+
+      
+      closeButton.addEventListener("click", closeModalInfo);
 
       searchInput.addEventListener("input", renderInventory);
       locationFilter.addEventListener("change", renderInventory);
