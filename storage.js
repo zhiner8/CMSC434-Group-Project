@@ -49,21 +49,7 @@ function initStorage() {
   //If the field already exists, no need to initialize
   if (_get("defaultIngredients") !== null) return;
 
-<<<<<<< HEAD
-  // Do we actually need this DEFAULTS dictionary?
-  for (const [key, value] of Object.entries(DEFAULTS)) {
-    if (_get(key) === null) _set(key, value);
-  }
-
-  DEFAULTS["inventory"] = DEFAULTS["ingredientMemory"].slice(0,8);
-  DEFAULTS["exampleWeeklyList"] = DEFAULTS["ingredientMemory"].slice(9,-1);
-  DEFAULTS["recipes"] =  [
-    new Recipe("r1",
-      "Tofu Bolognese", "", "Italian, Nut-Free", new Array(DEFAULTS["inventory"][0], DEFAULTS["inventory"][1])),
-    new Recipe("r2", "Protein Shake","","High-Protein, Gluten-Free", new Array(DEFAULTS["inventory"][7], DEFAULTS["inventory"][8], DEFAULTS["inventory"][5])
-      ),
-=======
-  // Default Satrter Ingredients
+    // Default Satrter Ingredients
   const defaultIngredients = [
     new Ingredient("i1", "spaghetti noodles", "", "2028-01-01", "Pantry", 2),
     new Ingredient("i2", "tomato sauce", "", "2026-06-02", "Fridge", 1),
@@ -76,7 +62,6 @@ function initStorage() {
     new Ingredient("i9", "chocolate protein powder", "", "2028-05-01", "Pantry", 1),
     new Ingredient("i10", "banana", "", null, "Pantry", 4),
     new Ingredient("i11", "sandwich bread", "", null, "Pantry", 1),
->>>>>>> 096d920054769e1eb676f05d634408a86677b6f0
   ];
 
   const inventory = defaultIngredients.slice(0, 8);
