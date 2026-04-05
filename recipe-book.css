@@ -592,3 +592,8 @@ ul#recipe-ul li {
         font-size: 16px;
         color: var(--dark-text);
       }
+
+#ingredient-amount-input {
+  width: 80px;
+  flex-shrink: 0;
+}

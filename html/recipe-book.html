@@ -4,16 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Recipe Book</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles.css" />
     <link rel="stylesheet" href="../recipe-book.css" />
-    <script
-      src="https://kit.fontawesome.com/75ab6db391.js"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://kit.fontawesome.com/75ab6db391.js" crossorigin="anonymous"></script>
     <script src="../storage.js"></script>
   </head>
 
@@ -25,13 +19,9 @@
         </div>
         <div id="recipe-container">
           <div id="recipe-toolbar">
-           <div id="search-wrapper">
+            <div id="search-wrapper">
               <i class="fa-solid fa-magnifying-glass"></i>
-              <input
-                type="text"
-                id="search-input"
-                placeholder="Search items..."
-              />
+              <input type="text" id="search-input" placeholder="Search items..." />
             </div>
             <select id="sort-select">
               <option value="none">Sort by...</option>
@@ -39,7 +29,7 @@
               <option value="name-desc">Name (Z–A)</option>
               <option value="tag">Tag</option>
             </select>
-             <div id="toolbar-buttons">
+            <div id="toolbar-buttons">
               <button id="edit-button">Edit</button>
               <button id="new-recipe">Add</button>
             </div>
@@ -47,9 +37,7 @@
 
           <div id="filter-bar">
             <input type="checkbox" id="available-toggle" />
-            <label id="filter-label" for="available-toggle"
-              >Show only recipes I can make</label
-            >
+            <label id="filter-label" for="available-toggle">Show only recipes I can make</label>
           </div>
 
           <div id="recipe-table-wrapper">
@@ -73,39 +61,19 @@
             <h3>New Recipe</h3>
 
             <label>Name</label>
-            <input
-              type="text"
-              id="recipe-name-input"
-              placeholder="e.g. Spaghetti Bolognese"
-            />
+            <input type="text" id="recipe-name-input" placeholder="e.g. Spaghetti Bolognese" />
 
             <label>Description</label>
-            <input
-              type="text"
-              id="recipe-description-input"
-              placeholder="good weeknight dinner"
-            />
+            <input type="text" id="recipe-description-input" placeholder="good weeknight dinner" />
 
-            <label
-              >Tags
-              <span style="font-weight: 400; font-size: 14px"
-                >(comma separated)</span
-              ></label
-            >
-            <input
-              type="text"
-              id="recipe-tags-input"
-              placeholder="e.g. Italian, Dinner"
-            />
+            <label>Tags <span style="font-weight:400; font-size:14px;">(comma separated)</span></label>
+            <input type="text" id="recipe-tags-input" placeholder="e.g. Italian, Dinner" />
 
             <label>Ingredients</label>
             <ul id="ingredient-list"></ul>
             <div id="ingredient-input-row">
-              <input
-                type="text"
-                id="ingredient-input"
-                placeholder="e.g. tomato sauce"
-              />
+              <input type="text" id="ingredient-input" placeholder="e.g. tomato sauce" />
+              <input type="text" id="ingredient-amount-input" placeholder="Amt." />
               <button id="add-ingredient-btn">Add</button>
             </div>
 
@@ -118,16 +86,14 @@
 
         <div id="nav-bar">
           <a href="my-kitchen.html" class="nav-buttons"><i class="fas fa-home"></i></a>
-          <a href="recipe-book.html" class="nav-buttons" id="selected"
-            ><i class="fas fa-book"></i></a
-          >
+          <a href="recipe-book.html" class="nav-buttons" id="selected"><i class="fas fa-book"></i></a>
           <a href="shopping.html" class="nav-buttons"><i class="fas fa-list-ul"></i></a>
         </div>
       </div>
     </div>
 
     <script>
-      initStorage(); // Do we need this line???
+      initStorage();
 
       const recipeTableBody = document.getElementById("recipe-table-body");
       const modalOverlay = document.getElementById("modal-overlay");
@@ -135,11 +101,10 @@
       const cancelBtn = document.getElementById("cancel-btn");
       const saveRecipeBtn = document.getElementById("save-recipe-btn");
       const recipeNameInput = document.getElementById("recipe-name-input");
-      const recipeDescriptionInput = document.getElementById(
-        "recipe-description-input",
-      );
+      const recipeDescriptionInput = document.getElementById("recipe-description-input");
       const recipeTagsInput = document.getElementById("recipe-tags-input");
       const ingredientInput = document.getElementById("ingredient-input");
+      const ingredientAmountInput = document.getElementById("ingredient-amount-input");
       const addIngredientBtn = document.getElementById("add-ingredient-btn");
       const ingredientList = document.getElementById("ingredient-list");
       const searchInput = document.getElementById("search-input");
@@ -149,15 +114,13 @@
       let currentIngredients = [];
 
       function getFilteredAndSorted() {
-        let recipes = availableToggle.checked
-          ? getAvailableRecipes()
-          : getRecipes();
-
-        console.log(recipes);
+        let recipes = availableToggle.checked ? getAvailableRecipes() : getRecipes();
 
         const query = searchInput.value.trim().toLowerCase();
         if (query) {
-          recipes = recipes.filter((r) => r.name.toLowerCase().includes(query));
+          recipes = recipes.filter((r) => {
+            return r ? r.name.toLowerCase().includes(query) : false;
+          });
         }
 
         const sort = sortSelect.value;
@@ -167,10 +130,8 @@
           recipes.sort((a, b) => b.name.localeCompare(a.name));
         } else if (sort === "tag") {
           recipes.sort((a, b) => {
-            const tagA =
-              typeof a.tags === "string" ? a.tags : a.tags.join(", ");
-            const tagB =
-              typeof b.tags === "string" ? b.tags : b.tags.join(", ");
+            const tagA = typeof a.tags === "string" ? a.tags : a.tags.join(", ");
+            const tagB = typeof b.tags === "string" ? b.tags : b.tags.join(", ");
             return tagA.localeCompare(tagB);
           });
         }
@@ -185,35 +146,39 @@
         if (recipes.length === 0) {
           recipeTableBody.innerHTML = `
             <tr>
-              <td colspan="3" style="text-align:center; color:gray;">
-                No recipes found.
-              </td>
+              <td colspan="3" style="text-align:center; color:gray;">No recipes found.</td>
             </tr>
           `;
           return;
         }
 
         recipes.forEach((recipe) => {
-          const tr = document.createElement("tr");
-          tr.style.cursor = "pointer";
-          tr.innerHTML = `
-            <td>${recipe.name}</td>
-            <td>${recipe.ingredients.reduce((acc, curr) => 
-              {if (curr !== null) return acc + curr.name + ", "; else return acc;}, "")}</td> 
-            <td>${recipe.tags}</td>
-          `; // rn not populating ingredients right lol
-          //console.log(recipe.ingredients);
-          tr.addEventListener("click", () => {
-            window.location.href = `recipe-detail.html?id=${recipe.id}`;
-          });
-          recipeTableBody.appendChild(tr);
+          if (recipe) {
+            const tr = document.createElement("tr");
+            tr.style.cursor = "pointer";
+            tr.innerHTML = `
+              <td>${recipe.name}</td>
+              <td>${recipe.ingredients.reduce((acc, curr) => {
+                if (!curr) return acc;
+                const qty = curr.quantity && curr.quantity !== 1 ? ` (${curr.quantity})` : "";
+                return acc + curr.name + qty + ", ";
+              }, "").replace(/, $/, "")}</td>
+              <td>${recipe.tags}</td>
+            `;
+            tr.addEventListener("click", () => {
+              window.location.href = `recipe-detail.html?id=${recipe.id}`;
+            });
+            recipeTableBody.appendChild(tr);
+          }
         });
       }
 
       function openModal() {
         recipeNameInput.value = "";
+        recipeDescriptionInput.value = "";
         recipeTagsInput.value = "";
         ingredientInput.value = "";
+        ingredientAmountInput.value = "";
         currentIngredients = [];
         renderIngredientList();
         modalOverlay.classList.add("open");
@@ -227,8 +192,9 @@
         ingredientList.innerHTML = "";
         currentIngredients.forEach((ing, index) => {
           const li = document.createElement("li");
+          const qty = ing.quantity && ing.quantity !== 1 ? ` (${ing.quantity})` : "";
           li.innerHTML = `
-            <span>${ing.name}</span>
+            <span>${ing.name}${qty}</span>
             <button onclick="removeIngredient(${index})">✕</button>
           `;
           ingredientList.appendChild(li);
@@ -236,19 +202,20 @@
       }
 
       function addIngredient() {
+        const name = ingredientInput.value.trim();
+        if (!name) return;
+        const amount = ingredientAmountInput.value.trim();
         const val = new Ingredient(
-          ingredientInput.value.trim(),
+          "i-" + Date.now(),
+          name,
           "",
           "2026-01-01",
           "pantry",
-          1,
+          amount || 1
         );
-        if (!val) return;
-
         currentIngredients.push(val);
-
-        // ALSO NEED TO ADD TO THE GLOBAL INGREDIENTS STORAGE
         ingredientInput.value = "";
+        ingredientAmountInput.value = "";
         renderIngredientList();
       }
 
@@ -259,9 +226,10 @@
 
       function saveRecipe() {
         const name = recipeNameInput.value.trim();
-        const description = recipeDescriptionInput.value; // is the trim() important?
+        const description = recipeDescriptionInput.value;
         const tags = recipeTagsInput.value.trim();
         const ingredients = currentIngredients;
+
         if (!name) {
           alert("Please enter a recipe name.");
           return;
@@ -271,9 +239,8 @@
           return;
         }
 
-        let recipe = new Recipe(name, description, tags, ingredients);
+        const recipe = new Recipe("r-" + Date.now(), name, description, tags, ingredients);
         addRecipe(recipe);
-
         closeModal();
         renderRecipes();
       }
@@ -283,6 +250,9 @@
       saveRecipeBtn.addEventListener("click", saveRecipe);
       addIngredientBtn.addEventListener("click", addIngredient);
       ingredientInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") addIngredient();
+      });
+      ingredientAmountInput.addEventListener("keypress", (e) => {
         if (e.key === "Enter") addIngredient();
       });
       searchInput.addEventListener("input", renderRecipes);

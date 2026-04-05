@@ -466,9 +466,11 @@
           addToShoppingBtn.style.display = "inline-block";
 
           missing.forEach((ing) => {
-            const li = document.createElement("li");
-            li.innerHTML = `<i class="fa-solid fa-xmark"></i> ${ing}`;
-            missingList.appendChild(li);
+            if (ing) {
+              const li = document.createElement("li");
+              li.innerHTML = `<i class="fa-solid fa-xmark"></i> ${ing.name}`;
+              missingList.appendChild(li);
+            }
           });
         }
       }
@@ -489,9 +491,11 @@
         const ingredientsList = document.getElementById("ingredients-list");
         ingredientsList.innerHTML = "";
         recipe.ingredients.forEach((ing) => {
-          const li = document.createElement("li");
-          li.innerHTML = `<i class="fa-solid fa-circle-dot" style="font-size:12px; color:var(--accent-blue-2)"></i> ${ing}`;
-          ingredientsList.appendChild(li);
+          if (ing) {
+            const li = document.createElement("li");
+            li.innerHTML = `<i class="fa-solid fa-circle-dot" style="font-size:12px; color:var(--accent-blue-2)"></i> ${ing.name}`;
+            ingredientsList.appendChild(li);
+          }
         });
 
         const tagsContainer = document.getElementById("tags-container");
@@ -526,14 +530,19 @@
       }
 
       function renderIngredientList() {
+        console.log(currentIngredients);
         ingredientList.innerHTML = "";
         currentIngredients.forEach((ing, index) => {
-          const li = document.createElement("li");
-          li.innerHTML = `
-          <span>${ing}</span>
-          <button onclick="removeIngredient(${index})">✕</button>
-        `;
-          ingredientList.appendChild(li);
+          console.log(ing);
+          if (ing){
+            const li = document.createElement("li");
+            li.innerHTML = `
+            <span>${ing.name}</span>
+            <button onclick="removeIngredient(${index})">✕</button>
+            `;
+            ingredientList.appendChild(li);
+          }
+          
         });
       }
 
@@ -572,16 +581,7 @@
       }
 
       addToShoppingBtn.addEventListener("click", () => {
-        const missing = getMissingIngredients(recipeId);
-        let list = getShoppingLists().find(
-          (l) => l.name === "My Shopping List"
-        );
-        if (!list) {
-          list = addShoppingList({ name: "My Shopping List" });
-        }
-        missing.forEach((ing) => addItemToShoppingList(list.id, ing));
-        addedConfirmation.style.display = "block";
-        addToShoppingBtn.style.display = "none";
+        window.location.href = `shopping-lists-display.html?id=${recipeId}`;
       });
 
       document.getElementById("edit-btn").addEventListener("click", openModal);

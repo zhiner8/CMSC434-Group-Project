@@ -5,15 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create List</title>
     <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="../create-list.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <script
-      src="https://kit.fontawesome.com/75ab6db391.js"
-      crossorigin="anonymous"
-    ></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/75ab6db391.js" crossorigin="anonymous"></script>
     <script src="../storage.js"></script>
   </head>
   <body>
@@ -29,37 +22,19 @@
         <div id="shopping-list-container">
           <div class="field-group">
             <label class="field-label" for="list-name-input">Name</label>
-            <input
-              class="text-input"
-              type="text"
-              id="list-name-input"
-              placeholder="e.g. Weekly Groceries"
-            />
+            <input class="text-input" type="text" id="list-name-input" placeholder="e.g. Weekly Groceries" />
           </div>
 
           <div class="field-group">
-            <label class="field-label" for="description-input"
-              >Description</label
-            >
-            <textarea
-              id="description-input"
-              placeholder="e.g. Everything for the week's meals"
-            ></textarea>
+            <label class="field-label" for="description-input">Description</label>
+            <textarea id="description-input" placeholder="e.g. Everything for the week's meals"></textarea>
           </div>
 
           <div class="field-group">
             <label class="field-label" for="tags-input">
-              Tags
-              <span style="font-weight: 400; font-size: 16px"
-                >(comma separated)</span
-              >
+              Tags <span style="font-weight:400; font-size:16px;">(comma separated)</span>
             </label>
-            <input
-              class="text-input"
-              type="text"
-              id="tags-input"
-              placeholder="e.g. Weekly, Produce, Meals"
-            />
+            <input class="text-input" type="text" id="tags-input" placeholder="e.g. Weekly, Produce, Meals" />
           </div>
 
           <hr class="divider" />
@@ -67,11 +42,8 @@
           <div class="field-group">
             <label class="field-label">Items</label>
             <div id="shopping-input-row">
-              <input
-                type="text"
-                id="item-input"
-                placeholder="Add new item..."
-              />
+              <input type="text" id="item-input" placeholder="Add new item..." />
+              <input type="text" id="item-amount-input" placeholder="Amt." />
               <button id="add-item">Add</button>
             </div>
           </div>
@@ -82,15 +54,9 @@
         </div>
 
         <div id="nav-bar">
-          <a href="my-kitchen.html" class="nav-buttons"
-            ><i class="fas fa-home"></i
-          ></a>
-          <a href="recipe-book.html" class="nav-buttons"
-            ><i class="fas fa-book"></i
-          ></a>
-          <a href="shopping.html" class="nav-buttons" id="selected"
-            ><i class="fas fa-list-ul"></i
-          ></a>
+          <a href="my-kitchen.html" class="nav-buttons"><i class="fas fa-home"></i></a>
+          <a href="recipe-book.html" class="nav-buttons"><i class="fas fa-book"></i></a>
+          <a href="shopping.html" class="nav-buttons" id="selected"><i class="fas fa-list-ul"></i></a>
         </div>
       </div>
     </div>
@@ -99,6 +65,7 @@
       initStorage();
 
       const itemInput = document.getElementById("item-input");
+      const itemAmountInput = document.getElementById("item-amount-input");
       const addItemButton = document.getElementById("add-item");
       const itemsUl = document.getElementById("items-ul");
       const createListButton = document.getElementById("create-list-button");
@@ -110,31 +77,13 @@
 
       const params = new URLSearchParams(window.location.search);
 
-      if (params.get("prefillName")) {
-        listNameInput.value = params.get("prefillName");
-      }
-
-      if (params.get("prefillDescription")) {
-        descriptionInput.value = params.get("prefillDescription");
-      }
-
-      if (params.get("prefillTags")) {
-        tagsInput.value = params.get("prefillTags");
-      }
-
+      if (params.get("prefillName")) listNameInput.value = params.get("prefillName");
+      if (params.get("prefillDescription")) descriptionInput.value = params.get("prefillDescription");
+      if (params.get("prefillTags")) tagsInput.value = params.get("prefillTags");
       if (params.get("prefillItems")) {
         const prefillItems = JSON.parse(params.get("prefillItems"));
         prefillItems.forEach((name) => {
-          draftList.push(
-            new Ingredient(
-              "i-" + Date.now() + Math.random(),
-              name,
-              "",
-              null,
-              "Pantry",
-              1
-            )
-          );
+          draftList.push(new Ingredient("i-" + Date.now() + Math.random(), name, "", null, "Pantry", 1));
         });
       }
 
@@ -142,10 +91,10 @@
         itemsUl.innerHTML = "";
         draftList.forEach((item, index) => {
           const li = document.createElement("li");
-
           if (item._editing) {
             li.innerHTML = `
               <input class="edit-inline-input" type="text" value="${item.name}" id="edit-input-${index}" />
+              <input class="edit-inline-input edit-amount-input" type="text" value="${item.quantity || ""}" id="edit-amount-${index}" placeholder="Amt." />
               <div class="item-action-buttons">
                 <button onclick="saveEdit(${index})">Save</button>
                 <button onclick="cancelEdit(${index})">Cancel</button>
@@ -153,15 +102,13 @@
             `;
           } else {
             li.innerHTML = `
-              <span>${item.name}</span>
+              <span>${item.name}${item.quantity && item.quantity !== 1 ? ` <span class="item-quantity">(${item.quantity})</span>` : ""}</span>
               <div class="item-action-buttons">
                 <button onclick="startEdit(${index})">Edit</button>
                 <button onclick="removeItem(${index})">Remove</button>
               </div>
             `;
           }
-          // ────────────────────────────────────────────────────────────────
-
           itemsUl.appendChild(li);
         });
       }
@@ -169,16 +116,18 @@
       function addItem() {
         const itemName = itemInput.value.trim();
         if (itemName !== "") {
+          const amount = itemAmountInput.value.trim();
           const newIngredient = new Ingredient(
             "i-" + Date.now(),
             itemName,
             "",
             null,
             "Pantry",
-            1
+            amount || 1
           );
           draftList.push(newIngredient);
           itemInput.value = "";
+          itemAmountInput.value = "";
           renderList();
         }
       }
@@ -195,11 +144,12 @@
       }
 
       function saveEdit(index) {
-        const input = document.getElementById(`edit-input-${index}`);
-        const newName = input.value.trim();
-        if (newName !== "") {
-          draftList[index].name = newName;
-        }
+        const nameInput = document.getElementById(`edit-input-${index}`);
+        const amountInput = document.getElementById(`edit-amount-${index}`);
+        const newName = nameInput.value.trim();
+        const newAmount = amountInput ? amountInput.value.trim() : "";
+        if (newName !== "") draftList[index].name = newName;
+        if (newAmount !== "") draftList[index].quantity = newAmount;
         draftList[index]._editing = false;
         renderList();
       }
@@ -214,7 +164,6 @@
           alert("Add at least one item before creating a list.");
           return;
         }
-
         const newList = new ShoppingList(
           "l-" + Date.now(),
           listNameInput.value.trim() || "New List",
@@ -224,13 +173,15 @@
           draftList,
           false
         );
-
         addShoppingList(newList);
         window.location.href = "shopping.html";
       }
 
       addItemButton.addEventListener("click", addItem);
       itemInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") addItem();
+      });
+      itemAmountInput.addEventListener("keypress", (e) => {
         if (e.key === "Enter") addItem();
       });
       createListButton.addEventListener("click", createList);

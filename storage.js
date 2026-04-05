@@ -47,7 +47,7 @@ function _set(key, value) {
 //Initializes the dstorage for the different pages. ()
 function initStorage() {
   //If the field already exists, no need to initialize
-  if (_get("defaultIngredients") !== null) return;
+   if (_get("defaultIngredients") !== null) return;
 
     // Default Satrter Ingredients
   const defaultIngredients = [
@@ -94,6 +94,15 @@ function initStorage() {
       exampleWeeklyList,
       false
     ),
+    new ShoppingList(
+      "l2",
+      "Monthly Club Meeting",
+      "",
+      "Monthly",
+      "2026-04-01",
+      exampleWeeklyList,
+      false
+    )
   ];
 
   // Store everything
@@ -185,7 +194,7 @@ function getMissingIngredients(recipeId) {
         return !inStock.has(name.toLowerCase());
       } 
     })
-    .map(ing => typeof ing === "object" ? ing.name : String(ing));
+    .map(ing => typeof ing === "object" ? {name: ing.name, quantity:ing.quantity} : undefined);
 }
 
 function getAvailableRecipes() {

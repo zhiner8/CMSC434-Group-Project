@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping Lists</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/75ab6db391.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="../storage.js"></script>
+  </head>
+  <body>
+    <div id="device">
+      <div id="screen">
+        <div id="header">
+          <h1>Shopping Lists</h1>
+        </div>
+
+        <div id="saved-lists-container">
+          <div id="saved-lists"></div>
+        </div>
+
+        <div id="nav-bar">
+          <a href="my-kitchen.html" class="nav-buttons"
+            ><i class="fas fa-home"></i
+          ></a>
+          <a href="recipe-book.html" class="nav-buttons"
+            ><i class="fas fa-book"></i
+          ></a>
+          <a href="shopping.html" class="nav-buttons" id="selected"
+            ><i class="fas fa-list-ul"></i
+          ></a>
+        </div>
+
+      </div>
+    </div>
+
+    <script>
+      initStorage();
+      const listsWrapper = document.getElementById("saved-lists");
+      const params = new URLSearchParams(window.location.search);
+      const recipeId = params.get("id")
+
+      function renderSavedLists() {
+        const savedLists = getShoppingLists();
+        console.log(savedLists);
+        listsWrapper.innerHTML = "";
+
+        if (savedLists.length === 0) {
+          listsWrapper.innerHTML = "<p>No shopping lists yet.</p>";
+          return;
+        }
+
+        savedLists.forEach((list, index) => {
+          const btn = document.createElement("button");
+          btn.className = "list-entry-button";
+          btn.innerHTML = `
+            <p class="list-entry-name">${
+              list.name || "List #" + (index + 1)
+            }</p>
+            <p class="list-entry-description">${list.description || ""}</p>
+          `;
+          btn.addEventListener("click", () => {
+                const missing = getMissingIngredients(recipeId);
+                missing.forEach((missingIng) => {
+                    if(list.ingredientList.map((j) => j.name).includes(missingIng.name)){
+                        list.ingredientList.map((k) => {
+                            if (k.name === missingIng.name){
+                                k.quantity += missingIng.quantity;
+                            } else {
+                                return;
+                            }
+                        });
+                    } else {
+                        list.ingredientList.push(new Ingredient(
+                            "i-" + Date.now(),
+                            missingIng.name,
+                            "",
+                            null,
+                            "Pantry",
+                            missingIng.quantity
+                        ));
+                    }
+                })
+                saveShoppingLists(savedLists);
+                window.location.href = "recipe-book.html";
+          });
+          listsWrapper.appendChild(btn);
+        });
+      }
+
+      renderSavedLists();
+    </script>
+  </body>
+</html>
