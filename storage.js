@@ -51,6 +51,8 @@ function initStorage() {
 
     // Default Satrter Ingredients
   const defaultIngredients = [
+
+    // current demo inventory 
     new Ingredient("i1", "spaghetti noodles", "", "2028-01-01", "Pantry", 2),
     new Ingredient("i2", "tomato sauce", "", "2026-06-02", "Fridge", 1),
     new Ingredient("i3", "firm tofu", "", "2026-05-02", "Fridge", 1),
@@ -59,13 +61,27 @@ function initStorage() {
     new Ingredient("i6", "peanut butter", "", "2027-01-01", "Fridge", 1),
     new Ingredient("i7", "apricot jam", "", "2026-11-01", "Fridge", 1),
     new Ingredient("i8", "almond milk", "", "2026-05-01", "Fridge", 1),
+
+    // ingredient options not currently stocked but on 04-01 shopping list
     new Ingredient("i9", "chocolate protein powder", "", "2028-05-01", "Pantry", 1),
-    new Ingredient("i10", "banana", "", null, "Pantry", 4),
-    new Ingredient("i11", "sandwich bread", "", null, "Pantry", 1),
+    new Ingredient("i10", "banana", "", "2026-04-02", "Pantry", 4),
+    new Ingredient("i11", "sandwich bread", "2026-04-03", "Pantry", 1),
+    new Ingredient("i12", "black beans", "", "2028-08-08", "Pantry", 1),
+    new Ingredient("i13", "vegetable broth", "", "2026-08-08", "Fridge", 1),
+    new Ingredient("i14", "bell pepper", "", "2026-04-21", "Fridge", 1),
+    new Ingredient("i15", "yellow onion", "2026-04-23", "Pantry", 1),
+
+    // ingredient options not current stocked but on monthly-book-club shopping list
+    new Ingredient("i16", "pretzels", "", null, "Pantry", 1),
+    new Ingredient("i17", "black tea", "", null, "Pantry", 1),
+    new Ingredient("i18", "strawberries", "", null, "Pantry", 1)
+  
   ];
 
   const inventory = defaultIngredients.slice(0, 8);
-  const exampleWeeklyList = defaultIngredients.slice(9);
+  const exampleWeeklyList = defaultIngredients.slice(8,15);
+  const monthlyList = defaultIngredients.slice(15);
+
 
   const recipes = [
     new Recipe(
@@ -80,8 +96,16 @@ function initStorage() {
       "Protein Shake",
       "",
       "High-Protein, Gluten-Free",
-      [inventory[7], inventory[8], inventory[5]]
+      [inventory[7], defaultIngredients[8], inventory[5]]
     ),
+    new Recipe(
+      "r3",
+      "Tofu Scramble",
+      "Easy breakfast",
+      "Gluten-Free, Nut-Free",
+      [defaultIngredients[2], defaultIngredients[13], defaultIngredients[14], defaultIngredients[3]]
+    ), 
+
   ];
 
   const shoppingLists = [
@@ -100,7 +124,7 @@ function initStorage() {
       "",
       "Monthly",
       "2026-04-01",
-      exampleWeeklyList,
+      monthlyList,
       false
     )
   ];

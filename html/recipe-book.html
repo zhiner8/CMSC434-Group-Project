@@ -239,7 +239,7 @@
           return;
         }
 
-        const recipe = new Recipe("r-" + Date.now(), name, description, tags, ingredients);
+        const recipe = new Recipe("r" + Date.now(), name, description, tags, ingredients);
         addRecipe(recipe);
         closeModal();
         renderRecipes();
