@@ -110,6 +110,7 @@ function initStorage() {
   _set("inventory", inventory);
   _set("recipes", recipes);
   _set("shoppingLists", shoppingLists);
+  console.log(shoppingLists);
 }
 
 function getRecipes() {
