@@ -202,7 +202,7 @@
             <td>${item.location}</td>
             <td>${formatDate(item.useBy)}</td>
             <td class="edit-column ${editMode ? "" : "hidden"}">
-              <button class="remove-btn" onclick="removeItem(${item.id})">
+              <button class="remove-btn" onclick="removeItem('${item.id}')">
                 <i class="fas fa-trash"></i>
               </button>
             </td>
@@ -289,7 +289,9 @@
 
       editButton.addEventListener("click", () => {
         editMode = !editMode;
-        editButton.innerHTML = editMode ? `<i class="fa-solid fa-check"></i>` : `<i class="fas fa-pen"></i>`;
+        editButton.innerHTML = editMode
+          ? `<i class="fa-solid fa-check"></i>`
+          : `<i class="fas fa-pen"></i>`;
         renderInventory();
       });
 
