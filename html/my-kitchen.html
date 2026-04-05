@@ -46,8 +46,8 @@
             </select>
             <!-- edit and add buttons next to dropdown -->
             <div id="toolbar-buttons">
-              <button id="edit-button"><i class="fas fa-pen"></i></button>
               <button id="add-button"><i class="fas fa-plus"></i></button>
+              <button id="edit-button"><i class="fas fa-pen"></i></button>
             </div>
           </div>
           <!-- where table starts -->
@@ -289,7 +289,7 @@
 
       editButton.addEventListener("click", () => {
         editMode = !editMode;
-        editButton.innerHTML = editMode ? "Done" : `<i class="fas fa-pen"></i>`;
+        editButton.innerHTML = editMode ? `<i class="fa-solid fa-check"></i>` : `<i class="fas fa-pen"></i>`;
         renderInventory();
       });
 
