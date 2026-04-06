@@ -6,14 +6,20 @@
     <title>Shopping List</title>
     <link rel="stylesheet" href="../styles.css" />
     <link rel="stylesheet" href="../my-kitchen.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
-    <script src="https://kit.fontawesome.com/75ab6db391.js" crossorigin="anonymous"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/75ab6db391.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="../storage.js"></script>
     <style>
       #finish-list-btn {
         width: 100%;
         padding: 14px;
-        background: var(--accent-blue-1);
+        background: var(--accent-blue-2);
         color: var(--off-white);
         border: none;
         border-radius: 14px;
@@ -23,280 +29,341 @@
         margin-top: 8px;
       }
       #finish-list-btn:hover {
-        background: var(--accent-blue-2);
+        background: var(--accent-blue-1);
       }
     </style>
-  <body>
-    <div id="device">
-      <div id="screen">
-        <div id="header">
-          <a href="shopping.html" id="back-button">
-            <i class="fa-solid fa-arrow-left"></i>
-          </a>
-          <h1 id="header-title">List</h1>
-          <div id="header-actions">
-            <button id="add-button" title="Add item">
-              <i class="fas fa-plus"></i>
-            </button>
-            <button id="star-btn" title="Save as favorite list">
-              <i class="fa-regular fa-star"></i>
-            </button>
-            <button id="delete-btn" title="Delete list">
-              <i class="fa-regular fa-trash-can"></i>
-            </button>
-          </div>
-        </div>
-
-        <div id="list-content">
-          <div class="list-meta">
-            <h2 id="list-name"></h2>
-            <p id="list-description"></p>
-          </div>
-
-          <div class="list-tags" id="list-tags"></div>
-
-          <hr class="divider" />
-
-          <ul id="checklist"></ul>
-
-          <button id="finish-list-btn">Finish List</button>
-        </div>
-
-        <div id="modal-overlay">
-          <div id="inventory-modal">
-            <h3>New Item</h3>
-
-            <label for="inventory-name-input">Name*</label>
-            <input type="text" id="inventory-name-input" placeholder="e.g. Lettuce" />
-
-            <label for="inventory-description-input">Description</label>
-            <input type="text" id="inventory-description-input" placeholder="..." />
-
-            <label for="inventory-useBy-input">Use-By</label>
-            <input type="date" id="inventory-useBy-input" />
-
-            <label for="inventory-quantity-input">Quantity</label>
-            <input type="number" id="inventory-quantity-input" />
-
-            <label for="inventory-location-input">Location*</label>
-            <select id="inventory-location-input">
-              <option value="">Select a location</option>
-              <option value="Fridge">Fridge</option>
-              <option value="Pantry">Pantry</option>
-              <option value="Freezer">Freezer</option>
-              <option value="Other">Other</option>
-            </select>
-
-            <div id="modal-buttons">
-              <button id="cancel-btn">Cancel</button>
-              <button id="save-item-btn">Save</button>
+    <body>
+      <div id="device">
+        <div id="screen">
+          <div id="header">
+            <a href="shopping.html" id="back-button">
+              <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <h1 id="header-title">List</h1>
+            <div id="header-actions">
+              <button id="add-button" title="Add item">
+                <i class="fas fa-plus"></i>
+              </button>
+              <button id="star-btn" title="Save as favorite list">
+                <i class="fa-regular fa-star"></i>
+              </button>
+              <button id="delete-btn" title="Delete list">
+                <i class="fa-regular fa-trash-can"></i>
+              </button>
             </div>
           </div>
-        </div>
 
-        <div id="nav-bar">
-          <a href="my-kitchen.html" class="nav-buttons"><i class="fas fa-home"></i></a>
-          <a href="recipe-book.html" class="nav-buttons"><i class="fas fa-book"></i></a>
-          <a href="shopping.html" class="nav-buttons" id="selected"><i class="fas fa-list-ul"></i></a>
+          <div id="list-content">
+            <div class="list-meta">
+              <h2 id="list-name"></h2>
+              <p id="list-description"></p>
+            </div>
+
+            <div class="list-tags" id="list-tags"></div>
+
+            <hr class="divider" />
+
+            <ul id="checklist"></ul>
+
+            <button id="finish-list-btn">Finish List</button>
+          </div>
+
+          <div id="modal-overlay">
+            <div id="inventory-modal">
+              <h3>New Item</h3>
+
+              <label for="inventory-name-input">Name*</label>
+              <input
+                type="text"
+                id="inventory-name-input"
+                placeholder="e.g. Lettuce"
+              />
+
+              <label for="inventory-description-input">Description</label>
+              <input
+                type="text"
+                id="inventory-description-input"
+                placeholder="..."
+              />
+
+              <label for="inventory-useBy-input">Use-By</label>
+              <input type="date" id="inventory-useBy-input" />
+
+              <label for="inventory-quantity-input">Quantity</label>
+              <input type="number" id="inventory-quantity-input" />
+
+              <label for="inventory-location-input">Location*</label>
+              <select id="inventory-location-input">
+                <option value="">Select a location</option>
+                <option value="Fridge">Fridge</option>
+                <option value="Pantry">Pantry</option>
+                <option value="Freezer">Freezer</option>
+                <option value="Other">Other</option>
+              </select>
+
+              <div id="modal-buttons">
+                <button id="cancel-btn">Cancel</button>
+                <button id="save-item-btn">Save</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="nav-bar">
+            <a href="my-kitchen.html" class="nav-buttons"
+              ><i class="fas fa-home"></i
+            ></a>
+            <a href="recipe-book.html" class="nav-buttons"
+              ><i class="fas fa-book"></i
+            ></a>
+            <a href="shopping.html" class="nav-buttons" id="selected"
+              ><i class="fas fa-list-ul"></i
+            ></a>
+          </div>
         </div>
       </div>
-    </div>
 
-    <script>
-      initStorage();
+      <script>
+        initStorage();
 
-      const params = new URLSearchParams(window.location.search);
-      const listId = params.get("id");
+        const params = new URLSearchParams(window.location.search);
+        const listId = params.get("id");
 
-      let savedLists = getShoppingLists();
-      let listIndex = savedLists.findIndex((l) => l.id === listId);
-      let list = savedLists[listIndex];
+        let savedLists = getShoppingLists();
+        let listIndex = savedLists.findIndex((l) => l.id === listId);
+        let list = savedLists[listIndex];
 
-      const modalOverlay = document.getElementById("modal-overlay");
-      const inventoryNameInput = document.getElementById("inventory-name-input");
-      const inventoryDescriptionInput = document.getElementById("inventory-description-input");
-      const inventoryUseByInput = document.getElementById("inventory-useBy-input");
-      const inventoryQuantityInput = document.getElementById("inventory-quantity-input");
-      const inventoryLocationInput = document.getElementById("inventory-location-input");
-
-      function openModal() {
-        inventoryNameInput.value = "";
-        inventoryDescriptionInput.value = "";
-        inventoryUseByInput.value = "";
-        inventoryQuantityInput.value = "";
-        inventoryLocationInput.value = "";
-        modalOverlay.classList.add("open");
-        inventoryNameInput.focus();
-      }
-
-      function closeModal() {
-        modalOverlay.classList.remove("open");
-      }
-
-      function saveItem() {
-        const name = inventoryNameInput.value.trim();
-        const location = inventoryLocationInput.value;
-
-        if (!name) {
-          alert("Please enter an item name.");
-          return;
-        }
-        if (!location) {
-          alert("Please select a location.");
-          return;
-        }
-
-        const newItem = new Ingredient(
-          "i-" + Date.now(),
-          name,
-          inventoryDescriptionInput.value.trim(),
-          inventoryUseByInput.value || null,
-          location,
-          inventoryQuantityInput.value || 1
+        const modalOverlay = document.getElementById("modal-overlay");
+        const inventoryNameInput = document.getElementById(
+          "inventory-name-input"
+        );
+        const inventoryDescriptionInput = document.getElementById(
+          "inventory-description-input"
+        );
+        const inventoryUseByInput = document.getElementById(
+          "inventory-useBy-input"
+        );
+        const inventoryQuantityInput = document.getElementById(
+          "inventory-quantity-input"
+        );
+        const inventoryLocationInput = document.getElementById(
+          "inventory-location-input"
         );
 
-        list.ingredientList = list.ingredientList || [];
-        list.ingredientList.push(newItem);
-        savedLists[listIndex] = list;
-        saveShoppingLists(savedLists);
-        closeModal();
-        renderChecklist();
-      }
-
-      document.getElementById("add-button").addEventListener("click", openModal);
-      document.getElementById("cancel-btn").addEventListener("click", closeModal);
-      document.getElementById("save-item-btn").addEventListener("click", saveItem);
-      inventoryNameInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") saveItem();
-      });
-
-      if (!list) {
-        document.getElementById("list-content").innerHTML =
-          "<p class='empty-message'>List not found.</p>";
-      } else {
-        document.getElementById("header-title").textContent = list.name || "List";
-        document.getElementById("list-name").textContent = list.name || "List";
-
-        const descEl = document.getElementById("list-description");
-        descEl.textContent = list.description || "";
-        if (!list.description) descEl.style.display = "none";
-
-        const tagsEl = document.getElementById("list-tags");
-        if (list.tags && list.tags.trim() !== "") {
-          list.tags.split(",").forEach((tag) => {
-            const pill = document.createElement("span");
-            pill.className = "tag-pill";
-            pill.textContent = tag.trim();
-            tagsEl.appendChild(pill);
-          });
-        } else {
-          tagsEl.style.display = "none";
+        function openModal() {
+          inventoryNameInput.value = "";
+          inventoryDescriptionInput.value = "";
+          inventoryUseByInput.value = "";
+          inventoryQuantityInput.value = "";
+          inventoryLocationInput.value = "";
+          modalOverlay.classList.add("open");
+          inventoryNameInput.focus();
         }
 
-        const starBtn = document.getElementById("star-btn");
+        function closeModal() {
+          modalOverlay.classList.remove("open");
+        }
 
-        function updateStar() {
-          if (list.isStarter) {
-            starBtn.classList.add("starred");
-            starBtn.querySelector("i").className = "fa-solid fa-star";
-          } else {
-            starBtn.classList.remove("starred");
-            starBtn.querySelector("i").className = "fa-regular fa-star";
+        function saveItem() {
+          const name = inventoryNameInput.value.trim();
+          const location = inventoryLocationInput.value;
+
+          if (!name) {
+            alert("Please enter an item name.");
+            return;
           }
-        }
-
-        updateStar();
-
-        starBtn.addEventListener("click", () => {
-          list.isStarter = !list.isStarter;
-          savedLists[listIndex] = list;
-          saveShoppingLists(savedLists);
-          updateStar();
-        });
-
-        document.getElementById("delete-btn").addEventListener("click", () => {
-          if (confirm(`Delete "${list.name || "this list"}"?`)) {
-            savedLists.splice(listIndex, 1);
-            saveShoppingLists(savedLists);
-            window.location.href = "shopping.html";
-          }
-        });
-
-        function saveItems() {
-          savedLists[listIndex] = list;
-          saveShoppingLists(savedLists);
-        }
-
-        const checklist = document.getElementById("checklist");
-
-        function renderChecklist() {
-          checklist.innerHTML = "";
-
-          if (!list.ingredientList || list.ingredientList.length === 0) {
-            checklist.innerHTML = "<p class='empty-message'>No items in this list.</p>";
+          if (!location) {
+            alert("Please select a location.");
             return;
           }
 
-          list.ingredientList.forEach((item, index) => {
-            const name = typeof item === "object" ? item.name : item;
-            const checked = typeof item === "object" ? item.checked : false;
-            const quantity = typeof item === "object" && item.quantity ? item.quantity : "";
+          const newItem = new Ingredient(
+            "i-" + Date.now(),
+            name,
+            inventoryDescriptionInput.value.trim(),
+            inventoryUseByInput.value || null,
+            location,
+            inventoryQuantityInput.value || 1
+          );
 
-            const li = document.createElement("li");
-            li.className = checked ? "checked" : "";
-            li.innerHTML = `
+          list.ingredientList = list.ingredientList || [];
+          list.ingredientList.push(newItem);
+          savedLists[listIndex] = list;
+          saveShoppingLists(savedLists);
+          closeModal();
+          renderChecklist();
+        }
+
+        document
+          .getElementById("add-button")
+          .addEventListener("click", openModal);
+        document
+          .getElementById("cancel-btn")
+          .addEventListener("click", closeModal);
+        document
+          .getElementById("save-item-btn")
+          .addEventListener("click", saveItem);
+        inventoryNameInput.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") saveItem();
+        });
+
+        if (!list) {
+          document.getElementById("list-content").innerHTML =
+            "<p class='empty-message'>List not found.</p>";
+        } else {
+          document.getElementById("header-title").textContent =
+            list.name || "List";
+          document.getElementById("list-name").textContent =
+            list.name || "List";
+
+          const descEl = document.getElementById("list-description");
+          descEl.textContent = list.description || "";
+          if (!list.description) descEl.style.display = "none";
+
+          const tagsEl = document.getElementById("list-tags");
+          if (list.tags && list.tags.trim() !== "") {
+            list.tags.split(",").forEach((tag) => {
+              const pill = document.createElement("span");
+              pill.className = "tag-pill";
+              pill.textContent = tag.trim();
+              tagsEl.appendChild(pill);
+            });
+          } else {
+            tagsEl.style.display = "none";
+          }
+
+          const starBtn = document.getElementById("star-btn");
+
+          function updateStar() {
+            if (list.isStarter) {
+              starBtn.classList.add("starred");
+              starBtn.querySelector("i").className = "fa-solid fa-star";
+            } else {
+              starBtn.classList.remove("starred");
+              starBtn.querySelector("i").className = "fa-regular fa-star";
+            }
+          }
+
+          updateStar();
+
+          starBtn.addEventListener("click", () => {
+            list.isStarter = !list.isStarter;
+            savedLists[listIndex] = list;
+            saveShoppingLists(savedLists);
+            updateStar();
+          });
+
+          document
+            .getElementById("delete-btn")
+            .addEventListener("click", () => {
+              if (confirm(`Delete "${list.name || "this list"}"?`)) {
+                savedLists.splice(listIndex, 1);
+                saveShoppingLists(savedLists);
+                window.location.href = "shopping.html";
+              }
+            });
+
+          function saveItems() {
+            savedLists[listIndex] = list;
+            saveShoppingLists(savedLists);
+          }
+
+          const checklist = document.getElementById("checklist");
+
+          function renderChecklist() {
+            checklist.innerHTML = "";
+
+            if (!list.ingredientList || list.ingredientList.length === 0) {
+              checklist.innerHTML =
+                "<p class='empty-message'>No items in this list.</p>";
+              return;
+            }
+
+            list.ingredientList.forEach((item, index) => {
+              const name = typeof item === "object" ? item.name : item;
+              const checked = typeof item === "object" ? item.checked : false;
+              const quantity =
+                typeof item === "object" && item.quantity ? item.quantity : "";
+
+              const li = document.createElement("li");
+              li.className = checked ? "checked" : "";
+              li.innerHTML = `
               <div class="check-circle">
                 <i class="fa-solid fa-check"></i>
               </div>
-              <span class="item-name">${name}${quantity ? `<span class="item-quantity"> (${quantity})</span>` : ""}</span>
+              <span class="item-name">${name}${
+                quantity
+                  ? `<span class="item-quantity"> (${quantity})</span>`
+                  : ""
+              }</span>
               <button class="delete-item-btn" title="Remove item">
                 <i class="fa-solid fa-xmark"></i>
               </button>
             `;
 
-            li.querySelector(".check-circle").addEventListener("click", (e) => {
-              e.stopPropagation();
-              const isChecked = li.classList.toggle("checked");
-              list.ingredientList[index] = {
-                ...list.ingredientList[index],
-                name,
-                checked: isChecked,
-              };
-              saveItems();
-            });
+              li.querySelector(".check-circle").addEventListener(
+                "click",
+                (e) => {
+                  e.stopPropagation();
+                  const isChecked = li.classList.toggle("checked");
+                  list.ingredientList[index] = {
+                    ...list.ingredientList[index],
+                    name,
+                    checked: isChecked,
+                  };
+                  saveItems();
+                }
+              );
 
-            li.querySelector(".delete-item-btn").addEventListener("click", (e) => {
-              e.stopPropagation();
-              list.ingredientList.splice(index, 1);
-              saveItems();
-              renderChecklist();
-            });
+              li.querySelector(".delete-item-btn").addEventListener(
+                "click",
+                (e) => {
+                  e.stopPropagation();
+                  list.ingredientList.splice(index, 1);
+                  saveItems();
+                  renderChecklist();
+                }
+              );
 
-            checklist.appendChild(li);
-          });
+              checklist.appendChild(li);
+            });
+          }
+
+          renderChecklist();
+
+          document
+            .getElementById("finish-list-btn")
+            .addEventListener("click", () => {
+              const checkedItems = list.ingredientList.filter(
+                (item) => item.checked
+              );
+              if (checkedItems.length === 0) {
+                alert("No checked items to add to your kitchen.");
+                return;
+              }
+              if (
+                confirm(
+                  `Add ${checkedItems.length} checked item(s) to My Kitchen?`
+                )
+              ) {
+                checkedItems.forEach((item) =>
+                  addInventoryItem(
+                    new Ingredient(
+                      "i-" + Date.now() + Math.random(),
+                      item.name,
+                      item.description || "",
+                      item.useBy || null,
+                      item.location || "Pantry",
+                      item.quantity || 1
+                    )
+                  )
+                );
+                savedLists.splice(listIndex, 1);
+                saveShoppingLists(savedLists);
+                window.location.href = "shopping.html";
+              }
+            });
         }
-
-        renderChecklist();
-
-        document.getElementById("finish-list-btn").addEventListener("click", () => {
-          const checkedItems = list.ingredientList.filter((item) => item.checked);
-          if (checkedItems.length === 0) {
-            alert("No checked items to add to your kitchen.");
-            return;
-          }
-          if (confirm(`Add ${checkedItems.length} checked item(s) to My Kitchen?`)) {
-            checkedItems.forEach((item) => addInventoryItem(new Ingredient(
-              "i-" + Date.now() + Math.random(),
-              item.name,
-              item.description || "",
-              item.useBy || null,
-              item.location || "Pantry",
-              item.quantity || 1
-            )));
-            savedLists.splice(listIndex, 1);
-            saveShoppingLists(savedLists);
-            window.location.href = "shopping.html";
-          }
-        });
-      }
-    </script>
+      </script>
+    </body>
+  </head>
+</html>
