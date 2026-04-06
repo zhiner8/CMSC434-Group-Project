@@ -45,8 +45,8 @@ function _set(key, value) {
 
 //Initializes the dstorage for the different pages. ()
 function initStorage() {
-  //If the field already exists, no need to initialize
-  if (_get("defaultIngredients") !== null) return;
+  // If the field already exists, no need to initialize
+   if (_get("defaultIngredients") !== null) return;
 
   // Default Starter Ingredients
   const defaultIngredients = [
@@ -242,12 +242,53 @@ function initStorage() {
     new ShoppingList(
       "l2",
       "Monthly Club Meeting",
-      "",
+      "Everything needed for Book Club",
       "Monthly",
       "2026-04-01",
       monthlyList,
       false
     ),
+    new ShoppingList(
+      "l3",
+      "Quick Breakfast",
+      "Easy morning essentials",
+      "Breakfast, Quick",
+      "2026-04-02",
+      [
+        defaultIngredients[9],  // banana
+        defaultIngredients[11], // sandwich bread
+        defaultIngredients[7],  // almond milk
+      ],
+      false
+    ),
+    new ShoppingList(
+      "l4",
+      "Vegan Dinner",
+      "Simple plant-based dinner",
+      "Dinner, Vegan",
+      "2026-04-03",
+      [
+        defaultIngredients[2],  // tofu
+        defaultIngredients[12], // black beans
+        defaultIngredients[13], // vegetable broth
+        defaultIngredients[14], // bell pepper
+        defaultIngredients[15], // onion
+      ],
+      false
+    ),
+    new ShoppingList(
+      "l5",
+      "Snack Restock",
+      "Snacks for the week",
+      "Snacks",
+      "2026-04-04",
+      [
+        defaultIngredients[16], // pretzels
+        defaultIngredients[17], // tea
+        defaultIngredients[18], // strawberries
+      ],
+      false
+    )
   ];
 
   // Store everything
