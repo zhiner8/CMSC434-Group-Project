@@ -30,9 +30,11 @@
   src: url("fonts/Roboto-Bold.ttf") format("truetype");
   font-weight: 700;
 }
-#search-wrapper svg {
-  color: var(--dark-text);
+
+.icon{
+  filter: var(--off-white);
 }
+
 #recipe-container {
   flex: 1;
   min-height: 0;
@@ -40,7 +42,7 @@
   flex-direction: column;
   gap: 16px;
   overflow: hidden;
-  margin: 20px;
+  margin: 20px 28px 20px 20px;
 }
 
 #recipe-container input,
@@ -72,31 +74,36 @@ ul#recipe-ul li {
 .recipe-buttons button {
   margin-left: 5px;
 }
+
 * {
   box-sizing: border-box;
 }
 
 #recipe-toolbar {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
   align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+  flex-wrap: nowrap;
 }
+
 #toolbar-buttons {
   display: flex;
   gap: 10px;
+  flex: 0 0 auto;
 }
 
 #search-wrapper {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex: 1;
-  min-width: 100px;
+  flex: 1 1 auto;
+  min-width: 0;
   background: white;
   border: 2px solid var(--dark-text);
   border-radius: 14px;
-  padding: 10px 10px;
+  padding: 10px;
 }
 
 #search-wrapper i {
@@ -104,10 +111,15 @@ ul#recipe-ul li {
   font-size: 22px;
 }
 
+#search-wrapper svg {
+  color: var(--dark-text);
+}
+
 #search-input {
   border: none;
   outline: none;
-  flex: 1;
+  flex: 1 1 auto;
+  min-width: 0;
   font-size: 22px;
   background: transparent;
   color: var(--dark-text);
@@ -119,7 +131,9 @@ ul#recipe-ul li {
   border-radius: 12px;
   background: white;
   color: var(--dark-text);
-  font-size: 22px;
+  font-size: 18px;
+  flex: 0 0 auto;
+  max-width: 130px;
 }
 
 #filter-bar {
@@ -129,10 +143,16 @@ ul#recipe-ul li {
   background: white;
   color: var(--dark-text);
   font-size: 22px;
+  flex: 0 0 auto;
 }
 
 #toolbar-buttons button {
-  padding: 10px 14px;
+  width: 72px;
+  height: 72px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 2px solid var(--dark-text);
   border-radius: 14px;
   background: var(--accent-blue-2);
@@ -145,20 +165,21 @@ ul#recipe-ul li {
 .remove-btn:hover {
   background: var(--accent-blue-1);
 }
+
 .info-btn:hover {
   background: var(--off-white);
   border-radius: 0px;
 }
 
-#recipe-book-tab {
+#recipe-book-tab{
   display: flex;
   position: relative;
   width: 100%;
   height: 100%;
-  background: var(--off-white);
+  background:var(--off-white);
   flex-wrap: wrap;
   align-items: center;
-  flex-direction: column;
+  flex-direction: column; 
   background: #f4f7f5;
   gap: 10px;
   justify-content: flex-start;
@@ -172,6 +193,7 @@ ul#recipe-ul li {
   border: 2px solid var(--dark-text);
   border-radius: 16px;
 }
+
 ul#recipe-ul li {
   padding: 8px;
   border-bottom: 1px solid #ddd;
@@ -180,13 +202,14 @@ ul#recipe-ul li {
   justify-content: space-between;
   align-items: center;
 }
+
 #recipe-table {
   width: 100%;
   border-collapse: collapse;
   color: var(--dark-text);
 }
 
-#recipe-table th,
+#recipe-table th, 
 #recipe-table td {
   padding: 16px;
   text-align: left;
@@ -214,11 +237,12 @@ ul#recipe-ul li {
   font-size: 22px;
   cursor: pointer;
 }
+
 #recipe-container .remove-btn:hover {
   background: var(--accent-blue-1);
 }
 
-#new-recipe-container {
+#new-recipe-container{
   height: 8%;
   width: 90%;
   text-align: right; /* for some reason this 
@@ -234,29 +258,27 @@ ul#recipe-ul li {
   font-size: 22px;
   cursor: pointer;
 } */
+
+#new-recipe{
+  color:var(--off-white);
+  background-color: var(--accent-blue-1);
+  font-size: 38px;
+  width: 9%;
+  height: 75%;
+}
+
 /*
 #recipe-container {
     margin: 20px;
   } */
-#recipe-table table {
-  width: 100%;
-}
 
-#recipe-table th:nth-child(1) {
-  width: 25%;
-}
-#recipe-table th:nth-child(2) {
-  width: 50%;
-}
-#recipe-table th:nth-child(3) {
-  width: 25%;
-}
 #inventory-container input,
 #inventory-container select,
 #inventory-container button {
   padding: 5px;
   margin: 5px 0;
 }
+
 #modal-overlay {
   display: none;
   position: absolute;
@@ -514,6 +536,7 @@ ul#recipe-ul li {
   transition: background 0.2s;
   flex-shrink: 0;
 }
+
 /* shoudl select after elements content */
 #available-toggle::after {
   content: "";
@@ -538,4 +561,8 @@ ul#recipe-ul li {
 #ingredient-amount-input {
   width: 80px;
   flex-shrink: 0;
+}
+
+.hidden {
+  display: none;
 }
