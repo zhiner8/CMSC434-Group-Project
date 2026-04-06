@@ -115,7 +115,7 @@ table {
   justify-content: center;
 }
 
-#star-btn.starred i {
+#star-btn.starred svg {
   color: #f5c842;
 }
 
@@ -528,13 +528,13 @@ li.checked .check-circle {
   border-color: var(--accent-blue-2);
 }
 
-.check-circle i {
+.check-circle svg {
   color: var(--off-white);
   font-size: 13px;
   display: none;
 }
 
-li.checked .check-circle i {
+li.checked .check-circle svg {
   display: block;
 }
 

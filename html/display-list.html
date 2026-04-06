@@ -10,10 +10,6 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
       rel="stylesheet"
     />
-    <script
-      src="https://kit.fontawesome.com/75ab6db391.js"
-      crossorigin="anonymous"
-    ></script>
     <script src="../storage.js"></script>
     <style>
       #finish-list-btn {
@@ -36,19 +32,59 @@
       <div id="device">
         <div id="screen">
           <div id="header">
+            <!-- back button SVG from FONTAWESOME-->
             <a href="shopping.html" id="back-button">
-              <i class="fa-solid fa-arrow-left"></i>
+              <svg
+                class="icon"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"
+              >
+                <path
+                  d="M73.4 297.4C60.9 309.9 60.9 330.2 73.4 342.7L233.4 502.7C245.9 515.2 266.2 515.2 278.7 502.7C291.2 490.2 291.2 469.9 278.7 457.4L173.3 352L544 352C561.7 352 576 337.7 576 320C576 302.3 561.7 288 544 288L173.3 288L278.7 182.6C291.2 170.1 291.2 149.8 278.7 137.3C266.2 124.8 245.9 124.8 233.4 137.3L73.4 297.3z"
+                />
+              </svg>
             </a>
             <h1 id="header-title">List</h1>
             <div id="header-actions">
               <button id="add-button" title="Add item">
-                <i class="fas fa-plus"></i>
+                <!-- plus symbol SVG from FONTAWESOME -->
+                <svg
+                  class="icon"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 640 640"
+                >
+                  <path
+                    d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"
+                  />
+                </svg>
               </button>
+              <!-- star symbol svg, had to also update update star funciton because of svg  -->
               <button id="star-btn" title="Save as favorite list">
-                <i class="fa-regular fa-star"></i>
+                <svg
+                  class="icon"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 640 640"
+                >
+                  <path
+                    d="M320.1 32C329.1 32 337.4 37.1 341.5 45.1L415 189.3L574.9 214.7C583.8 216.1 591.2 222.4 594 231C596.8 239.6 594.5 249 588.2 255.4L473.7 369.9L499 529.8C500.4 538.7 496.7 547.7 489.4 553C482.1 558.3 472.4 559.1 464.4 555L320.1 481.6L175.8 555C167.8 559.1 158.1 558.3 150.8 553C143.5 547.7 139.8 538.8 141.2 529.8L166.4 369.9L52 255.4C45.6 249 43.4 239.6 46.2 231C49 222.4 56.3 216.1 65.3 214.7L225.2 189.3L298.8 45.1C302.9 37.1 311.2 32 320.2 32zM320.1 108.8L262.3 222C258.8 228.8 252.3 233.6 244.7 234.8L119.2 254.8L209 344.7C214.4 350.1 216.9 357.8 215.7 365.4L195.9 490.9L309.2 433.3C316 429.8 324.1 429.8 331 433.3L444.3 490.9L424.5 365.4C423.3 357.8 425.8 350.1 431.2 344.7L521 254.8L395.5 234.8C387.9 233.6 381.4 228.8 377.9 222L320.1 108.8z"
+                  />
+                </svg>
               </button>
+              <!-- // trash can svg -->
               <button id="delete-btn" title="Delete list">
-                <i class="fa-regular fa-trash-can"></i>
+                <svg
+                  class="icon"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 640 640"
+                >
+                  <path
+                    d="M262.2 48C248.9 48 236.9 56.3 232.2 68.8L216 112L120 112C106.7 112 96 122.7 96 136C96 149.3 106.7 160 120 160L520 160C533.3 160 544 149.3 544 136C544 122.7 533.3 112 520 112L424 112L407.8 68.8C403.1 56.3 391.2 48 377.8 48L262.2 48zM128 208L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 208L464 208L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 208L128 208zM288 280C288 266.7 277.3 256 264 256C250.7 256 240 266.7 240 280L240 456C240 469.3 250.7 480 264 480C277.3 480 288 469.3 288 456L288 280zM400 280C400 266.7 389.3 256 376 256C362.7 256 352 266.7 352 280L352 456C352 469.3 362.7 480 376 480C389.3 480 400 469.3 400 456L400 280z"
+                  />
+                </svg>
               </button>
             </div>
           </div>
@@ -109,29 +145,59 @@
           </div>
 
           <div id="nav-bar">
-            <a href="my-kitchen.html" class="nav-buttons"
-              ><i class="fas fa-home"></i
-            ></a>
-            <a href="recipe-book.html" class="nav-buttons"
-              ><i class="fas fa-book"></i
-            ></a>
-            <a href="shopping.html" class="nav-buttons" id="selected"
-              ><i class="fas fa-list-ul"></i
-            ></a>
+            <a href="my-kitchen.html" class="nav-buttons">
+              <!-- NAV ICONS FROM FONTAWESOME SVGS -->
+              <svg
+                class="icon"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"
+              >
+                <path
+                  d="M341.8 72.6C329.5 61.2 310.5 61.2 298.3 72.6L74.3 280.6C64.7 289.6 61.5 303.5 66.3 315.7C71.1 327.9 82.8 336 96 336L112 336L112 512C112 547.3 140.7 576 176 576L464 576C499.3 576 528 547.3 528 512L528 336L544 336C557.2 336 569 327.9 573.8 315.7C578.6 303.5 575.4 289.5 565.8 280.6L341.8 72.6zM304 384L336 384C362.5 384 384 405.5 384 432L384 528L256 528L256 432C256 405.5 277.5 384 304 384z"
+                />
+              </svg>
+            </a>
+            <a href="recipe-book.html" class="nav-buttons">
+              <svg
+                class="icon"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"
+              >
+                <path
+                  d="M480 576L192 576C139 576 96 533 96 480L96 160C96 107 139 64 192 64L496 64C522.5 64 544 85.5 544 112L544 400C544 420.9 530.6 438.7 512 445.3L512 512C529.7 512 544 526.3 544 544C544 561.7 529.7 576 512 576L480 576zM192 448C174.3 448 160 462.3 160 480C160 497.7 174.3 512 192 512L448 512L448 448L192 448zM224 216C224 229.3 234.7 240 248 240L424 240C437.3 240 448 229.3 448 216C448 202.7 437.3 192 424 192L248 192C234.7 192 224 202.7 224 216zM248 288C234.7 288 224 298.7 224 312C224 325.3 234.7 336 248 336L424 336C437.3 336 448 325.3 448 312C448 298.7 437.3 288 424 288L248 288z"
+                />
+              </svg>
+            </a>
+            <a href="shopping.html" class="nav-buttons" id="selected">
+              <svg
+                class="icon"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"
+              >
+                <path
+                  d="M112 208C138.5 208 160 186.5 160 160C160 133.5 138.5 112 112 112C85.5 112 64 133.5 64 160C64 186.5 85.5 208 112 208zM256 128C238.3 128 224 142.3 224 160C224 177.7 238.3 192 256 192L544 192C561.7 192 576 177.7 576 160C576 142.3 561.7 128 544 128L256 128zM256 288C238.3 288 224 302.3 224 320C224 337.7 238.3 352 256 352L544 352C561.7 352 576 337.7 576 320C576 302.3 561.7 288 544 288L256 288zM256 448C238.3 448 224 462.3 224 480C224 497.7 238.3 512 256 512L544 512C561.7 512 576 497.7 576 480C576 462.3 561.7 448 544 448L256 448zM112 528C138.5 528 160 506.5 160 480C160 453.5 138.5 432 112 432C85.5 432 64 453.5 64 480C64 506.5 85.5 528 112 528zM160 320C160 293.5 138.5 272 112 272C85.5 272 64 293.5 64 320C64 346.5 85.5 368 112 368C138.5 368 160 346.5 160 320z"
+                />
+              </svg>
+            </a>
           </div>
         </div>
       </div>
 
       <script>
+        // initialize storage from storage.js
         initStorage();
-
+        // parses query string
         const params = new URLSearchParams(window.location.search);
         const listId = params.get("id");
 
+        // find list matching the URL id
         let savedLists = getShoppingLists();
         let listIndex = savedLists.findIndex((l) => l.id === listId);
         let list = savedLists[listIndex];
-
+        // get all input fields
         const modalOverlay = document.getElementById("modal-overlay");
         const inventoryNameInput = document.getElementById(
           "inventory-name-input"
@@ -148,7 +214,7 @@
         const inventoryLocationInput = document.getElementById(
           "inventory-location-input"
         );
-
+        // opens add item modal
         function openModal() {
           inventoryNameInput.value = "";
           inventoryDescriptionInput.value = "";
@@ -162,7 +228,7 @@
         function closeModal() {
           modalOverlay.classList.remove("open");
         }
-
+        // does the save new ingredient, might be able to delete/ probably should
         function saveItem() {
           const name = inventoryNameInput.value.trim();
           const location = inventoryLocationInput.value;
@@ -214,11 +280,11 @@
             list.name || "List";
           document.getElementById("list-name").textContent =
             list.name || "List";
-
+          // shows description or hides if no description
           const descEl = document.getElementById("list-description");
           descEl.textContent = list.description || "";
           if (!list.description) descEl.style.display = "none";
-
+          // same as description but for tags
           const tagsEl = document.getElementById("list-tags");
           if (list.tags && list.tags.trim() !== "") {
             list.tags.split(",").forEach((tag) => {
@@ -232,14 +298,20 @@
           }
 
           const starBtn = document.getElementById("star-btn");
+          // svg path for the two stars filled and empty
+          const starPathEmpty =
+            "M320.1 32C329.1 32 337.4 37.1 341.5 45.1L415 189.3L574.9 214.7C583.8 216.1 591.2 222.4 594 231C596.8 239.6 594.5 249 588.2 255.4L473.7 369.9L499 529.8C500.4 538.7 496.7 547.7 489.4 553C482.1 558.3 472.4 559.1 464.4 555L320.1 481.6L175.8 555C167.8 559.1 158.1 558.3 150.8 553C143.5 547.7 139.8 538.8 141.2 529.8L166.4 369.9L52 255.4C45.6 249 43.4 239.6 46.2 231C49 222.4 56.3 216.1 65.3 214.7L225.2 189.3L298.8 45.1C302.9 37.1 311.2 32 320.2 32zM320.1 108.8L262.3 222C258.8 228.8 252.3 233.6 244.7 234.8L119.2 254.8L209 344.7C214.4 350.1 216.9 357.8 215.7 365.4L195.9 490.9L309.2 433.3C316 429.8 324.1 429.8 331 433.3L444.3 490.9L424.5 365.4C423.3 357.8 425.8 350.1 431.2 344.7L521 254.8L395.5 234.8C387.9 233.6 381.4 228.8 377.9 222L320.1 108.8z";
+          const starPathFilled =
+            "M341.5 45.1C337.4 37.1 329.1 32 320.1 32C311.1 32 302.8 37.1 298.7 45.1L225.1 189.3L65.2 214.7C56.3 216.1 48.9 222.4 46.1 231C43.3 239.6 45.6 249 51.9 255.4L166.3 369.9L141.1 529.8C139.7 538.7 143.4 547.7 150.7 553C158 558.3 167.6 559.1 175.7 555L320.1 481.6L464.4 555C472.4 559.1 482.1 558.3 489.4 553C496.7 547.7 500.4 538.8 499 529.8L473.7 369.9L588.1 255.4C594.5 249 596.7 239.6 593.9 231C591.1 222.4 583.8 216.1 574.8 214.7L415 189.3L341.5 45.1z";
 
           function updateStar() {
+            const path = starBtn.querySelector("path");
             if (list.isStarter) {
-              starBtn.classList.add("starred");
-              starBtn.querySelector("i").className = "fa-solid fa-star";
+              starBtn.classList.add("starred"); //filled star
+              path.setAttribute("d", starPathFilled);
             } else {
-              starBtn.classList.remove("starred");
-              starBtn.querySelector("i").className = "fa-regular fa-star";
+              starBtn.classList.remove("starred"); //empty star
+              path.setAttribute("d", starPathEmpty);
             }
           }
 
@@ -286,19 +358,23 @@
 
               const li = document.createElement("li");
               li.className = checked ? "checked" : "";
+              // had to repalce with SVGs again
               li.innerHTML = `
-              <div class="check-circle">
-                <i class="fa-solid fa-check"></i>
-              </div>
+                <div class="check-circle">
+                    <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                         <path d="M530.8 134.1C545.1 144.5 548.3 164.5 537.9 178.8L281.9 530.8C276.4 538.4 267.9 543.1 258.5 543.9C249.1 544.7 240 541.2 233.4 534.6L105.4 406.6C92.9 394.1 92.9 373.8 105.4 361.3C117.9 348.8 138.2 348.8 150.7 361.3L252.2 462.8L486.2 141.1C496.6 126.8 516.6 123.6 530.9 134z"/>
+                    </svg>
+                </div>
               <span class="item-name">${name}${
                 quantity
                   ? `<span class="item-quantity"> (${quantity})</span>`
                   : ""
               }</span>
               <button class="delete-item-btn" title="Remove item">
-                <i class="fa-solid fa-xmark"></i>
-              </button>
-            `;
+                <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                    <path d="M183.1 137.4C170.6 124.9 150.3 124.9 137.8 137.4C125.3 149.9 125.3 170.2 137.8 182.7L275.2 320L137.9 457.4C125.4 469.9 125.4 490.2 137.9 502.7C150.4 515.2 170.7 515.2 183.2 502.7L320.5 365.3L457.9 502.6C470.4 515.1 490.7 515.1 503.2 502.6C515.7 490.1 515.7 469.8 503.2 457.3L365.8 320L503.1 182.6C515.6 170.1 515.6 149.8 503.1 137.3C490.6 124.8 470.3 124.8 457.8 137.3L320.5 274.7L183.1 137.4z"/>
+                </svg>
+                </button>`;
 
               li.querySelector(".check-circle").addEventListener(
                 "click",
