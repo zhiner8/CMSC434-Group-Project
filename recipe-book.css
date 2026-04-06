@@ -514,7 +514,7 @@ ul#recipe-ul li {
   transition: background 0.2s;
   flex-shrink: 0;
 }
-
+/* shoudl select after elements content */
 #available-toggle::after {
   content: "";
   position: absolute;
