@@ -495,10 +495,10 @@ table {
 #add-item-btn {
   height: 52px;
   padding: 0 22px;
+  background: var(--accent-blue-2);
+  color: var(--off-white);
   border: none;
   border-radius: 14px;
-  background-color: var(--accent-blue-2);
-  color: var(--off-white);
   font-family: "Roboto", sans-serif;
   font-size: 20px;
   cursor: pointer;
@@ -577,10 +577,6 @@ li.checked .check-circle svg {
 }
 
 /* ── shopping lists page ── */
-#saved-lists-container {
-  padding: 24px 20px;
-  overflow-y: auto;
-}
 
 #lists-wrapper {
   display: flex;
@@ -788,16 +784,6 @@ li.checked .check-circle svg {
 #item-input-row #item-amount-input {
   width: 70px;
   flex-shrink: 0;
-}
-
-#add-item-btn {
-  padding: 8px 14px;
-  background: var(--accent-blue-2);
-  color: var(--off-white);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
 }
 
 #btn-save {
