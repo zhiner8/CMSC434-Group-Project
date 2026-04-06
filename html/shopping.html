@@ -5,18 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shopping Lists</title>
     <link rel="stylesheet" href="../styles.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <script
-      src="https://kit.fontawesome.com/75ab6db391.js"
-      crossorigin="anonymous"
-    ></script>
+    <link rel="stylesheet" href="../my-kitchen.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/75ab6db391.js" crossorigin="anonymous"></script>
     <script src="../storage.js"></script>
     <style>
       #modal-overlay {
@@ -78,51 +69,6 @@
         background: #ccc;
         color: var(--dark-text);
       }
-
-      #saved-lists-container {
-        padding: 16px 20px;
-        overflow-y: auto;
-      }
-
-      #saved-lists {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-      }
-
-      .list-entry-button {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        width: 100%;
-        padding: 18px 20px;
-        background: white;
-        border: none;
-        border-radius: 16px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-        cursor: pointer;
-        text-align: left;
-        transition: background-color 0.15s ease;
-        box-sizing: border-box;
-      }
-
-      .list-entry-button:hover {
-        background-color: #e8eef2;
-      }
-
-      .list-entry-name {
-        font-size: 24px;
-        font-weight: 500;
-        color: var(--accent-blue-1);
-        margin: 0 0 6px 0;
-      }
-
-      .list-entry-description {
-        font-size: 17px;
-        font-weight: 400;
-        color: #555;
-        margin: 0;
-      }
     </style>
   </head>
   <body>
@@ -130,25 +76,31 @@
       <div id="screen">
         <div id="header">
           <h1>Shopping Lists</h1>
-          <button id="create-button" onclick="openModal()">
-            <i class="fa-solid fa-plus"></i>
-          </button>
         </div>
 
-        <div id="saved-lists-container">
-          <div id="saved-lists"></div>
-        </div>
+        <div id="inventory-container">
+          <div id="inventory-toolbar">
+            <div id="search-wrapper">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="search-input" placeholder="Search lists..." />
+            </div>
+            <div id="toolbar-buttons">
+              <button id="add-button"><i class="fas fa-plus"></i></button>
+              <button id="edit-button"><i class="fas fa-pen"></i></button>
+            </div>
+          </div>
 
-        <div id="nav-bar">
-          <a href="my-kitchen.html" class="nav-buttons"
-            ><i class="fas fa-home"></i
-          ></a>
-          <a href="recipe-book.html" class="nav-buttons"
-            ><i class="fas fa-book"></i
-          ></a>
-          <a href="shopping.html" class="nav-buttons" id="selected"
-            ><i class="fas fa-list-ul"></i
-          ></a>
+          <div id="inventory-table-wrapper">
+            <table id="inventory-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th class="edit-column hidden">Action</th>
+                </tr>
+              </thead>
+              <tbody id="lists-table-body"></tbody>
+            </table>
+          </div>
         </div>
 
         <div id="modal-overlay">
@@ -157,21 +109,29 @@
             <p>How would you like to start?</p>
             <div id="modal-buttons">
               <button id="btn-cancel" onclick="closeModal()">Cancel</button>
-              <button id="btn-starter" onclick="goToStarterList()">
-                Starter List
-              </button>
-              <button id="btn-new" onclick="goToNewList()">From New</button>
+              <button id="btn-starter" onclick="goToStarterList()">Favorite List</button>
+              <button id="btn-new" onclick="goToNewList()">Create New List</button>
             </div>
           </div>
+        </div>
+
+        <div id="nav-bar">
+          <a href="my-kitchen.html" class="nav-buttons"><i class="fas fa-home"></i></a>
+          <a href="recipe-book.html" class="nav-buttons"><i class="fas fa-book"></i></a>
+          <a href="shopping.html" class="nav-buttons" id="selected"><i class="fas fa-list-ul"></i></a>
         </div>
       </div>
     </div>
 
     <script>
       initStorage();
-      console.log(getShoppingLists());
-      const listsWrapper = document.getElementById("saved-lists");
+
+      const listsTableBody = document.getElementById("lists-table-body");
+      const searchInput = document.getElementById("search-input");
+      const editButton = document.getElementById("edit-button");
       const modalOverlay = document.getElementById("modal-overlay");
+
+      let editMode = false;
 
       function openModal() {
         modalOverlay.classList.add("open");
@@ -186,41 +146,70 @@
       }
 
       function goToStarterList() {
-        window.location.href = "starter-lists.html";
         closeModal();
+        window.location.href = "starter-lists.html";
       }
 
-      modalOverlay.addEventListener("click", function (e) {
+      modalOverlay.addEventListener("click", (e) => {
         if (e.target === modalOverlay) closeModal();
       });
 
-      function renderSavedLists() {
+      function renderLists() {
         const savedLists = getShoppingLists();
-        console.log(savedLists);
-        listsWrapper.innerHTML = "";
+        const query = searchInput.value.toLowerCase().trim();
+        listsTableBody.innerHTML = "";
 
-        if (savedLists.length === 0) {
-          listsWrapper.innerHTML = "<p>No shopping lists yet.</p>";
+        const filtered = savedLists.filter((l) =>
+          (l.name || "").toLowerCase().includes(query)
+        );
+
+        if (filtered.length === 0) {
+          listsTableBody.innerHTML = `<tr><td colspan="2" style="text-align:center; color:gray;">No lists found.</td></tr>`;
           return;
         }
 
-        savedLists.forEach((list, index) => {
-          const btn = document.createElement("button");
-          btn.className = "list-entry-button";
-          btn.innerHTML = `
-            <p class="list-entry-name">${
-              list.name || "List #" + (index + 1)
-            }</p>
-            <p class="list-entry-description">${list.description || ""}</p>
+        filtered.forEach((list) => {
+          const tr = document.createElement("tr");
+          tr.style.cursor = "pointer";
+          tr.innerHTML = `
+            <td>${list.name || "Unnamed List"}</td>
+            <td class="edit-column ${editMode ? "" : "hidden"}">
+              <button class="remove-btn" onclick="deleteList('${list.id}')">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
           `;
-          btn.addEventListener("click", () => {
+          tr.addEventListener("click", (e) => {
+            if (e.target.closest(".remove-btn")) return;
             window.location.href = `display-list.html?id=${list.id}`;
           });
-          listsWrapper.appendChild(btn);
+          listsTableBody.appendChild(tr);
+        });
+
+        document.querySelectorAll(".edit-column").forEach((cell) => {
+          editMode ? cell.classList.remove("hidden") : cell.classList.add("hidden");
         });
       }
 
-      renderSavedLists();
+      function deleteList(id) {
+        const savedLists = getShoppingLists();
+        const updated = savedLists.filter((l) => l.id !== id);
+        saveShoppingLists(updated);
+        renderLists();
+      }
+
+      editButton.addEventListener("click", () => {
+        editMode = !editMode;
+        editButton.innerHTML = editMode
+          ? `<i class="fa-solid fa-check"></i>`
+          : `<i class="fas fa-pen"></i>`;
+        renderLists();
+      });
+
+      document.getElementById("add-button").addEventListener("click", openModal);
+      searchInput.addEventListener("input", renderLists);
+
+      renderLists();
     </script>
   </body>
 </html>
