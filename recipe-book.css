@@ -1,7 +1,9 @@
 /*
 
 */
-
+.icon{
+  filter: var(--off-white);
+}
 #recipe-container {
   flex: 1;
   min-height: 0;
@@ -9,7 +11,9 @@
   flex-direction: column;
   gap: 16px;
   overflow: hidden;
+  margin: 20px;
 }
+
 #recipe-container input,
 #recipe-container select,
 #recipe-container button {
@@ -17,7 +21,7 @@
   margin: 5px 0;
 }
 
-/* WHAT IS THIS */
+
 ul#recipe-ul {
   list-style-type: none;
   color: var(--dark-text);
@@ -47,7 +51,7 @@ ul#recipe-ul li {
 #recipe-toolbar {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
 }
 #toolbar-buttons {
@@ -60,14 +64,18 @@ ul#recipe-ul li {
   align-items: center;
   gap: 10px;
   flex: 1;
-  min-width: 220px;
+  min-width: 100px;
   background: white;
   border: 2px solid var(--dark-text);
   border-radius: 14px;
-  padding: 10px 14px;
+  padding: 10px 10px;
+}
+
+#search-wrapper i {
   color: var(--dark-text);
   font-size: 22px;
 }
+
 
 #search-input {
   border: none;
@@ -78,8 +86,9 @@ ul#recipe-ul li {
   color: var(--dark-text);
 }
 
+
 #sort-select {
-  padding: 12px;
+  padding: 10px;
   border: 2px solid var(--dark-text);
   border-radius: 12px;
   background: white;
@@ -88,12 +97,31 @@ ul#recipe-ul li {
 }
 
 #filter-bar {
-  padding: 12px;
+  padding: 10px;
   border: 2px solid var(--dark-text);
   border-radius: 12px;
   background: white;
   color: var(--dark-text);
   font-size: 22px;
+}
+
+#toolbar-buttons button {
+  padding: 10px 10px;
+  border: 2px solid var(--dark-text);
+  border-radius: 14px;
+  background: var(--accent-blue-2);
+  color: var(--off-white);
+  font-size: 22px;
+  cursor: pointer;
+}
+
+#toolbar-buttons button:hover,
+.remove-btn:hover {
+  background: var(--accent-blue-1);
+}
+.info-btn:hover {
+  background: var(--off-white);
+  border-radius: 0px;
 }
 
 #recipe-book-tab{
@@ -156,7 +184,7 @@ ul#recipe-ul li {
   border-bottom: none;
 }
 
-#inventory-container .remove-btn {
+#recipe-container .remove-btn {
   padding: 10px 14px;
   border: 2px solid var(--dark-text);
   border-radius: 14px;
@@ -165,7 +193,7 @@ ul#recipe-ul li {
   font-size: 22px;
   cursor: pointer;
 }
-#inventory-container .remove-btn:hover {
+#recipe-container .remove-btn:hover {
   background: var(--accent-blue-1);
 }
 
@@ -187,7 +215,7 @@ ul#recipe-ul li {
  
 }
 
-     #inventory-container {
+#recipe-container {
     margin: 20px;
   }
 
@@ -321,80 +349,6 @@ ul#recipe-ul li {
         color: var(--dark-text);
       }
 
-      #search-sort-bar {
-        display: flex;
-        gap: 8px;
-        padding: 10px 16px;
-        align-items: center;
-        border-bottom: 1px solid var(--accent-blue-1);
-      }
-
-      #search-input {
-        flex: 1;
-        padding: 8px 12px;
-        border-radius: 8px;
-        border: 1px solid var(--accent-blue-2);
-        font-family: "Roboto", sans-serif;
-        font-size: 16px;
-        color: var(--dark-text);
-        background: var(--off-white);
-      }
-
-      #sort-select {
-        padding: 8px 10px;
-        border-radius: 8px;
-        border: 1px solid var(--accent-blue-2);
-        font-family: "Roboto", sans-serif;
-        font-size: 16px;
-        color: var(--dark-text);
-        background: var(--off-white);
-        cursor: pointer;
-      }
-
-      #filter-bar {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 8px 16px;
-        border-bottom: 1px solid var(--accent-blue-1);
-      }
-
-      #available-toggle {
-        appearance: none;
-        width: 40px;
-        height: 22px;
-        background: #ccc;
-        border-radius: 11px;
-        cursor: pointer;
-        position: relative;
-        transition: background 0.2s;
-        flex-shrink: 0;
-      }
-
-      #available-toggle::after {
-        content: "";
-        position: absolute;
-        width: 16px;
-        height: 16px;
-        background: white;
-        border-radius: 50%;
-        top: 3px;
-        left: 3px;
-        transition: left 0.2s;
-      }
-
-      #available-toggle:checked {
-        background: var(--accent-blue-2);
-      }
-
-      #available-toggle:checked::after {
-        left: 21px;
-      }
-
-      #filter-label {
-        font-size: 16px;
-        color: var(--dark-text);
-      }
 
         #modal-overlay {
       display: none;
@@ -518,44 +472,6 @@ ul#recipe-ul li {
         color: var(--dark-text);
       }
 
-      #search-sort-bar {
-        display: flex;
-        gap: 8px;
-        padding: 10px 16px;
-        align-items: center;
-        border-bottom: 1px solid var(--accent-blue-1);
-      }
-
-      #search-input {
-        flex: 1;
-        padding: 8px 12px;
-        border-radius: 8px;
-        border: 1px solid var(--accent-blue-2);
-        font-family: "Roboto", sans-serif;
-        font-size: 16px;
-        color: var(--dark-text);
-        background: var(--off-white);
-      }
-
-      #sort-select {
-        padding: 8px 10px;
-        border-radius: 8px;
-        border: 1px solid var(--accent-blue-2);
-        font-family: "Roboto", sans-serif;
-        font-size: 16px;
-        color: var(--dark-text);
-        background: var(--off-white);
-        cursor: pointer;
-      }
-
-      #filter-bar {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 8px 16px;
-        border-bottom: 1px solid var(--accent-blue-1);
-      }
-
       #available-toggle {
         appearance: none;
         width: 40px;
@@ -588,10 +504,7 @@ ul#recipe-ul li {
         left: 21px;
       }
 
-      #filter-label {
-        font-size: 16px;
-        color: var(--dark-text);
-      }
+
 
 #ingredient-amount-input {
   width: 80px;

@@ -95,6 +95,7 @@ ul#inventory-ul li {
   color: var(--dark-text);
   font-size: 22px;
 }
+
 #toolbar-buttons {
   display: flex;
   gap: 10px;
@@ -109,7 +110,7 @@ ul#inventory-ul li {
   font-size: 22px;
   cursor: pointer;
 }
-/*
+
 #toolbar-buttons button:hover,
 .remove-btn:hover {
   background: var(--accent-blue-1);
@@ -117,7 +118,7 @@ ul#inventory-ul li {
 .info-btn:hover {
   background: var(--off-white);
   border-radius: 0px;
-} */
+}
 
 #inventory-table-wrapper {
   flex: 1;
