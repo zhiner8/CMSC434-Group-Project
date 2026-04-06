@@ -6,6 +6,10 @@
 - adding within an element foe example #fakeelement button will select all the buttons under than id fakeelement
 - for hovering over buttons, use ":hover"
 -  */
+
+/* css referenced from https://www.w3schools.com/cssref/index.php */
+/* go here for any questions or needed examples if something isn't working as intended */
+/* styling sukcs :( */
 /* These are the fonts for offline, by fonts i mean roboto :) */
 @font-face {
   font-family: "Roboto";
@@ -706,7 +710,7 @@ li.checked .check-circle svg {
   height: 1.5em;
   vertical-align: -0.125em;
   fill: currentColor;
-  overflow: visible; 
+  overflow: visible;
 }
 
 #new-list-modal {

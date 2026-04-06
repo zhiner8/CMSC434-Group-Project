@@ -6,6 +6,9 @@
 - for hovering over buttons, use ":hover"
 -  */
 
+/* css referenced from https://www.w3schools.com/cssref/index.php */
+/* go here for any questions or needed examples if something isn't working as intended */
+/* styling sukcs :( */
 /* the offline fonts */
 @font-face {
   font-family: "Roboto";
@@ -51,6 +54,7 @@
   overflow: hidden;
   margin: 20px;
 }
+/* can stack multiple css elements like this  */
 #inventory-container input,
 #inventory-container select,
 #inventory-container button {
