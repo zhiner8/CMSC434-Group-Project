@@ -80,7 +80,7 @@ function initStorage() {
       "spinach (frozen)",
       "Calories: 30, Protein: 3g, Carbs: 4g, Fat: 0g, Fiber: 2g",
       "2027-01-16",
-      "Pantry",
+      "Freezer",
       1
     ),
     new Ingredient(
@@ -88,7 +88,7 @@ function initStorage() {
       "rice (frozen)",
       "Calories: 180, Protein: 4g, Carbs: 38g, Fat: 1g, Fiber: 1g",
       "2029-01-01",
-      "Pantry",
+      "Freezer",
       1
     ),
     new Ingredient(
