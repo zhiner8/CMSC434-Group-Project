@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recipe Shopping</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="../my-kitchen.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="../storage.js"></script>
+    <style>
+      /* ── Checkbox column ── */
+      #inventory-table th:first-child,
+      #inventory-table td:first-child {
+        width: 44px;
+        text-align: center;
+        padding-left: 8px;
+        padding-right: 0;
+      }
+
+      .recipe-checkbox {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--accent-blue-1);
+        cursor: pointer;
+      }
+
+      /* ── Tags ── */
+      .tag-cell {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+      .tag-pill {
+        padding: 2px 10px;
+        background: var(--accent-blue-2);
+        color: var(--off-white);
+        border-radius: 999px;
+        font-size: 12px;
+        white-space: nowrap;
+      }
+
+      /* ── Missing badges ── */
+      .missing-badge {
+        display: inline-block;
+        padding: 2px 10px;
+        background: #fff0f0;
+        color: #c0392b;
+        border-radius: 999px;
+        font-size: 12px;
+        white-space: nowrap;
+      }
+      .ok-badge {
+        display: inline-block;
+        padding: 2px 10px;
+        background: #f0fff4;
+        color: #27ae60;
+        border-radius: 999px;
+        font-size: 12px;
+        white-space: nowrap;
+      }
+
+      /* ── Done bar ── */
+      #done-bar {
+        position: sticky;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 16px;
+        background: white;
+        border-top: 1px solid #e5e5e5;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+
+      #selected-count {
+        font-size: 14px;
+        color: #666;
+      }
+
+      #done-btn {
+        padding: 10px 24px;
+        background: var(--accent-blue-1);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: opacity 0.15s;
+      }
+      #done-btn:disabled {
+        opacity: 0.35;
+        cursor: default;
+      }
+      #done-btn:not(:disabled):hover {
+        opacity: 0.85;
+      }
+
+      /* ── Screen layout tweak so done-bar is above nav bar ── */
+      #screen {
+        display: flex;
+        flex-direction: column;
+      }
+      #inventory-container {
+        flex: 1;
+        overflow-y: auto;
+        min-height: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="device">
+      <div id="screen">
+        <div id="header">
+          <a href="shopping.html" id="back-button">
+            <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+              <path d="M73.4 297.4C60.9 309.9 60.9 330.2 73.4 342.7L233.4 502.7C245.9 515.2 266.2 515.2 278.7 502.7C291.2 490.2 291.2 469.9 278.7 457.4L173.3 352L544 352C561.7 352 576 337.7 576 320C576 302.3 561.7 288 544 288L173.3 288L278.7 182.6C291.2 170.1 291.2 149.8 278.7 137.3C266.2 124.8 245.9 124.8 233.4 137.3L73.4 297.3z"/>
+            </svg>
+          </a>
+          <h1>Recipe Shopping</h1>
+        </div>
+
+        <div id="inventory-container">
+          <div id="inventory-toolbar">
+            <div id="search-wrapper">
+              <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                <path d="M480 272C480 317.9 465.1 360.3 440 394.7L566.6 521.4C579.1 533.9 579.1 554.2 566.6 566.7C554.1 579.2 533.8 579.2 521.3 566.7L394.7 440C360.3 465.1 317.9 480 272 480C157.1 480 64 386.9 64 272C64 157.1 157.1 64 272 64C386.9 64 480 157.1 480 272zM272 416C351.5 416 416 351.5 416 272C416 192.5 351.5 128 272 128C192.5 128 128 192.5 128 272C128 351.5 192.5 416 272 416z"/>
+              </svg>
+              <input type="text" id="search-input" placeholder="Search recipes..." />
+            </div>
+          </div>
+
+          <div id="inventory-table-wrapper">
+            <table id="inventory-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Recipe</th>
+                  <th>Tags</th>
+                  <th>Missing</th>
+                </tr>
+              </thead>
+              <tbody id="recipe-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="done-bar">
+          <span id="selected-count">0 recipes selected</span>
+          <button id="done-btn" disabled>Create List</button>
+        </div>
+
+        <div id="nav-bar">
+          <a href="my-kitchen.html" class="nav-buttons">
+            <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+              <path d="M341.8 72.6C329.5 61.2 310.5 61.2 298.3 72.6L74.3 280.6C64.7 289.6 61.5 303.5 66.3 315.7C71.1 327.9 82.8 336 96 336L112 336L112 512C112 547.3 140.7 576 176 576L464 576C499.3 576 528 547.3 528 512L528 336L544 336C557.2 336 569 327.9 573.8 315.7C578.6 303.5 575.4 289.5 565.8 280.6L341.8 72.6zM304 384L336 384C362.5 384 384 405.5 384 432L384 528L256 528L256 432C256 405.5 277.5 384 304 384z"/>
+            </svg>
+          </a>
+          <a href="recipe-book.html" class="nav-buttons">
+            <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+              <path d="M480 576L192 576C139 576 96 533 96 480L96 160C96 107 139 64 192 64L496 64C522.5 64 544 85.5 544 112L544 400C544 420.9 530.6 438.7 512 445.3L512 512C529.7 512 544 526.3 544 544C544 561.7 529.7 576 512 576L480 576zM192 448C174.3 448 160 462.3 160 480C160 497.7 174.3 512 192 512L448 512L448 448L192 448zM224 216C224 229.3 234.7 240 248 240L424 240C437.3 240 448 229.3 448 216C448 202.7 437.3 192 424 192L248 192C234.7 192 224 202.7 224 216zM248 288C234.7 288 224 298.7 224 312C224 325.3 234.7 336 248 336L424 336C437.3 336 448 325.3 448 312C448 298.7 437.3 288 424 288L248 288z"/>
+            </svg>
+          </a>
+          <a href="shopping.html" class="nav-buttons" id="selected">
+            <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+              <path d="M112 208C138.5 208 160 186.5 160 160C160 133.5 138.5 112 112 112C85.5 112 64 133.5 64 160C64 186.5 85.5 208 112 208zM256 128C238.3 128 224 142.3 224 160C224 177.7 238.3 192 256 192L544 192C561.7 192 576 177.7 576 160C576 142.3 561.7 128 544 128L256 128zM256 288C238.3 288 224 302.3 224 320C224 337.7 238.3 352 256 352L544 352C561.7 352 576 337.7 576 320C576 302.3 561.7 288 544 288L256 288zM256 448C238.3 448 224 462.3 224 480C224 497.7 238.3 512 256 512L544 512C561.7 512 576 497.7 576 480C576 462.3 561.7 448 544 448L256 448zM112 528C138.5 528 160 506.5 160 480C160 453.5 138.5 432 112 432C85.5 432 64 453.5 64 480C64 506.5 85.5 528 112 528zM160 320C160 293.5 138.5 272 112 272C85.5 272 64 293.5 64 320C64 346.5 85.5 368 112 368C138.5 368 160 346.5 160 320z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      initStorage();
+
+      const tableBody = document.getElementById("recipe-table-body");
+      const searchInput = document.getElementById("search-input");
+      const doneBtn = document.getElementById("done-btn");
+      const selectedCount = document.getElementById("selected-count");
+
+      // Map recipeId to missing ingredients array
+      const missingDraft = {};
+      // Set of checked recipe IDs
+      const checkedIds = new Set();
+
+      function getMissing(recipe) {
+        if (missingDraft[recipe.id]) return missingDraft[recipe.id];
+        const inStock = new Set(getInventory().map((i) => i.name.toLowerCase()));
+        const missing = (recipe.ingredients || [])
+          .filter((ing) => {
+            if (!ing) return false;
+            const name = typeof ing === "object" ? ing.name : ing;
+            return !inStock.has(name.toLowerCase());
+          })
+          .map((ing) =>
+            typeof ing === "object"
+              ? { name: ing.name, quantity: ing.quantity || 1 }
+              : { name: ing, quantity: 1 }
+          );
+        missingDraft[recipe.id] = missing;
+        return missing;
+      }
+
+      function updateDoneBar() {
+        const count = checkedIds.size;
+        selectedCount.textContent =
+          count === 0
+            ? "0 recipes selected"
+            : count === 1
+            ? "1 recipe selected"
+            : `${count} recipes selected`;
+        doneBtn.disabled = count === 0;
+      }
+
+      function renderRecipes() {
+        const recipes = getRecipes();
+        const query = searchInput.value.toLowerCase().trim();
+        const filtered = recipes.filter((r) =>
+          (r.name || "").toLowerCase().includes(query)
+        );
+
+        tableBody.innerHTML = "";
+
+        if (filtered.length === 0) {
+          tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:gray;">${
+            query ? "No matching recipes." : "No recipes yet."
+          }</td></tr>`;
+          return;
+        }
+
+        filtered.forEach((recipe) => {
+          const missing = getMissing(recipe);
+          const isChecked = checkedIds.has(recipe.id);
+
+          const tagHTML = recipe.tags
+            ? recipe.tags
+                .split(",")
+                .map((t) => `<span class="tag-pill">${t.trim()}</span>`)
+                .join("")
+            : "—";
+
+          const missingHTML =
+            missing.length === 0
+              ? `<span class="ok-badge">All stocked</span>`
+              : `<span class="missing-badge">${missing.length} missing</span>`;
+
+          const tr = document.createElement("tr");
+          tr.style.cursor = "pointer";
+          tr.dataset.id = recipe.id;
+          if (isChecked) tr.style.background = "#f0f6ff";
+
+          tr.innerHTML = `
+            <td>
+              <input
+                type="checkbox"
+                class="recipe-checkbox"
+                data-id="${recipe.id}"
+                ${isChecked ? "checked" : ""}
+              />
+            </td>
+            <td>${recipe.name || "Unnamed Recipe"}</td>
+            <td><div class="tag-cell">${tagHTML}</div></td>
+            <td>${missingHTML}</td>
+          `;
+
+          // Update checkbox
+          tr.addEventListener("click", (e) => {
+            if (e.target.type === "checkbox") return;
+            const cb = tr.querySelector(".recipe-checkbox");
+            cb.checked = !cb.checked;
+            toggleRecipe(recipe.id, cb.checked, tr);
+          });
+
+          const cb = tr.querySelector(".recipe-checkbox");
+          cb.addEventListener("change", () => {
+            toggleRecipe(recipe.id, cb.checked, tr);
+          });
+
+          tableBody.appendChild(tr);
+        });
+      }
+
+      function toggleRecipe(id, checked, tr) {
+        if (checked) {
+          checkedIds.add(id);
+          tr.style.background = "#f0f6ff";
+        } else {
+          checkedIds.delete(id);
+          tr.style.background = "";
+        }
+        updateDoneBar();
+      }
+
+      doneBtn.addEventListener("click", () => {
+        if (checkedIds.size === 0) return;
+
+        const allRecipes = getRecipes();
+        const seen = new Map(); 
+
+        checkedIds.forEach((id) => {
+          const recipe = allRecipes.find((r) => r.id === id);
+          if (!recipe) return;
+          getMissing(recipe).forEach((item) => {
+            const key = item.name.toLowerCase();
+            if (seen.has(key)) {
+              // Add quantities together
+              const existing = seen.get(key);
+              const q1 = parseFloat(existing.quantity) || 1;
+              const q2 = parseFloat(item.quantity) || 1;
+              seen.set(key, { name: existing.name, quantity: q1 + q2 });
+            } else {
+              seen.set(key, { name: item.name, quantity: item.quantity || 1 });
+            }
+          });
+        });
+
+        const missingItems = Array.from(seen.values());
+
+        const params = new URLSearchParams({
+          prefillName: "Recipe Shopping",
+          prefillDescription: "",
+          prefillTags: "",
+          prefillItems: JSON.stringify(missingItems),
+        });
+
+        window.location.href = `shopping.html?${params.toString()}`;
+      });
+
+      searchInput.addEventListener("input", renderRecipes);
+
+      renderRecipes();
+      updateDoneBar();
+    </script>
+  </body>
+</html>
