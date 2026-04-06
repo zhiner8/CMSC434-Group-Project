@@ -6,10 +6,7 @@
     <title>My Kitchen</title>
     <link rel="stylesheet" href="../styles.css" />
     <link rel="stylesheet" href="../my-kitchen.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
-      rel="stylesheet"
-    />
+
     <script src="../storage.js"></script>
   </head>
 
@@ -93,6 +90,30 @@
               </thead>
               <tbody id="inventory-body"></tbody>
             </table>
+          </div>
+        </div>
+        <div id="modal-overlay-item">
+          <div id="item-action-modal">
+            <h3 id="item-action-title"></h3>
+
+            <div id="item-action-buttons">
+              <p>Add to:</p>
+
+              <label>Shopping List</label>
+              <select id="item-shopping-select">
+                <option value="">Select a list...</option>
+              </select>
+
+              <label>Recipe</label>
+              <select id="item-recipe-select">
+                <option value="">Select a recipe...</option>
+              </select>
+            </div>
+
+            <div id="modal-buttons">
+              <button id="item-action-cancel-btn">Cancel</button>
+              <button id="item-action-save-btn">Add</button>
+            </div>
           </div>
         </div>
 
@@ -251,10 +272,14 @@
 
         filteredItems.forEach((item) => {
           const row = document.createElement("tr");
+          row.style.cursor = "pointer";
+          row.addEventListener("click", () => openItemActionModal(item.id));
           // All the ugly sutff is SVG for offline usage
           row.innerHTML = `
             <td>
-              <button id="info-btn" onclick="openModalInfo('${item.id}')">
+              <button id="info-btn" onclick="event.stopPropagation(); openModalInfo('${
+                item.id
+              }')">
                <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
                 <path d="M320 576C461.4 576 576 461.4 576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320C64 461.4 178.6 576 320 576zM288 224C288 206.3 302.3 192 320 192C337.7 192 352 206.3 352 224C352 241.7 337.7 256 320 256C302.3 256 288 241.7 288 224zM280 288L328 288C341.3 288 352 298.7 352 312L352 400L360 400C373.3 400 384 410.7 384 424C384 437.3 373.3 448 360 448L280 448C266.7 448 256 437.3 256 424C256 410.7 266.7 400 280 400L304 400L304 336L280 336C266.7 336 256 325.3 256 312C256 298.7 266.7 288 280 288z"/>
               </svg>
@@ -263,7 +288,9 @@
             <td>${item.location}</td>
             <td>${formatDate(item.useBy)}</td>
             <td class="edit-column ${editMode ? "" : "hidden"}">
-              <button class="remove-btn" onclick="removeItem('${item.id}')">
+              <button class="remove-btn" onclick="event.stopPropagation(); removeItem('${
+                item.id
+              }')">
                 <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
                   <path d="M232.7 69.9C237.1 56.8 249.3 48 263.1 48L377 48C390.8 48 403 56.8 407.4 69.9L416 96L512 96C529.7 96 544 110.3 544 128C544 145.7 529.7 160 512 160L128 160C110.3 160 96 145.7 96 128C96 110.3 110.3 96 128 96L224 96L232.7 69.9zM128 208L512 208L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 208zM216 272C202.7 272 192 282.7 192 296L192 488C192 501.3 202.7 512 216 512C229.3 512 240 501.3 240 488L240 296C240 282.7 229.3 272 216 272zM320 272C306.7 272 296 282.7 296 296L296 488C296 501.3 306.7 512 320 512C333.3 512 344 501.3 344 488L344 296C344 282.7 333.3 272 320 272zM424 272C410.7 272 400 282.7 400 296L400 488C400 501.3 410.7 512 424 512C437.3 512 448 501.3 448 488L448 296C448 282.7 437.3 272 424 272z"/>
                 </svg>
@@ -371,6 +398,110 @@
        </svg>`;
         renderInventory();
       });
+      const modalOverlayItem = document.getElementById("modal-overlay-item");
+      const itemActionTitle = document.getElementById("item-action-title");
+      const itemShoppingSelect = document.getElementById(
+        "item-shopping-select"
+      );
+      const itemRecipeSelect = document.getElementById("item-recipe-select");
+      let selectedItemId = null;
+
+      function openItemActionModal(itemId) {
+        const inventory = getInventory();
+        const item = inventory.find((i) => i.id === itemId);
+        if (!item) return;
+
+        selectedItemId = itemId;
+        itemActionTitle.textContent = item.name;
+
+        // Populate shopping list dropdown
+        itemShoppingSelect.innerHTML = `<option value="">Select a list...</option>`;
+        getShoppingLists().forEach((list) => {
+          const opt = document.createElement("option");
+          opt.value = list.id;
+          opt.textContent = list.name;
+          itemShoppingSelect.appendChild(opt);
+        });
+
+        // Populate recipe dropdown
+        itemRecipeSelect.innerHTML = `<option value="">Select a recipe...</option>`;
+        getRecipes().forEach((recipe) => {
+          const opt = document.createElement("option");
+          opt.value = recipe.id;
+          opt.textContent = recipe.name;
+          itemRecipeSelect.appendChild(opt);
+        });
+
+        modalOverlayItem.classList.add("open");
+      }
+
+      function closeItemActionModal() {
+        modalOverlayItem.classList.remove("open");
+        selectedItemId = null;
+      }
+
+      document
+        .getElementById("item-action-cancel-btn")
+        .addEventListener("click", closeItemActionModal);
+
+      document
+        .getElementById("item-action-save-btn")
+        .addEventListener("click", () => {
+          const inventory = getInventory();
+          const item = inventory.find((i) => i.id === selectedItemId);
+          if (!item) return;
+
+          const listId = itemShoppingSelect.value;
+          const recipeId = itemRecipeSelect.value;
+
+          if (!listId && !recipeId) {
+            alert("Please select a shopping list or recipe.");
+            return;
+          }
+
+          // Add to shopping list
+          if (listId) {
+            const lists = getShoppingLists();
+            const list = lists.find((l) => l.id === listId);
+            if (list) {
+              list.ingredientList = list.ingredientList || [];
+              list.ingredientList.push(
+                new Ingredient(
+                  "i-" + Date.now(),
+                  item.name,
+                  item.description || "",
+                  item.useBy || null,
+                  item.location || "Pantry",
+                  item.quantity || 1
+                )
+              );
+              saveShoppingLists(lists);
+            }
+          }
+
+          // Add to recipe
+          if (recipeId) {
+            const recipes = getRecipes();
+            const recipe = recipes.find((r) => r.id === recipeId);
+            if (recipe) {
+              recipe.ingredients = recipe.ingredients || [];
+              recipe.ingredients.push(
+                new Ingredient(
+                  "i-" + Date.now(),
+                  item.name,
+                  item.description || "",
+                  item.useBy || null,
+                  item.location || "Pantry",
+                  item.quantity || 1
+                )
+              );
+              saveRecipes(recipes);
+            }
+          }
+
+          closeItemActionModal();
+          alert("Added successfully!");
+        });
 
       addButton.addEventListener("click", openModal);
       cancelBtn.addEventListener("click", closeModal);
