@@ -144,6 +144,9 @@ ul#recipe-ul li {
   color: var(--dark-text);
   font-size: 22px;
   flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 #toolbar-buttons button {
@@ -565,4 +568,15 @@ ul#recipe-ul li {
 
 .hidden {
   display: none;
+}
+
+#tag-filter-select {
+  padding: 6px 10px;
+  border: none;
+  background: transparent;
+  color: var(--dark-text);
+  font-size: 18px;
+  font-family: "Roboto", sans-serif;
+  cursor: pointer;
+  margin: 0;
 }

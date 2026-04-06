@@ -38,6 +38,9 @@
           <div id="filter-bar">
             <input type="checkbox" id="available-toggle" />
             <label id="filter-label" for="available-toggle">Show only recipes I can make</label>
+            <select id="tag-filter-select">
+              <option value="all">All Tags</option>
+            </select>
           </div>
  
           <div id="recipe-table-wrapper">
@@ -113,6 +116,7 @@
       const searchInput = document.getElementById("search-input");
       const sortSelect = document.getElementById("sort-select");
       const availableToggle = document.getElementById("available-toggle");
+      const tagFilterSelect = document.getElementById("tag-filter-select");
  
       // array to hold and store the ingredients
       let currentIngredients = [];
@@ -126,6 +130,15 @@
         if (query) {
           recipes = recipes.filter((r) => {
             return r ? r.name.toLowerCase().includes(query) : false;
+          });
+        }
+
+        const selectedTag = tagFilterSelect.value;
+        if (selectedTag !== "all") {
+          recipes = recipes.filter((r) => {
+            if (!r) return false;
+            const tags = typeof r.tags === "string" ? r.tags.split(",").map(t => t.trim()) : r.tags;
+            return tags.some(t => t.toLowerCase() === selectedTag.toLowerCase());
           });
         }
  
@@ -263,6 +276,7 @@
         const recipe = new Recipe("r" + Date.now(), name, description, tags, ingredients);
         addRecipe(recipe);
         closeModal();
+        populateTagFilter();
         renderRecipes();
       }
  
@@ -295,7 +309,24 @@
       searchInput.addEventListener("input", renderRecipes);
       sortSelect.addEventListener("change", renderRecipes);
       availableToggle.addEventListener("change", renderRecipes);
- 
+      tagFilterSelect.addEventListener("change", renderRecipes);
+
+      function populateTagFilter() {
+        const all = getRecipes().flatMap(r => {
+          if (!r) return [];
+          return typeof r.tags === "string" ? r.tags.split(",").map(t => t.trim()) : r.tags;
+        });
+        const unique = [...new Set(all)].filter(Boolean).sort();
+        tagFilterSelect.innerHTML = `<option value="all">All Tags</option>`;
+        unique.forEach(tag => {
+          const opt = document.createElement("option");
+          opt.value = tag;
+          opt.textContent = tag;
+          tagFilterSelect.appendChild(opt);
+        });
+      }
+
+      populateTagFilter();
       renderRecipes();
     </script>
   </body>
