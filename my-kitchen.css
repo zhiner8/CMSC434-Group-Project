@@ -7,9 +7,10 @@
   font-family: "Roboto", sans-serif;
 } */
 
-.icon {
-  filter: var(--off-white);
+#search-wrapper svg {
+  color: var(--dark-text);
 }
+
 #inventory-container {
   flex: 1;
   min-height: 0;
