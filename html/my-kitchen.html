@@ -211,6 +211,7 @@
     </div>
 
     <script>
+      // https://www.w3schools.com/jsref/jsref_obj_array.asp gave fucntions used with all the array manipulation
       // storage from storage.js (used to be app.js make sure to fix)
       initStorage();
 
@@ -405,7 +406,7 @@
       );
       const itemRecipeSelect = document.getElementById("item-recipe-select");
       let selectedItemId = null;
-
+      // 04/03 not working?
       function openItemActionModal(itemId) {
         const inventory = getInventory();
         const item = inventory.find((i) => i.id === itemId);
@@ -459,7 +460,7 @@
             return;
           }
 
-          // Add to shopping list
+          // Add to shopping list, need to work with Bemi
           if (listId) {
             const lists = getShoppingLists();
             const list = lists.find((l) => l.id === listId);
@@ -479,7 +480,7 @@
             }
           }
 
-          // Add to recipe
+          // Add to recipe, yosh
           if (recipeId) {
             const recipes = getRecipes();
             const recipe = recipes.find((r) => r.id === recipeId);
@@ -500,7 +501,6 @@
           }
 
           closeItemActionModal();
-          alert("Added successfully!");
         });
 
       addButton.addEventListener("click", openModal);
@@ -512,12 +512,16 @@
       searchInput.addEventListener("input", renderInventory);
       locationFilter.addEventListener("change", renderInventory);
 
-      inventoryNameInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") saveInventoryItem();
+      inventoryNameInput.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          saveInventoryItem();
+        }
       });
 
-      inventoryLocationInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") saveInventoryItem();
+      inventoryLocationInput.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          saveInventoryItem();
+        }
       });
 
       renderInventory();
