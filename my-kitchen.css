@@ -311,3 +311,18 @@ ul#inventory-ul li {
   font-size: 16px;
   margin: 0;
 }
+#finish-edit-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--accent-blue-2);
+  color: var(--off-white);
+  border: none;
+  border-radius: 14px;
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+#finish-edit-btn:hover {
+  background: var(--accent-blue-1);
+}

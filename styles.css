@@ -671,3 +671,10 @@ li.checked .check-circle i {
   background-color: var(--accent-blue-1);
   color: var(--off-white);
 }
+.icon {
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: -0.125em;
+  fill: currentColor; /* inherits color from parent, just like FA */
+  overflow: visible; /* prevents clipping on tall icons */
+}
