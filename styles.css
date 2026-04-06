@@ -513,7 +513,7 @@ table {
 .check-circle {
   width: 24px;
   height: 24px;
-  border-radius: 50%;
+  border-radius: 4px;
   border: 2px solid var(--accent-blue-2);
   display: flex;
   align-items: center;

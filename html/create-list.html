@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create List</title>
     <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="../my-kitchen.css" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/75ab6db391.js" crossorigin="anonymous"></script>
     <script src="../storage.js"></script>
@@ -17,6 +18,11 @@
             <i class="fa-solid fa-arrow-left"></i>
           </a>
           <h1>Create List</h1>
+          <div id="header-actions">
+            <button id="add-button" title="Add item">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
         </div>
 
         <div id="shopping-list-container">
@@ -41,16 +47,43 @@
 
           <div class="field-group">
             <label class="field-label">Items</label>
-            <div id="shopping-input-row">
-              <input type="text" id="item-input" placeholder="Add new item..." />
-              <input type="text" id="item-amount-input" placeholder="Amt." />
-              <button id="add-item">Add</button>
-            </div>
           </div>
 
           <ul id="items-ul"></ul>
 
           <button id="create-list-button">Create List</button>
+        </div>
+
+        <div id="modal-overlay">
+          <div id="inventory-modal">
+            <h3>New Item</h3>
+
+            <label for="inventory-name-input">Name*</label>
+            <input type="text" id="inventory-name-input" placeholder="e.g. Lettuce" />
+
+            <label for="inventory-description-input">Description</label>
+            <input type="text" id="inventory-description-input" placeholder="..." />
+
+            <label for="inventory-useBy-input">Use-By</label>
+            <input type="date" id="inventory-useBy-input" />
+
+            <label for="inventory-quantity-input">Quantity</label>
+            <input type="number" id="inventory-quantity-input" />
+
+            <label for="inventory-location-input">Location*</label>
+            <select id="inventory-location-input">
+              <option value="">Select a location</option>
+              <option value="Fridge">Fridge</option>
+              <option value="Pantry">Pantry</option>
+              <option value="Freezer">Freezer</option>
+              <option value="Other">Other</option>
+            </select>
+
+            <div id="modal-buttons">
+              <button id="cancel-btn">Cancel</button>
+              <button id="save-item-btn">Save</button>
+            </div>
+          </div>
         </div>
 
         <div id="nav-bar">
@@ -64,14 +97,17 @@
     <script>
       initStorage();
 
-      const itemInput = document.getElementById("item-input");
-      const itemAmountInput = document.getElementById("item-amount-input");
-      const addItemButton = document.getElementById("add-item");
       const itemsUl = document.getElementById("items-ul");
       const createListButton = document.getElementById("create-list-button");
       const listNameInput = document.getElementById("list-name-input");
       const descriptionInput = document.getElementById("description-input");
       const tagsInput = document.getElementById("tags-input");
+      const modalOverlay = document.getElementById("modal-overlay");
+      const inventoryNameInput = document.getElementById("inventory-name-input");
+      const inventoryDescriptionInput = document.getElementById("inventory-description-input");
+      const inventoryUseByInput = document.getElementById("inventory-useBy-input");
+      const inventoryQuantityInput = document.getElementById("inventory-quantity-input");
+      const inventoryLocationInput = document.getElementById("inventory-location-input");
 
       let draftList = [];
 
@@ -87,75 +123,63 @@
         });
       }
 
+      function openModal() {
+        inventoryNameInput.value = "";
+        inventoryDescriptionInput.value = "";
+        inventoryUseByInput.value = "";
+        inventoryQuantityInput.value = "";
+        inventoryLocationInput.value = "";
+        modalOverlay.classList.add("open");
+        inventoryNameInput.focus();
+      }
+
+      function closeModal() {
+        modalOverlay.classList.remove("open");
+      }
+
+      function saveItem() {
+        const name = inventoryNameInput.value.trim();
+        const location = inventoryLocationInput.value;
+
+        if (!name) {
+          alert("Please enter an item name.");
+          return;
+        }
+        if (!location) {
+          alert("Please select a location.");
+          return;
+        }
+
+        const newItem = new Ingredient(
+          "i-" + Date.now(),
+          name,
+          inventoryDescriptionInput.value.trim(),
+          inventoryUseByInput.value || null,
+          location,
+          inventoryQuantityInput.value || 1
+        );
+
+        draftList.push(newItem);
+        closeModal();
+        renderList();
+      }
+
       function renderList() {
         itemsUl.innerHTML = "";
         draftList.forEach((item, index) => {
           const li = document.createElement("li");
-          if (item._editing) {
-            li.innerHTML = `
-              <input class="edit-inline-input" type="text" value="${item.name}" id="edit-input-${index}" />
-              <input class="edit-inline-input edit-amount-input" type="text" value="${item.quantity || ""}" id="edit-amount-${index}" placeholder="Amt." />
-              <div class="item-action-buttons">
-                <button onclick="saveEdit(${index})">Save</button>
-                <button onclick="cancelEdit(${index})">Cancel</button>
-              </div>
-            `;
-          } else {
-            li.innerHTML = `
-              <span>${item.name}${item.quantity && item.quantity !== 1 ? ` <span class="item-quantity">(${item.quantity})</span>` : ""}</span>
-              <div class="item-action-buttons">
-                <button onclick="startEdit(${index})">Edit</button>
-                <button onclick="removeItem(${index})">Remove</button>
-              </div>
-            `;
-          }
+          li.innerHTML = `
+            <span>${item.name}${item.quantity && item.quantity !== 1 ? ` <span class="item-quantity">(${item.quantity})</span>` : ""}</span>
+            <div class="item-action-buttons">
+              <button onclick="removeItem(${index})">Remove</button>
+            </div>
+          `;
           itemsUl.appendChild(li);
         });
       }
 
-      function addItem() {
-        const itemName = itemInput.value.trim();
-        if (itemName !== "") {
-          const amount = itemAmountInput.value.trim();
-          const newIngredient = new Ingredient(
-            "i-" + Date.now(),
-            itemName,
-            "",
-            null,
-            "Pantry",
-            amount || 1
-          );
-          draftList.push(newIngredient);
-          itemInput.value = "";
-          itemAmountInput.value = "";
-          renderList();
-        }
-      }
-
       function removeItem(index) {
         draftList.splice(index, 1);
-        renderList();
-      }
-
-      function startEdit(index) {
-        draftList[index]._editing = true;
-        renderList();
-        document.getElementById(`edit-input-${index}`).focus();
-      }
-
-      function saveEdit(index) {
-        const nameInput = document.getElementById(`edit-input-${index}`);
-        const amountInput = document.getElementById(`edit-amount-${index}`);
-        const newName = nameInput.value.trim();
-        const newAmount = amountInput ? amountInput.value.trim() : "";
-        if (newName !== "") draftList[index].name = newName;
-        if (newAmount !== "") draftList[index].quantity = newAmount;
-        draftList[index]._editing = false;
-        renderList();
-      }
-
-      function cancelEdit(index) {
-        draftList[index]._editing = false;
         renderList();
       }
 
@@ -177,12 +201,11 @@
         window.location.href = "shopping.html";
       }
 
-      addItemButton.addEventListener("click", addItem);
-      itemInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") addItem();
-      });
-      itemAmountInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") addItem();
+      document.getElementById("add-button").addEventListener("click", openModal);
+      document.getElementById("cancel-btn").addEventListener("click", closeModal);
+      document.getElementById("save-item-btn").addEventListener("click", saveItem);
+      inventoryNameInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") saveItem();
       });
       createListButton.addEventListener("click", createList);
 
