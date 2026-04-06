@@ -109,7 +109,8 @@
 
       <div id="modal-overlay-info">
         <div id="info-modal">
-          <h3>Item</h3>
+          <h3 id="info-title">Item</h3>
+          <p id="info-description"></p>
           <div class="modal-buttons">
             <button id="close-btn">Close</button>
           </div>
@@ -137,7 +138,8 @@
       const locationFilter = document.getElementById("location-filter");
       const editButton = document.getElementById("edit-button");
       const addButton = document.getElementById("add-button");
-
+      const infoTitle = document.getElementById("info-title");
+      const infoDescription = document.getElementById("info-description");
       // Info Modal Overlay
 
       const modalOverlayInfo = document.getElementById("modal-overlay-info");
@@ -152,7 +154,7 @@
         "inventory-location-input"
       );
       const inventoryDescriptionInput = document.getElementById(
-        "inventory-location-input"
+        "inventory-description-input"
       );
       const inventoryUseByInput = document.getElementById(
         "inventory-useBy-input"
@@ -195,7 +197,7 @@
 
           row.innerHTML = `
             <td>
-              <button id="info-btn" onclick="openModalInfo()">
+              <button id="info-btn" onclick="openModalInfo('${item.id}')">
                <i class="fas fa-info-circle"></i>
               </button> 
                ${item.name} </td>
@@ -243,8 +245,18 @@
         modalOverlay.classList.remove("open");
       }
 
-      function openModalInfo() {
-        console.log("openModalInfo called");
+      function openModalInfo(id) {
+        const inventory = getInventory();
+        const item = inventory.find((i) => i.id === id);
+
+        if (!item) return;
+
+        infoTitle.textContent = item.name;
+
+        console.log("setting description to:", item.description); // sanity check
+        infoDescription.innerHTML =
+          item.description || "No description available.";
+
         modalOverlayInfo.classList.add("open");
       }
 
@@ -258,8 +270,7 @@
         const location = inventoryLocationInput.value;
         const description = inventoryDescriptionInput.value;
         const useBy = inventoryUseByInput.value;
-        const quantity = inventoryQuantityInput.quantity;
-
+        const quantity = inventoryQuantityInput.value;
         // WHICH FIELDS SHOULD BE ABSOLUTELY REQUIRED?
 
         if (!name) {

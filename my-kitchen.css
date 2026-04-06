@@ -7,7 +7,7 @@
   font-family: "Roboto", sans-serif;
 } */
 
-.icon{
+.icon {
   filter: var(--off-white);
 }
 #inventory-container {
@@ -18,7 +18,7 @@
   gap: 16px;
   overflow: hidden;
   margin: 20px;
-} 
+}
 #inventory-container input,
 #inventory-container select,
 #inventory-container button {
@@ -51,8 +51,6 @@ ul#inventory-ul li {
 * {
   box-sizing: border-box;
 }
-
-
 
 #inventory-toolbar {
   display: flex;
@@ -168,7 +166,7 @@ ul#inventory-ul li {
   background: var(--accent-blue-1);
 }
 
-#info-btn{
+#info-btn {
   padding: 10px 14px;
   border: 0px solid var(--dark-text);
   border-radius: 14px;
@@ -178,11 +176,9 @@ ul#inventory-ul li {
   cursor: pointer;
 }
 
-#info-btn:hover{
+#info-btn:hover {
   background: var(--off-white);
 }
-
-
 
 .hidden {
   display: none;
@@ -304,9 +300,14 @@ ul#inventory-ul li {
 #close-btn {
   background: var(--accent-blue-1);
   color: var(--off-white);
-   padding: 8px 20px;
+  padding: 8px 20px;
   border-radius: 8px;
   border: none;
   font-size: 16px;
   cursor: pointer;
+}
+#info-modal p {
+  color: var(--dark-text);
+  font-size: 16px;
+  margin: 0;
 }
