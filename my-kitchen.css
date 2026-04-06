@@ -310,14 +310,28 @@ ul#inventory-ul li {
   cursor: pointer;
 }
 
-#save-item-btn {
+/* #save-item-btn {
   background: var(--accent-blue-1);
+  color: var(--off-white);
+} */
+
+/* #cancel-btn {
+  background: #ccc;
+  color: var(--dark-text);
+} */
+#modal-buttons button {
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  background: var(--accent-blue-2);
   color: var(--off-white);
 }
 
-#cancel-btn {
-  background: #ccc;
-  color: var(--dark-text);
+/* hover effect */
+#modal-buttons button:hover {
+  background: var(--accent-blue-1);
 }
 
 #close-btn {
