@@ -49,7 +49,7 @@ function initStorage() {
   //If the field already exists, no need to initialize
    if (_get("defaultIngredients") !== null) return;
 
-    // Default Satrter Ingredients
+    // Default Starter Ingredients
   const defaultIngredients = [
 
     // current demo inventory 
