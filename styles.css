@@ -1,4 +1,12 @@
 /* ── style guide ── */
+/* CSS Notes:
+- '#' selects an element by its id so we can use it to style elements
+- '.' selects elements by their class so we can also use it to style elements
+- if nothing is put before the css then it will select all of those elements to style across the application unless overriden
+- adding within an element foe example #fakeelement button will select all the buttons under than id fakeelement
+- for hovering over buttons, use ":hover"
+-  */
+/* These are the fonts for offline, by fonts i mean roboto :) */
 @font-face {
   font-family: "Roboto";
   src: url("fonts/Roboto-Regular.ttf") format("truetype");
@@ -22,6 +30,7 @@
   src: url("fonts/Roboto-Bold.ttf") format("truetype");
   font-weight: 700;
 }
+/* The root / base colors and styling  */
 :root {
   --off-white: #f4f7f5;
   --dark-text: #011627;
