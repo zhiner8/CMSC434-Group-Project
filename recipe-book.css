@@ -1,8 +1,5 @@
-/*
-
-*/
-.icon {
-  filter: var(--off-white);
+#search-wrapper svg {
+  color: var(--dark-text);
 }
 #recipe-container {
   flex: 1;
@@ -209,7 +206,19 @@ ul#recipe-ul li {
 #recipe-container {
     margin: 20px;
   } */
+#recipe-table table {
+  width: 100%;
+}
 
+#recipe-table th:nth-child(1) {
+  width: 25%;
+}
+#recipe-table th:nth-child(2) {
+  width: 50%;
+}
+#recipe-table th:nth-child(3) {
+  width: 25%;
+}
 #inventory-container input,
 #inventory-container select,
 #inventory-container button {
