@@ -46,158 +46,212 @@ function _set(key, value) {
 //Initializes the dstorage for the different pages. ()
 function initStorage() {
   // If the field already exists, no need to initialize
-   if (_get("defaultIngredients") !== null) return;
+  if (_get("defaultIngredients") !== null) return;
 
   // Default Starter Ingredients
   const defaultIngredients = [
     // current demo inventory
-    new Ingredient(
-      "i1",
-      "spaghetti noodles",
-      "Calories: 200, Protein: 7g, Carbs: 42g, Fat: 1g, Fiber: 2g",
-      "2028-01-01",
-      "Pantry",
-      2
+    Object.assign(
+      new Ingredient(
+        "i1",
+        "spaghetti noodles",
+        "Calories: 200, Protein: 7g, Carbs: 42g, Fat: 1g, Fiber: 2g",
+        "2028-01-01",
+        "Pantry",
+        2
+      ),
+      { unit: "lb" }
     ),
-    new Ingredient(
-      "i2",
-      "tomato sauce",
-      "Calories: 80, Protein: 2g, Carbs: 14g, Fat: 2g, Fiber: 3g",
-      "2026-06-02",
-      "Fridge",
-      1
+    Object.assign(
+      new Ingredient(
+        "i2",
+        "tomato sauce",
+        "Calories: 80, Protein: 2g, Carbs: 14g, Fat: 2g, Fiber: 3g",
+        "2026-06-02",
+        "Fridge",
+        24
+      ),
+      { unit: "oz" }
     ),
-    new Ingredient(
-      "i3",
-      "firm tofu",
-      "Calories: 90, Protein: 10g, Carbs: 2g, Fat: 5g, Fiber: 1g",
-      "2026-05-02",
-      "Fridge",
-      1
+    Object.assign(
+      new Ingredient(
+        "i3",
+        "firm tofu",
+        "Calories: 90, Protein: 10g, Carbs: 2g, Fat: 5g, Fiber: 1g",
+        "2026-05-02",
+        "Fridge",
+        14
+      ),
+      { unit: "oz" }
     ),
-    new Ingredient(
-      "i4",
-      "spinach (frozen)",
-      "Calories: 30, Protein: 3g, Carbs: 4g, Fat: 0g, Fiber: 2g",
-      "2027-01-16",
-      "Freezer",
-      1
+    Object.assign(
+      new Ingredient(
+        "i4",
+        "spinach (frozen)",
+        "Calories: 30, Protein: 3g, Carbs: 4g, Fat: 0g, Fiber: 2g",
+        "2027-01-16",
+        "Freezer",
+        10
+      ),
+      { unit: "oz" }
     ),
-    new Ingredient(
-      "i5",
-      "rice (frozen)",
-      "Calories: 180, Protein: 4g, Carbs: 38g, Fat: 1g, Fiber: 1g",
-      "2029-01-01",
-      "Freezer",
-      1
+    Object.assign(
+      new Ingredient(
+        "i5",
+        "rice (frozen)",
+        "Calories: 180, Protein: 4g, Carbs: 38g, Fat: 1g, Fiber: 1g",
+        "2029-01-01",
+        "Freezer",
+        3
+      ),
+      { unit: "lb" }
     ),
-    new Ingredient(
-      "i6",
-      "peanut butter",
-      "Calories: 190, Protein: 8g, Carbs: 7g, Fat: 16g, Fiber: 2g",
-      "2027-01-01",
-      "Fridge",
-      1
+    Object.assign(
+      new Ingredient(
+        "i6",
+        "peanut butter",
+        "Calories: 190, Protein: 8g, Carbs: 7g, Fat: 16g, Fiber: 2g",
+        "2027-01-01",
+        "Fridge",
+        16
+      ),
+      { unit: "oz" }
     ),
-    new Ingredient(
-      "i7",
-      "apricot jam",
-      "Calories: 50, Protein: 0g, Carbs: 13g, Fat: 0g, Fiber: 1g",
-      "2026-11-01",
-      "Fridge",
-      1
+    Object.assign(
+      new Ingredient(
+        "i7",
+        "apricot jam",
+        "Calories: 50, Protein: 0g, Carbs: 13g, Fat: 0g, Fiber: 1g",
+        "2026-11-01",
+        "Fridge",
+        12
+      ),
+      { unit: "oz" }
     ),
-    new Ingredient(
-      "i8",
-      "almond milk",
-      "Calories: 30, Protein: 1g, Carbs: 1g, Fat: 2.5g, Fiber: 0g",
-      "2026-05-01",
-      "Fridge",
-      1
+    Object.assign(
+      new Ingredient(
+        "i8",
+        "almond milk",
+        "Calories: 30, Protein: 1g, Carbs: 1g, Fat: 2.5g, Fiber: 0g",
+        "2026-05-01",
+        "Fridge",
+        1
+      ),
+      { unit: "L" }
     ),
 
     // ingredient options not currently stocked but on 04-01 shopping list
-    new Ingredient(
-      "i9",
-      "chocolate protein powder",
-      "Calories: 120, Protein: 24g, Carbs: 3g, Fat: 1g, Fiber: 1g",
-      "2028-05-01",
-      "Pantry",
-      1
+    Object.assign(
+      new Ingredient(
+        "i9",
+        "chocolate protein powder",
+        "Calories: 120, Protein: 24g, Carbs: 3g, Fat: 1g, Fiber: 1g",
+        "2028-05-01",
+        "Pantry",
+        2
+      ),
+      { unit: "lb" }
     ),
-    new Ingredient(
-      "i10",
-      "banana",
-      "Calories: 105, Protein: 1g, Carbs: 27g, Fat: 0g, Fiber: 3g",
-      "2026-04-02",
-      "Pantry",
-      4
+    Object.assign(
+      new Ingredient(
+        "i10",
+        "banana",
+        "Calories: 105, Protein: 1g, Carbs: 27g, Fat: 0g, Fiber: 3g",
+        "2026-04-02",
+        "Pantry",
+        4
+      ),
+      { unit: "pcs" }
     ),
-    new Ingredient(
-      "i11",
-      "sandwich bread",
-      "Calories: 80, Protein: 3g, Carbs: 15g, Fat: 1g, Fiber: 1g",
-      "2026-04-03",
-      "Pantry",
-      1
+    Object.assign(
+      new Ingredient(
+        "i11",
+        "sandwich bread",
+        "Calories: 80, Protein: 3g, Carbs: 15g, Fat: 1g, Fiber: 1g",
+        "2026-04-03",
+        "Pantry",
+        1
+      ),
+      { unit: "pcs" }
     ),
-    new Ingredient(
-      "i12",
-      "black beans",
-      "Calories: 110, Protein: 7g, Carbs: 20g, Fat: 0.5g, Fiber: 6g",
-      "2028-08-08",
-      "Pantry",
-      1
+    Object.assign(
+      new Ingredient(
+        "i12",
+        "black beans",
+        "Calories: 110, Protein: 7g, Carbs: 20g, Fat: 0.5g, Fiber: 6g",
+        "2028-08-08",
+        "Pantry",
+        15
+      ),
+      { unit: "oz" }
     ),
-    new Ingredient(
-      "i13",
-      "vegetable broth",
-      "Calories: 15, Protein: 1g, Carbs: 2g, Fat: 0g, Fiber: 0g",
-      "2026-08-08",
-      "Fridge",
-      1
+    Object.assign(
+      new Ingredient(
+        "i13",
+        "vegetable broth",
+        "Calories: 15, Protein: 1g, Carbs: 2g, Fat: 0g, Fiber: 0g",
+        "2026-08-08",
+        "Fridge",
+        32
+      ),
+      { unit: "oz" }
     ),
-    new Ingredient(
-      "i14",
-      "bell pepper",
-      "Calories: 25, Protein: 1g, Carbs: 6g, Fat: 0g, Fiber: 2g",
-      "2026-04-21",
-      "Fridge",
-      1
+    Object.assign(
+      new Ingredient(
+        "i14",
+        "bell pepper",
+        "Calories: 25, Protein: 1g, Carbs: 6g, Fat: 0g, Fiber: 2g",
+        "2026-04-21",
+        "Fridge",
+        2
+      ),
+      { unit: "pcs" }
     ),
-    new Ingredient(
-      "i15",
-      "yellow onion",
-      "Calories: 45, Protein: 1g, Carbs: 11g, Fat: 0g, Fiber: 2g",
-      "2026-04-23",
-      "Pantry",
-      1
+    Object.assign(
+      new Ingredient(
+        "i15",
+        "yellow onion",
+        "Calories: 45, Protein: 1g, Carbs: 11g, Fat: 0g, Fiber: 2g",
+        "2026-04-23",
+        "Pantry",
+        3
+      ),
+      { unit: "pcs" }
     ),
 
-    // ingredient options not current stocked but on monthly-book-club shopping list
-    new Ingredient(
-      "i16",
-      "pretzels",
-      "Calories: 110, Protein: 2g, Carbs: 23g, Fat: 1g, Fiber: 1g",
-      null,
-      "Pantry",
-      1
+    // ingredient options not currently stocked but on monthly-book-club shopping list
+    Object.assign(
+      new Ingredient(
+        "i16",
+        "pretzels",
+        "Calories: 110, Protein: 2g, Carbs: 23g, Fat: 1g, Fiber: 1g",
+        null,
+        "Pantry",
+        16
+      ),
+      { unit: "oz" }
     ),
-    new Ingredient(
-      "i17",
-      "black tea",
-      "Calories: 0, Protein: 0g, Carbs: 0g, Fat: 0g, Fiber: 0g",
-      null,
-      "Pantry",
-      1
+    Object.assign(
+      new Ingredient(
+        "i17",
+        "black tea",
+        "Calories: 0, Protein: 0g, Carbs: 0g, Fat: 0g, Fiber: 0g",
+        null,
+        "Pantry",
+        20
+      ),
+      { unit: "pcs" }
     ),
-    new Ingredient(
-      "i18",
-      "strawberries",
-      "Calories: 50, Protein: 1g, Carbs: 12g, Fat: 0g, Fiber: 3g",
-      null,
-      "Pantry",
-      1
+    Object.assign(
+      new Ingredient(
+        "i18",
+        "strawberries",
+        "Calories: 50, Protein: 1g, Carbs: 12g, Fat: 0g, Fiber: 3g",
+        null,
+        "Pantry",
+        1
+      ),
+      { unit: "lb" }
     ),
   ];
 
@@ -255,9 +309,9 @@ function initStorage() {
       "Breakfast, Quick",
       "2026-04-02",
       [
-        defaultIngredients[9],  // banana
+        defaultIngredients[9], // banana
         defaultIngredients[11], // sandwich bread
-        defaultIngredients[7],  // almond milk
+        defaultIngredients[7], // almond milk
       ],
       false
     ),
@@ -268,7 +322,7 @@ function initStorage() {
       "Dinner, Vegan",
       "2026-04-03",
       [
-        defaultIngredients[2],  // tofu
+        defaultIngredients[2], // tofu
         defaultIngredients[12], // black beans
         defaultIngredients[13], // vegetable broth
         defaultIngredients[14], // bell pepper
@@ -288,7 +342,7 @@ function initStorage() {
         defaultIngredients[18], // strawberries
       ],
       false
-    )
+    ),
   ];
 
   // Store everything
@@ -409,4 +463,11 @@ function getExpiredItems() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   return getInventory().filter((i) => i.useBy && new Date(i.useBy) < today);
+}
+
+function updateInventoryItem(id, changes) {
+  const inventory = getInventory().map((i) =>
+    i.id === id ? { ...i, ...changes } : i
+  );
+  saveInventory(inventory);
 }
