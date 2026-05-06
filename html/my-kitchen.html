@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Kitchen</title>
+    <title>Inventory</title>
     <link rel="stylesheet" href="../styles.css" />
     <link rel="stylesheet" href="../my-kitchen.css" />
 
@@ -14,7 +14,7 @@
     <div id="device">
       <div id="screen">
         <div id="header">
-          <h1>My Kitchen</h1>
+          <h1>Inventory</h1>
         </div>
         <!-- entire container div -->
         <div id="inventory-container">
@@ -47,10 +47,12 @@
               <option value="Freezer">Freezer</option>
               <option value="Other">Other</option>
             </select>
-            <!-- edit and add buttons next to dropdown -->
+
+            <!-- only the add button now (pencil/edit-mode toggle removed per redesign) -->
             <div id="toolbar-buttons">
-              <!-- SVGS for add and edit -->
-              <button id="add-button">
+              <!-- SVGS for add -->
+
+              <button id="add-button" aria-label="Add item">
                 <svg
                   class="icon"
                   aria-hidden="true"
@@ -62,7 +64,31 @@
                   />
                 </svg>
               </button>
-              <button id="edit-button">
+            </div>
+          </div>
+
+          <!-- inventory table with all 5 columns -->
+          <div id="inventory-table-wrapper">
+            <table id="inventory-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Use By</th>
+                  <th>Quantity</th>
+                  <th>Location</th>
+                </tr>
+              </thead>
+              <tbody id="inventory-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- replaces old modal -->
+        <div id="modal-overlay-item">
+          <div id="item-detail-modal">
+            <div id="item-detail-header">
+              <button id="item-back-btn" aria-label="Back">
                 <svg
                   class="icon"
                   aria-hidden="true"
@@ -70,54 +96,97 @@
                   viewBox="0 0 640 640"
                 >
                   <path
-                    d="M416.9 85.2L372 130.1L509.9 268L554.8 223.1C568.4 209.6 576 191.2 576 172C576 152.8 568.4 134.4 554.8 120.9L519.1 85.2C505.6 71.6 487.2 64 468 64C448.8 64 430.4 71.6 416.9 85.2zM338.1 164L122.9 379.1C112.2 389.8 104.4 403.2 100.3 417.8L64.9 545.6C62.6 553.9 64.9 562.9 71.1 569C77.3 575.1 86.2 577.5 94.5 575.2L222.3 539.7C236.9 535.6 250.2 527.9 261 517.1L476 301.9L338.1 164z"
+                    d="M249.4 169.4C261.9 156.9 282.2 156.9 294.7 169.4C307.2 181.9 307.2 202.2 294.7 214.7L221.3 288L544 288C561.7 288 576 302.3 576 320C576 337.7 561.7 352 544 352L221.3 352L294.6 425.4C307.1 437.9 307.1 458.2 294.6 470.7C282.1 483.2 261.8 483.2 249.3 470.7L121.3 342.7C108.8 330.2 108.8 309.9 121.3 297.4L249.3 169.4z"
                   />
                 </svg>
               </button>
+              <h3 id="item-detail-title">Item</h3>
+              <div id="item-detail-actions">
+                <button id="item-edit-btn" aria-label="Edit">
+                  <svg
+                    class="icon"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 640 640"
+                  >
+                    <path
+                      d="M416.9 85.2L372 130.1L509.9 268L554.8 223.1C568.4 209.6 576 191.2 576 172C576 152.8 568.4 134.4 554.8 120.9L519.1 85.2C505.6 71.6 487.2 64 468 64C448.8 64 430.4 71.6 416.9 85.2zM338.1 164L122.9 379.1C112.2 389.8 104.4 403.2 100.3 417.8L64.9 545.6C62.6 553.9 64.9 562.9 71.1 569C77.3 575.1 86.2 577.5 94.5 575.2L222.3 539.7C236.9 535.6 250.2 527.9 261 517.1L476 301.9L338.1 164z"
+                    />
+                  </svg>
+                </button>
+                <button id="item-delete-btn" aria-label="Delete">
+                  <svg
+                    class="icon"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 640 640"
+                  >
+                    <path
+                      d="M232.7 69.9C237.1 56.8 249.3 48 263.1 48L377 48C390.8 48 403 56.8 407.4 69.9L416 96L512 96C529.7 96 544 110.3 544 128C544 145.7 529.7 160 512 160L128 160C110.3 160 96 145.7 96 128C96 110.3 110.3 96 128 96L224 96L232.7 69.9zM128 208L512 208L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 208zM216 272C202.7 272 192 282.7 192 296L192 488C192 501.3 202.7 512 216 512C229.3 512 240 501.3 240 488L240 296C240 282.7 229.3 272 216 272zM320 272C306.7 272 296 282.7 296 296L296 488C296 501.3 306.7 512 320 512C333.3 512 344 501.3 344 488L344 296C344 282.7 333.3 272 320 272zM424 272C410.7 272 400 282.7 400 296L400 488C400 501.3 410.7 512 424 512C437.3 512 448 501.3 448 488L448 296C448 282.7 437.3 272 424 272z"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
-          </div>
-          <!-- where table starts -->
-          <div id="inventory-table-wrapper">
-            <!-- why is this not working :() -->
-            <table id="inventory-table">
-              <thead>
-                <tr>
-                  <th>Item</th>
-                  <th>Location</th>
-                  <th>Use By</th>
-                  <th class="edit-column hidden">Action</th>
-                </tr>
-              </thead>
-              <tbody id="inventory-body"></tbody>
-            </table>
+
+            <div id="item-detail-body">
+              <div class="detail-row">
+                <label>Name</label>
+                <span class="detail-value" id="detail-name"></span>
+                <input type="text" class="detail-input" id="edit-name" />
+              </div>
+              <div class="detail-row">
+                <label>Description</label>
+                <span class="detail-value" id="detail-description"></span>
+                <input type="text" class="detail-input" id="edit-description" />
+              </div>
+
+              <div class="detail-row">
+                <label>Use By</label>
+                <span class="detail-value" id="detail-useBy"></span>
+                <input type="date" class="detail-input" id="edit-useBy" />
+              </div>
+
+              <div class="detail-row">
+                <label>Quantity</label>
+                <span class="detail-value" id="detail-quantity"></span>
+                <div class="detail-input quantity-edit-row">
+                  <input type="number" id="edit-quantity" min="0" step="any" />
+                  <select id="edit-unit">
+                    <option value="">—</option>
+                    <option value="pcs">pcs</option>
+                    <option value="g">g</option>
+                    <option value="kg">kg</option>
+                    <option value="oz">oz</option>
+                    <option value="lb">lb</option>
+                    <option value="ml">ml</option>
+                    <option value="L">L</option>
+                    <option value="cup">cup</option>
+                    <option value="tbsp">tbsp</option>
+                    <option value="tsp">tsp</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="detail-row">
+                <label>Location</label>
+                <span class="detail-value" id="detail-location"></span>
+                <select class="detail-input" id="edit-location">
+                  <option value="Fridge">Fridge</option>
+                  <option value="Pantry">Pantry</option>
+                  <option value="Freezer">Freezer</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="item-detail-footer">
+              <button id="item-save-btn">Save</button>
+            </div>
           </div>
         </div>
-        <div id="modal-overlay-item">
-          <div id="item-action-modal">
-            <h3 id="item-action-title"></h3>
 
-            <div id="item-action-buttons">
-              <p>Add to:</p>
-
-              <label>Shopping List</label>
-              <select id="item-shopping-select">
-                <option value="">Select a list...</option>
-              </select>
-
-              <label>Recipe</label>
-              <select id="item-recipe-select">
-                <option value="">Select a recipe...</option>
-              </select>
-            </div>
-
-            <div id="modal-buttons">
-              <button id="item-action-cancel-btn">Cancel</button>
-              <button id="item-action-save-btn">Add</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- modal -->
+        <!-- add new modal kept, with unit added now -->
         <div id="modal-overlay">
           <div id="inventory-modal">
             <h3>New Item</h3>
@@ -136,10 +205,31 @@
             />
 
             <label for="inventory-useBy-input">Use-By</label>
-            <input type="date" id="inventory-useBy-input" placeholder="..." />
+            <input type="date" id="inventory-useBy-input" />
 
-            <label for="inventory-quantity-input">Quantity</label>
-            <input type="number" id="inventory-quantity-input" />
+            <label>Quantity</label>
+            <div class="quantity-edit-row">
+              <input
+                type="number"
+                id="inventory-quantity-input"
+                min="0"
+                step="any"
+                placeholder="0"
+              />
+              <select id="inventory-unit-input">
+                <option value="">—</option>
+                <option value="pcs">pcs</option>
+                <option value="g">g</option>
+                <option value="kg">kg</option>
+                <option value="oz">oz</option>
+                <option value="lb">lb</option>
+                <option value="ml">ml</option>
+                <option value="L">L</option>
+                <option value="cup">cup</option>
+                <option value="tbsp">tbsp</option>
+                <option value="tsp">tsp</option>
+              </select>
+            </div>
 
             <label for="inventory-location-input">Location*</label>
             <select id="inventory-location-input">
@@ -154,16 +244,6 @@
               <button id="cancel-btn">Cancel</button>
               <button id="save-item-btn">Save</button>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="modal-overlay-info">
-        <div id="info-modal">
-          <h3 id="info-title">Item</h3>
-          <p id="info-description"></p>
-          <div class="modal-buttons">
-            <button id="close-btn">Close</button>
           </div>
         </div>
       </div>
@@ -218,16 +298,8 @@
       const inventoryBody = document.getElementById("inventory-body");
       const searchInput = document.getElementById("search-input");
       const locationFilter = document.getElementById("location-filter");
-      const editButton = document.getElementById("edit-button");
       const addButton = document.getElementById("add-button");
-      const infoTitle = document.getElementById("info-title");
-      const infoDescription = document.getElementById("info-description");
-      // Info Modal Overlay
 
-      const modalOverlayInfo = document.getElementById("modal-overlay-info");
-      const closeButton = document.getElementById("close-btn");
-
-      // Add Item Modal Overlay
       const modalOverlay = document.getElementById("modal-overlay");
       const inventoryNameInput = document.getElementById(
         "inventory-name-input"
@@ -244,11 +316,11 @@
       const inventoryQuantityInput = document.getElementById(
         "inventory-quantity-input"
       );
+      const inventoryUnitInput = document.getElementById(
+        "inventory-unit-input"
+      );
       const cancelBtn = document.getElementById("cancel-btn");
       const saveItemBtn = document.getElementById("save-item-btn");
-
-      let editMode = false;
-
       // function getTodayDate() {
       //   const today = new Date();
       //
@@ -257,75 +329,96 @@
       // we are using UseBy instead of getTodays Date now
 
       //rebuilds inevntoru table based on current search and location filters :]
-      function renderInventory() {
-        inventoryBody.innerHTML = "";
 
-        const searchValue = searchInput.value.toLowerCase().trim();
-        const selectedLocation = locationFilter.value;
-        let inventory = getInventory();
-        const filteredItems = inventory.filter((item) => {
-          const matchesSearch = item.name.toLowerCase().includes(searchValue);
-          const matchesLocation =
-            selectedLocation === "All" || item.location === selectedLocation;
+      const modalOverlayItem = document.getElementById("modal-overlay-item");
+      const itemDetailTitle = document.getElementById("item-detail-title");
+      const itemBackBtn = document.getElementById("item-back-btn");
+      const itemEditBtn = document.getElementById("item-edit-btn");
+      const itemDeleteBtn = document.getElementById("item-delete-btn");
+      const itemSaveBtn = document.getElementById("item-save-btn");
 
-          return matchesSearch && matchesLocation;
-        });
+      const detailName = document.getElementById("detail-name");
+      const detailDescription = document.getElementById("detail-description");
+      const detailUseBy = document.getElementById("detail-useBy");
+      const detailQuantity = document.getElementById("detail-quantity");
+      const detailLocation = document.getElementById("detail-location");
 
-        filteredItems.forEach((item) => {
-          const row = document.createElement("tr");
-          row.style.cursor = "pointer";
-          row.addEventListener("click", () => openItemActionModal(item.id));
-          // All the ugly sutff is SVG for offline usage
-          row.innerHTML = `
-            <td>
-              <button id="info-btn" onclick="event.stopPropagation(); openModalInfo('${
-                item.id
-              }')">
-               <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-                <path d="M320 576C461.4 576 576 461.4 576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320C64 461.4 178.6 576 320 576zM288 224C288 206.3 302.3 192 320 192C337.7 192 352 206.3 352 224C352 241.7 337.7 256 320 256C302.3 256 288 241.7 288 224zM280 288L328 288C341.3 288 352 298.7 352 312L352 400L360 400C373.3 400 384 410.7 384 424C384 437.3 373.3 448 360 448L280 448C266.7 448 256 437.3 256 424C256 410.7 266.7 400 280 400L304 400L304 336L280 336C266.7 336 256 325.3 256 312C256 298.7 266.7 288 280 288z"/>
-              </svg>
-              </button> 
-               ${item.name} </td>
-            <td>${item.location}</td>
-            <td>${formatDate(item.useBy)}</td>
-            <td class="edit-column ${editMode ? "" : "hidden"}">
-              <button class="remove-btn" onclick="event.stopPropagation(); removeItem('${
-                item.id
-              }')">
-                <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-                  <path d="M232.7 69.9C237.1 56.8 249.3 48 263.1 48L377 48C390.8 48 403 56.8 407.4 69.9L416 96L512 96C529.7 96 544 110.3 544 128C544 145.7 529.7 160 512 160L128 160C110.3 160 96 145.7 96 128C96 110.3 110.3 96 128 96L224 96L232.7 69.9zM128 208L512 208L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 208zM216 272C202.7 272 192 282.7 192 296L192 488C192 501.3 202.7 512 216 512C229.3 512 240 501.3 240 488L240 296C240 282.7 229.3 272 216 272zM320 272C306.7 272 296 282.7 296 296L296 488C296 501.3 306.7 512 320 512C333.3 512 344 501.3 344 488L344 296C344 282.7 333.3 272 320 272zM424 272C410.7 272 400 282.7 400 296L400 488C400 501.3 410.7 512 424 512C437.3 512 448 501.3 448 488L448 296C448 282.7 437.3 272 424 272z"/>
-                </svg>
-              </button>
-            </td>
-          `;
+      const editName = document.getElementById("edit-name");
+      const editDescription = document.getElementById("edit-description");
+      const editUseBy = document.getElementById("edit-useBy");
+      const editQuantity = document.getElementById("edit-quantity");
+      const editUnit = document.getElementById("edit-unit");
+      const editLocation = document.getElementById("edit-location");
 
-          inventoryBody.appendChild(row);
-        });
-        //i think we fixed this with someothing else, but not going to delete because its working
-        document.querySelectorAll(".edit-column").forEach((cell) => {
-          if (editMode) {
-            cell.classList.remove("hidden");
-          } else {
-            cell.classList.add("hidden");
-          }
-        });
-      }
-      // got some of the function from https://medium.com/@jmatix/javascript-one-liners-for-zero-padding-short-format-date-908318ccf315
-      // was helpful to learn padStart function
+      let selectedItemId = null;
+      let detailEditMode = false;
+
       function formatDate(dateValue) {
         if (!dateValue) return "--";
-
         const date = new Date(dateValue);
         if (isNaN(date)) return "--";
         const mm = String(date.getMonth() + 1).padStart(2, "0");
         const dd = String(date.getDate()).padStart(2, "0");
         const yy = String(date.getFullYear()).slice(-2);
-
         return `${mm}/${dd}/${yy}`;
       }
-      // learned classList during this project also https://www.w3schools.com/jsref/prop_element_classlist.asp
+
+      function formatQuantity(qty, unit) {
+        if (qty === null || qty === undefined || qty === "") return "--";
+        return unit ? `${qty} ${unit}` : `${qty}`;
+      }
+
+      function updateInventoryItemLocal(id, changes) {
+        const inventory = getInventory().map((i) =>
+          i.id === id ? { ...i, ...changes } : i
+        );
+        saveInventory(inventory);
+      }
+
+      function renderInventory() {
+        inventoryBody.innerHTML = "";
+
+        const searchValue = searchInput.value.toLowerCase().trim();
+        const selectedLocation = locationFilter.value;
+        const inventory = getInventory();
+
+        const filteredItems = inventory.filter((item) => {
+          const matchesSearch = item.name.toLowerCase().includes(searchValue);
+          const matchesLocation =
+            selectedLocation === "All" || item.location === selectedLocation;
+          return matchesSearch && matchesLocation;
+        });
+
+        if (filteredItems.length === 0) {
+          const row = document.createElement("tr");
+          row.innerHTML = `<td colspan="5" class="empty-row">No items found.</td>`;
+          inventoryBody.appendChild(row);
+          return;
+        }
+
+        filteredItems.forEach((item) => {
+          const row = document.createElement("tr");
+          row.style.cursor = "pointer";
+          row.addEventListener("click", () => openItemDetailModal(item.id));
+
+          row.innerHTML = `
+            <td class="cell-name">${item.name}</td>
+            <td class="cell-desc">${item.description || "--"}</td>
+            <td>${formatDate(item.useBy)}</td>
+            <td>${formatQuantity(item.quantity, item.unit)}</td>
+            <td>${item.location || "--"}</td>
+          `;
+          inventoryBody.appendChild(row);
+        });
+      }
+
+      // add new item modal
       function openModal() {
         inventoryNameInput.value = "";
+        inventoryDescriptionInput.value = "";
+        inventoryUseByInput.value = "";
+        inventoryQuantityInput.value = "";
+        inventoryUnitInput.value = "";
         inventoryLocationInput.value = "";
         modalOverlay.classList.add("open");
         inventoryNameInput.focus();
@@ -335,193 +428,171 @@
         modalOverlay.classList.remove("open");
       }
 
-      function openModalInfo(id) {
-        const inventory = getInventory();
-        const item = inventory.find((i) => i.id === id);
-
-        if (!item) return;
-
-        infoTitle.textContent = item.name;
-
-        console.log(item.description); // to test if storage updated
-        infoDescription.innerHTML =
-          item.description || "No description available.";
-
-        modalOverlayInfo.classList.add("open");
-      }
-
-      function closeModalInfo() {
-        modalOverlayInfo.classList.remove("open");
-      }
-
       function saveInventoryItem() {
         const id = "i" + Date.now();
         const name = inventoryNameInput.value.trim();
         const location = inventoryLocationInput.value;
-        const description = inventoryDescriptionInput.value;
+        const description = inventoryDescriptionInput.value.trim();
         const useBy = inventoryUseByInput.value;
-        const quantity = inventoryQuantityInput.value;
-        // WHICH FIELDS SHOULD BE ABSOLUTELY REQUIRED?
+        const quantityRaw = inventoryQuantityInput.value;
+        const quantity = quantityRaw === "" ? 0 : Number(quantityRaw);
+        const unit = inventoryUnitInput.value;
 
         if (!name) {
           alert("Please enter an item name.");
           return;
         }
-
         if (!location) {
           alert("Please select a location.");
           return;
         }
 
-        // need to remove?
-        item = new Ingredient(id, name, description, useBy, location, quantity);
+        const item = new Ingredient(
+          id,
+          name,
+          description,
+          useBy,
+          location,
+          quantity
+        );
+        // unit isn't part of the Ingredient constructor — attach it as an extra prop
+        item.unit = unit;
+
         addInventoryItem(item);
-
         closeModal();
-
-        // rn if you reload or close the modal and re-open it keeps your input so we need to figure out how to fix that
         renderInventory();
       }
 
-      function removeItem(id) {
-        removeInventoryItem(id);
-        renderInventory();
-      }
-      // more svg stuff
-      editButton.addEventListener("click", () => {
-        editMode = !editMode;
-        editButton.innerHTML = editMode
-          ? `<svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-        <path d="M530.8 134.1C545.1 144.5 548.3 164.5 537.9 178.8L281.9 530.8C276.4 538.4 267.9 543.1 258.5 543.9C249.1 544.7 240 541.2 233.4 534.6L105.4 406.6C92.9 394.1 92.9 373.8 105.4 361.3C117.9 348.8 138.2 348.8 150.7 361.3L252.2 462.8L486.2 141.1C496.6 126.8 516.6 123.6 530.9 134z"/>
-       </svg>`
-          : `<svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-        <path d="M416.9 85.2L372 130.1L509.9 268L554.8 223.1C568.4 209.6 576 191.2 576 172C576 152.8 568.4 134.4 554.8 120.9L519.1 85.2C505.6 71.6 487.2 64 468 64C448.8 64 430.4 71.6 416.9 85.2zM338.1 164L122.9 379.1C112.2 389.8 104.4 403.2 100.3 417.8L64.9 545.6C62.6 553.9 64.9 562.9 71.1 569C77.3 575.1 86.2 577.5 94.5 575.2L222.3 539.7C236.9 535.6 250.2 527.9 261 517.1L476 301.9L338.1 164z"/>
-       </svg>`;
-        renderInventory();
-      });
-      const modalOverlayItem = document.getElementById("modal-overlay-item");
-      const itemActionTitle = document.getElementById("item-action-title");
-      const itemShoppingSelect = document.getElementById(
-        "item-shopping-select"
-      );
-      const itemRecipeSelect = document.getElementById("item-recipe-select");
-      let selectedItemId = null;
-      // 04/03 not working?
-      function openItemActionModal(itemId) {
-        const inventory = getInventory();
-        const item = inventory.find((i) => i.id === itemId);
+      function openItemDetailModal(id) {
+        const item = getInventory().find((i) => i.id === id);
         if (!item) return;
 
-        selectedItemId = itemId;
-        itemActionTitle.textContent = item.name;
+        selectedItemId = id;
+        detailEditMode = false;
 
-        // Populate shopping list dropdown
-        itemShoppingSelect.innerHTML = `<option value="">Select a list...</option>`;
-        getShoppingLists().forEach((list) => {
-          const opt = document.createElement("option");
-          opt.value = list.id;
-          opt.textContent = list.name;
-          itemShoppingSelect.appendChild(opt);
-        });
+        // populate read only spans
+        itemDetailTitle.textContent = item.name;
+        detailName.textContent = item.name;
+        detailDescription.textContent = item.description || "--";
+        detailUseBy.textContent = formatDate(item.useBy);
+        detailQuantity.textContent = formatQuantity(item.quantity, item.unit);
+        detailLocation.textContent = item.location || "--";
 
-        // Populate recipe dropdown
-        itemRecipeSelect.innerHTML = `<option value="">Select a recipe...</option>`;
-        getRecipes().forEach((recipe) => {
-          const opt = document.createElement("option");
-          opt.value = recipe.id;
-          opt.textContent = recipe.name;
-          itemRecipeSelect.appendChild(opt);
-        });
+        // preffill edit inputs (so they're ready when user clicks edit)
+        editName.value = item.name || "";
+        editDescription.value = item.description || "";
+        editUseBy.value = item.useBy || "";
+        editQuantity.value =
+          item.quantity === null || item.quantity === undefined
+            ? ""
+            : item.quantity;
+        editUnit.value = item.unit || "";
+        editLocation.value = item.location || "Pantry";
 
+        applyDetailMode();
         modalOverlayItem.classList.add("open");
       }
 
-      function closeItemActionModal() {
+      function closeItemDetailModal() {
         modalOverlayItem.classList.remove("open");
         selectedItemId = null;
+        detailEditMode = false;
       }
 
-      document
-        .getElementById("item-action-cancel-btn")
-        .addEventListener("click", closeItemActionModal);
+      // toggles between view and edit modes
+      function applyDetailMode() {
+        const modal = document.getElementById("item-detail-modal");
+        if (detailEditMode) {
+          modal.classList.add("editing");
+        } else {
+          modal.classList.remove("editing");
+        }
+      }
 
-      document
-        .getElementById("item-action-save-btn")
-        .addEventListener("click", () => {
-          const inventory = getInventory();
-          const item = inventory.find((i) => i.id === selectedItemId);
-          if (!item) return;
+      function toggleEditMode() {
+        detailEditMode = !detailEditMode;
+        applyDetailMode();
+        if (detailEditMode) editName.focus();
+      }
 
-          const listId = itemShoppingSelect.value;
-          const recipeId = itemRecipeSelect.value;
+      function saveDetailEdits() {
+        if (!selectedItemId) return;
 
-          if (!listId && !recipeId) {
-            alert("Please select a shopping list or recipe.");
-            return;
-          }
+        const name = editName.value.trim();
+        if (!name) {
+          alert("Name can't be empty.");
+          return;
+        }
+        const location = editLocation.value;
+        if (!location) {
+          alert("Please select a location.");
+          return;
+        }
 
-          // Add to shopping list, need to work with Bemi
-          if (listId) {
-            const lists = getShoppingLists();
-            const list = lists.find((l) => l.id === listId);
-            if (list) {
-              list.ingredientList = list.ingredientList || [];
-              list.ingredientList.push(
-                new Ingredient(
-                  "i-" + Date.now(),
-                  item.name,
-                  item.description || "",
-                  item.useBy || null,
-                  item.location || "Pantry",
-                  item.quantity || 1
-                )
-              );
-              saveShoppingLists(lists);
-            }
-          }
+        const quantityRaw = editQuantity.value;
+        const quantity = quantityRaw === "" ? 0 : Number(quantityRaw);
 
-          // Add to recipe, yosh
-          if (recipeId) {
-            const recipes = getRecipes();
-            const recipe = recipes.find((r) => r.id === recipeId);
-            if (recipe) {
-              recipe.ingredients = recipe.ingredients || [];
-              recipe.ingredients.push(
-                new Ingredient(
-                  "i-" + Date.now(),
-                  item.name,
-                  item.description || "",
-                  item.useBy || null,
-                  item.location || "Pantry",
-                  item.quantity || 1
-                )
-              );
-              saveRecipes(recipes);
-            }
-          }
-
-          closeItemActionModal();
+        updateInventoryItemLocal(selectedItemId, {
+          name,
+          description: editDescription.value.trim(),
+          useBy: editUseBy.value || null,
+          quantity,
+          unit: editUnit.value,
+          location,
         });
+
+        // refresh displayed values, exit edit mode, rerender table
+        const updated = getInventory().find((i) => i.id === selectedItemId);
+        if (updated) {
+          itemDetailTitle.textContent = updated.name;
+          detailName.textContent = updated.name;
+          detailDescription.textContent = updated.description || "--";
+          detailUseBy.textContent = formatDate(updated.useBy);
+          detailQuantity.textContent = formatQuantity(
+            updated.quantity,
+            updated.unit
+          );
+          detailLocation.textContent = updated.location || "--";
+        }
+
+        detailEditMode = false;
+        applyDetailMode();
+        renderInventory();
+      }
+
+      function deleteCurrentItem() {
+        if (!selectedItemId) return;
+        const item = getInventory().find((i) => i.id === selectedItemId);
+        const confirmName = item ? item.name : "this item";
+        if (!confirm(`Delete "${confirmName}"? This can't be undone.`)) return;
+
+        removeInventoryItem(selectedItemId);
+        closeItemDetailModal();
+        renderInventory();
+      }
 
       addButton.addEventListener("click", openModal);
       cancelBtn.addEventListener("click", closeModal);
       saveItemBtn.addEventListener("click", saveInventoryItem);
 
-      closeButton.addEventListener("click", closeModalInfo);
+      itemBackBtn.addEventListener("click", closeItemDetailModal);
+      itemEditBtn.addEventListener("click", toggleEditMode);
+      itemDeleteBtn.addEventListener("click", deleteCurrentItem);
+      itemSaveBtn.addEventListener("click", saveDetailEdits);
 
       searchInput.addEventListener("input", renderInventory);
       locationFilter.addEventListener("change", renderInventory);
 
       inventoryNameInput.addEventListener("keypress", function (e) {
-        if (e.key === "Enter") {
-          saveInventoryItem();
-        }
+        if (e.key === "Enter") saveInventoryItem();
       });
 
-      inventoryLocationInput.addEventListener("keypress", function (e) {
-        if (e.key === "Enter") {
-          saveInventoryItem();
-        }
+      // close modals on overlay click (not on inner-modal click)
+      modalOverlay.addEventListener("click", (e) => {
+        if (e.target === modalOverlay) closeModal();
+      });
+      modalOverlayItem.addEventListener("click", (e) => {
+        if (e.target === modalOverlayItem) closeItemDetailModal();
       });
 
       renderInventory();
