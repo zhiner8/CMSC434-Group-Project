@@ -1,97 +1,32 @@
-/* CSS Notes:
-- '#' selects an element by its id so we can use it to style elements
-- '.' selects elements by their class so we can also use it to style elements
-- if nothing is put before the css then it will select all of those elements to style across the application unless overriden
-- adding within an element foe example #fakeelement button will select all the buttons under than id fakeelement
-- for hovering over buttons, use ":hover"
--  */
+/* recipe-book.css */
 
-/* offline fonts */
-@font-face {
-  font-family: "Roboto";
-  src: url("fonts/Roboto-Regular.ttf") format("truetype");
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: "Roboto";
-  src: url("fonts/Roboto-Light.ttf") format("truetype");
-  font-weight: 300;
-}
-
-@font-face {
-  font-family: "Roboto";
-  src: url("fonts/Roboto-Medium.ttf") format("truetype");
-  font-weight: 500;
-}
-
-@font-face {
-  font-family: "Roboto";
-  src: url("fonts/Roboto-Bold.ttf") format("truetype");
-  font-weight: 700;
-}
-
-.icon {
-  filter: var(--off-white);
-}
-
+/* ── main container ── */
 #recipe-container {
   flex: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   overflow: hidden;
-  margin: 20px 28px 20px 20px;
+  margin: 16px 20px 12px 20px;
 }
 
-#recipe-container input,
-#recipe-container select,
-#recipe-container button {
-  padding: 5px;
-  margin: 5px 0;
-}
+* { box-sizing: border-box; }
 
-ul#recipe-ul {
-  list-style-type: none;
-  color: var(--dark-text);
-  padding: 0;
-}
-
-ul#recipe-ul li {
-  padding: 8px;
-  border-bottom: 1px solid #ddd;
-  display: flex;
-  color: var(--dark-text);
-  justify-content: space-between;
-  align-items: center;
-}
-
-.recipe-item span {
-  font-weight: 500;
-}
-
-.recipe-buttons button {
-  margin-left: 5px;
-}
-
-* {
-  box-sizing: border-box;
-}
-
+/* ── toolbar ── */
 #recipe-toolbar {
   display: flex;
   align-items: center;
   gap: 10px;
   width: 100%;
-  min-width: 0;
   flex-wrap: nowrap;
 }
 
-#toolbar-buttons {
-  display: flex;
-  gap: 10px;
-  flex: 0 0 auto;
+/* Consistent height for all toolbar widgets */
+#search-wrapper,
+#sort-select,
+#toolbar-buttons button {
+  height: 52px;
 }
 
 #search-wrapper {
@@ -103,16 +38,12 @@ ul#recipe-ul li {
   background: white;
   border: 2px solid var(--dark-text);
   border-radius: 14px;
-  padding: 10px;
-}
-
-#search-wrapper i {
-  color: var(--dark-text);
-  font-size: 22px;
+  padding: 0 14px;
 }
 
 #search-wrapper svg {
   color: var(--dark-text);
+  flex-shrink: 0;
 }
 
 #search-input {
@@ -120,38 +51,34 @@ ul#recipe-ul li {
   outline: none;
   flex: 1 1 auto;
   min-width: 0;
-  font-size: 22px;
+  font-size: 20px;
   background: transparent;
   color: var(--dark-text);
+  font-family: "Roboto", sans-serif;
+  height: 100%;
 }
 
 #sort-select {
-  padding: 10px;
+  padding: 0 12px;
   border: 2px solid var(--dark-text);
   border-radius: 12px;
   background: white;
   color: var(--dark-text);
-  font-size: 18px;
-  flex: 0 0 auto;
-  max-width: 130px;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  flex-shrink: 0;
+  max-width: 125px;
+  cursor: pointer;
 }
 
-#filter-bar {
-  padding: 10px;
-  border: 2px solid var(--dark-text);
-  border-radius: 12px;
-  background: white;
-  color: var(--dark-text);
-  font-size: 22px;
-  flex: 0 0 auto;
+#toolbar-buttons {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 #toolbar-buttons button {
-  width: 72px;
-  height: 72px;
+  width: 52px;        /* square — consistent with height above */
   padding: 0;
   display: flex;
   align-items: center;
@@ -160,63 +87,102 @@ ul#recipe-ul li {
   border-radius: 14px;
   background: var(--accent-blue-2);
   color: var(--off-white);
-  font-size: 22px;
   cursor: pointer;
+  transition: background 0.15s ease;
 }
 
-#toolbar-buttons button:hover,
-.remove-btn:hover {
+#toolbar-buttons button:hover {
   background: var(--accent-blue-1);
 }
 
-.info-btn:hover {
-  background: var(--off-white);
-  border-radius: 0px;
-}
-
-#recipe-book-tab {
+/* ── filter bar — same height as toolbar widgets ── */
+#filter-bar {
   display: flex;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: var(--off-white);
-  flex-wrap: wrap;
   align-items: center;
-  flex-direction: column;
-  background: #f4f7f5;
   gap: 10px;
-  justify-content: flex-start;
+  height: 52px;
+  padding: 0 14px;
+  border: 2px solid var(--dark-text);
+  border-radius: 12px;
+  background: white;
+  color: var(--dark-text);
+  flex-shrink: 0;
 }
 
+#filter-label {
+  flex: 1;
+  font-size: 16px;
+  color: var(--dark-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#tag-filter-select {
+  padding: 4px 8px;
+  background: transparent;
+  color: var(--dark-text);
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  cursor: pointer;
+  border: 1px solid var(--dark-text);
+  border-radius: 8px;
+  flex-shrink: 0;
+  height: 36px;
+}
+
+/* toggle switch */
+#available-toggle {
+  appearance: none;
+  width: 38px;
+  height: 20px;
+  background: #ccc;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+#available-toggle::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: white;
+  border-radius: 50%;
+  top: 3px;
+  left: 3px;
+  transition: left 0.2s;
+}
+#available-toggle:checked { background: var(--accent-blue-2); }
+#available-toggle:checked::after { left: 21px; }
+
+/* ── table wrapper ── */
 #recipe-table-wrapper {
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
+  overflow-y: auto;       /* vertical scroll for many recipes */
+  overflow-x: auto;       /* horizontal scroll so tags are never clipped */
   background: white;
   border: 2px solid var(--dark-text);
   border-radius: 16px;
 }
 
-ul#recipe-ul li {
-  padding: 8px;
-  border-bottom: 1px solid #ddd;
-  display: flex;
-  color: var(--dark-text);
-  justify-content: space-between;
-  align-items: center;
-}
-
+/* ── table ── */
 #recipe-table {
   width: 100%;
+  min-width: 480px;       /* prevents columns collapsing too narrow */
   border-collapse: collapse;
   color: var(--dark-text);
+  table-layout: fixed;
 }
 
 #recipe-table th,
 #recipe-table td {
-  padding: 16px;
+  padding: 14px 12px;
   text-align: left;
   border-bottom: 1px solid #d9d9d9;
+  font-size: 18px;
 }
 
 #recipe-table th {
@@ -225,358 +191,205 @@ ul#recipe-ul li {
   background: #f4f7f5;
   font-weight: 700;
   z-index: 1;
+  white-space: nowrap;
 }
 
+/* Each row is single-line for name + ingredients; tags col wraps but scrolls */
+#recipe-table td.col-name,
+#recipe-table td.col-ingredients {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* tappable row highlight */
+.recipe-row {
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+.recipe-row:hover td {
+  background: #eef2f0;
+}
 #recipe-table tr:last-child td {
   border-bottom: none;
 }
 
-#recipe-container .remove-btn {
-  padding: 10px 14px;
-  border: 2px solid var(--dark-text);
-  border-radius: 14px;
+/* ── column widths ── */
+.col-name        { width: 26%; }
+.col-ingredients { width: 34%; color: #555; font-size: 16px; }
+.col-tags        { width: 30%; }
+.col-caret       { width: 10%; text-align: center; }
+
+.cell-name     { font-weight: 500; }
+.cell-truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ── tag pills ── */
+.tag-cell {
+  display: flex;
+  flex-wrap: wrap;        /* allow wrapping — table scrolls horizontally */
+  gap: 4px;
+}
+.tag-pill {
+  padding: 2px 8px;
   background: var(--accent-blue-2);
   color: var(--off-white);
-  font-size: 22px;
-  cursor: pointer;
+  border-radius: 999px;
+  font-size: 14px;
+  white-space: nowrap;
 }
 
-#recipe-container .remove-btn:hover {
-  background: var(--accent-blue-1);
+/* ── chevron visual cue ── */
+.caret-icon {
+  width: 1em;
+  height: 1em;
+  fill: #aaa;
+  vertical-align: middle;
+  transition: fill 0.12s ease;
+}
+.recipe-row:hover .caret-icon {
+  fill: var(--accent-blue-2);
 }
 
-#new-recipe-container {
-  height: 8%;
-  width: 90%;
-  text-align: right; /* for some reason this 
-  aligns all children in the container text or not */
+/* ── empty state ── */
+.empty-row {
+  text-align: center !important;
+  color: #888;
+  padding: 32px !important;
+  font-style: italic;
 }
 
-/* #new-recipe {
-  padding: 10px 14px;
-  border: 2px solid var(--dark-text);
-  border-radius: 14px;
-  background: var(--accent-blue-2);
+/* ── hidden utility ── */
+.hidden { display: none !important; }
+
+/* ── nav bar labels ── */
+/* styles.css controls the nav-bar itself; we just add label styling here */
+.nav-buttons {
+  flex-direction: column;
+  gap: 3px;
+}
+.nav-label {
+  font-size: 13px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
   color: var(--off-white);
-  font-size: 22px;
-  cursor: pointer;
-} */
-
-#new-recipe {
-  color: var(--off-white);
-  background-color: var(--accent-blue-1);
-  font-size: 38px;
-  width: 9%;
-  height: 75%;
+  line-height: 1;
 }
 
-/*
-#recipe-container {
-    margin: 20px;
-  } */
-
-#inventory-container input,
-#inventory-container select,
-#inventory-container button {
-  padding: 5px;
-  margin: 5px 0;
-}
-
+/* ── Add Recipe modal ── */
 #modal-overlay {
   display: none;
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
   z-index: 10;
   justify-content: center;
   align-items: center;
 }
-
-#modal-overlay.open {
-  display: flex;
-}
+#modal-overlay.open { display: flex; }
 
 #recipe-modal {
   background: var(--off-white);
   border-radius: 16px;
   padding: 24px;
-  width: 80%;
-  max-height: 80%;
+  width: 82%;
+  max-height: 82%;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
-
-#recipe-modal h3 {
-  color: var(--dark-text);
-  margin: 0;
-  font-size: 22px;
-}
+#recipe-modal h3 { color: var(--dark-text); margin: 0; font-size: 20px; }
+#recipe-modal label { color: var(--dark-text); font-size: 15px; font-weight: 500; }
+.label-hint { font-weight: 400; font-size: 13px; }
 
 #recipe-modal input[type="text"] {
   width: 100%;
-  padding: 8px;
+  padding: 8px 10px;
   border-radius: 8px;
   border: 1px solid var(--accent-blue-2);
   font-family: "Roboto", sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   color: var(--dark-text);
-  box-sizing: border-box;
-}
-
-#recipe-modal label {
-  color: var(--dark-text);
-  font-size: 16px;
-  font-weight: 500;
-}
-
-#ingredient-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-#ingredient-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--accent-blue-2);
-  color: var(--off-white);
-  padding: 6px 10px;
-  border-radius: 8px;
-  font-size: 16px;
-  border: none;
-}
-
-#ingredient-list li button {
-  background: none;
-  border: none;
-  color: var(--off-white);
-  cursor: pointer;
-  font-size: 16px;
-}
-
-#ingredient-input-row {
-  display: flex;
-  gap: 8px;
-}
-
-#ingredient-input-row input {
-  flex: 1;
-}
-
-#add-ingredient-btn {
-  padding: 8px 14px;
-  background: var(--accent-blue-2);
-  color: var(--off-white);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-#modal-buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-}
-
-#modal-buttons button {
-  padding: 8px 20px;
-  border-radius: 8px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-#save-recipe-btn {
-  background: var(--accent-blue-1);
-  color: var(--off-white);
-}
-
-#cancel-btn {
-  background: #ccc;
-  color: var(--dark-text);
-}
-
-#modal-overlay {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 10;
-  justify-content: center;
-  align-items: center;
-}
-
-#modal-overlay.open {
-  display: flex;
-}
-
-#recipe-modal {
-  background: var(--off-white);
-  border-radius: 16px;
-  padding: 24px;
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-#recipe-modal h3 {
-  color: var(--dark-text);
-  margin: 0;
-  font-size: 22px;
-}
-
-#recipe-modal input[type="text"] {
-  width: 100%;
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid var(--accent-blue-2);
-  font-family: "Roboto", sans-serif;
-  font-size: 16px;
-  color: var(--dark-text);
-  box-sizing: border-box;
-}
-
-#recipe-modal label {
-  color: var(--dark-text);
-  font-size: 16px;
-  font-weight: 500;
-}
-
-#ingredient-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-#ingredient-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--accent-blue-2);
-  color: var(--off-white);
-  padding: 6px 10px;
-  border-radius: 8px;
-  font-size: 16px;
-  border: none;
-}
-
-#ingredient-list li button {
-  background: none;
-  border: none;
-  color: var(--off-white);
-  cursor: pointer;
-  font-size: 16px;
-}
-
-#ingredient-input-row {
-  display: flex;
-  gap: 8px;
-}
-
-#ingredient-input-row input {
-  flex: 1;
-}
-
-#add-ingredient-btn {
-  padding: 8px 14px;
-  background: var(--accent-blue-2);
-  color: var(--off-white);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-#modal-buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-}
-
-#modal-buttons button {
-  padding: 8px 20px;
-  border-radius: 8px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-#save-recipe-btn {
-  background: var(--accent-blue-1);
-  color: var(--off-white);
-}
-
-#cancel-btn {
-  background: #ccc;
-  color: var(--dark-text);
-}
-
-#available-toggle {
-  appearance: none;
-  width: 40px;
-  height: 22px;
-  background: #ccc;
-  border-radius: 11px;
-  cursor: pointer;
-  position: relative;
-  transition: background 0.2s;
-  flex-shrink: 0;
-}
-
-/* shoudl select after elements content */
-#available-toggle::after {
-  content: "";
-  position: absolute;
-  width: 16px;
-  height: 16px;
   background: white;
-  border-radius: 50%;
-  top: 3px;
-  left: 3px;
-  transition: left 0.2s;
 }
 
-#available-toggle:checked {
-  background: var(--accent-blue-2);
-}
-
-#available-toggle:checked::after {
-  left: 21px;
-}
-
-#ingredient-amount-input {
-  width: 80px;
-  flex-shrink: 0;
-}
-
-.hidden {
+/* in-app error */
+#modal-error {
   display: none;
+  background: #fff0f0;
+  border: 1px solid #f5c6c6;
+  color: #c0392b;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 15px;
+}
+#modal-error.visible { display: block; }
+
+#ingredient-list {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 4px;
+}
+#ingredient-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--accent-blue-2);
+  color: var(--off-white);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 15px;
+}
+#ingredient-list li button {
+  background: none; border: none;
+  color: var(--off-white); cursor: pointer; font-size: 15px;
 }
 
-#tag-filter-select {
-  padding: 6px 10px;
-  background: transparent;
-  color: var(--dark-text);
-  font-size: 18px;
+#ingredient-input-row { display: flex; gap: 6px; }
+#ingredient-input { flex: 1; }
+#ingredient-amount-input {
+  width: 68px; flex-shrink: 0;
+  padding: 8px 6px;
+  border-radius: 8px;
+  border: 1px solid var(--accent-blue-2);
   font-family: "Roboto", sans-serif;
-  cursor: pointer;
-  margin: 0;
-  border: 2px solid black;
+  font-size: 15px; color: var(--dark-text); background: white;
 }
+#add-ingredient-btn {
+  padding: 8px 14px;
+  background: var(--accent-blue-2); color: var(--off-white);
+  border: none; border-radius: 8px; cursor: pointer; font-size: 15px;
+}
+#add-ingredient-btn:hover { background: var(--accent-blue-1); }
+
+#modal-buttons { display: flex; justify-content: flex-end; gap: 8px; margin-top: 4px; }
+#modal-buttons button { padding: 8px 20px; border-radius: 8px; border: none; font-size: 15px; cursor: pointer; }
+#save-recipe-btn { background: var(--accent-blue-1); color: var(--off-white); }
+#save-recipe-btn:hover { background: var(--accent-blue-2); }
+#cancel-btn { background: #ccc; color: var(--dark-text); }
+#cancel-btn:hover { background: #bbb; }
+
+/* ── in-app delete confirmation bar ── */
+#delete-confirm-bar {
+  display: none;
+  position: absolute;
+  bottom: 9%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 88%;
+  background: white;
+  border: 2px solid #f5c6c6;
+  border-radius: 14px;
+  padding: 14px 18px;
+  z-index: 20;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  flex-direction: column;
+  gap: 12px;
+}
+#delete-confirm-bar.visible { display: flex; }
+#delete-confirm-bar p { margin: 0; font-size: 17px; color: var(--dark-text); }
+.confirm-buttons { display: flex; gap: 10px; justify-content: flex-end; }
+.confirm-buttons button { padding: 8px 20px; border-radius: 8px; border: none; font-size: 15px; cursor: pointer; }
+#confirm-cancel-btn { background: #ccc; color: var(--dark-text); }
+#confirm-delete-btn { background: #c0392b; color: white; }
+#confirm-delete-btn:hover { background: #a93226; }
