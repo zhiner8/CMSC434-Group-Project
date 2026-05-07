@@ -67,7 +67,7 @@
             </div>
           </div>
 
-          <!-- inventory table with all 5 columns -->
+          <!-- inventory table with all 5 columns + caret indicator -->
           <div id="inventory-table-wrapper">
             <table id="inventory-table">
               <thead>
@@ -77,6 +77,7 @@
                   <th>Use By</th>
                   <th>Quantity</th>
                   <th>Location</th>
+                  <th class="col-caret"></th>
                 </tr>
               </thead>
               <tbody id="inventory-body"></tbody>
@@ -102,6 +103,18 @@
               </button>
               <h3 id="item-detail-title">Item</h3>
               <div id="item-detail-actions">
+                <button id="item-send-btn" aria-label="Add to list or recipe">
+                  <svg
+                    class="icon"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 640 640"
+                  >
+                    <path
+                      d="M566.6 73.4C572.7 79.5 575 88.4 572.6 96.7L444.6 544.7C442.1 553.5 434.4 559.8 425.3 560.7C416.2 561.6 407.4 556.8 403.3 548.6L295.7 333.4L80.5 225.8C72.3 221.7 67.5 213 68.4 203.8C69.3 194.6 75.6 187 84.4 184.5L532.4 56.5C540.7 54.1 549.6 56.5 555.7 62.6L566.6 73.4zM369.7 308.2L451.4 471.6L536.6 173.4L369.7 308.2zM331.5 282.7L466.3 115.8L168.1 201L331.5 282.7z"
+                    />
+                  </svg>
+                </button>
                 <button id="item-edit-btn" aria-label="Edit">
                   <svg
                     class="icon"
@@ -181,7 +194,84 @@
             </div>
 
             <div id="item-detail-footer">
-              <button id="item-save-btn">Save</button>
+              <div class="onscreen-keyboard">
+                <div class="kb-row">
+                  <button class="kb-key">1</button>
+                  <button class="kb-key">2</button>
+                  <button class="kb-key">3</button>
+                  <button class="kb-key">4</button>
+                  <button class="kb-key">5</button>
+                  <button class="kb-key">6</button>
+                  <button class="kb-key">7</button>
+                  <button class="kb-key">8</button>
+                  <button class="kb-key">9</button>
+                  <button class="kb-key">0</button>
+                </div>
+                <div class="kb-row">
+                  <button class="kb-key">q</button>
+                  <button class="kb-key">w</button>
+                  <button class="kb-key">e</button>
+                  <button class="kb-key">r</button>
+                  <button class="kb-key">t</button>
+                  <button class="kb-key">y</button>
+                  <button class="kb-key">u</button>
+                  <button class="kb-key">i</button>
+                  <button class="kb-key">o</button>
+                  <button class="kb-key">p</button>
+                </div>
+                <div class="kb-row kb-row-mid">
+                  <button class="kb-key">a</button>
+                  <button class="kb-key">s</button>
+                  <button class="kb-key">d</button>
+                  <button class="kb-key">f</button>
+                  <button class="kb-key">g</button>
+                  <button class="kb-key">h</button>
+                  <button class="kb-key">j</button>
+                  <button class="kb-key">k</button>
+                  <button class="kb-key">l</button>
+                </div>
+                <div class="kb-row">
+                  <button class="kb-key kb-key-fn">⇧</button>
+                  <button class="kb-key">z</button>
+                  <button class="kb-key">x</button>
+                  <button class="kb-key">c</button>
+                  <button class="kb-key">v</button>
+                  <button class="kb-key">b</button>
+                  <button class="kb-key">n</button>
+                  <button class="kb-key">m</button>
+                  <button class="kb-key kb-key-fn">⌫</button>
+                </div>
+                <div class="kb-row">
+                  <button class="kb-key kb-key-space">space</button>
+                  <button class="kb-key kb-key-return">return</button>
+                </div>
+              </div>
+
+              <div id="item-detail-buttons">
+                <button id="item-save-btn">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- send to list/recipe picker, opened from item detail modal -->
+        <div id="modal-overlay-send">
+          <div id="send-modal">
+            <h3 id="send-modal-title">Add to...</h3>
+
+            <label for="send-shopping-select">Shopping List</label>
+            <select id="send-shopping-select">
+              <option value="">Select a list...</option>
+            </select>
+
+            <label for="send-recipe-select">Recipe</label>
+            <select id="send-recipe-select">
+              <option value="">Select a recipe...</option>
+            </select>
+
+            <div id="modal-buttons">
+              <button id="send-cancel-btn">Cancel</button>
+              <button id="send-save-btn">Add</button>
             </div>
           </div>
         </div>
@@ -240,6 +330,59 @@
               <option value="Other">Other</option>
             </select>
 
+            <div class="onscreen-keyboard">
+              <div class="kb-row">
+                <button class="kb-key">1</button>
+                <button class="kb-key">2</button>
+                <button class="kb-key">3</button>
+                <button class="kb-key">4</button>
+                <button class="kb-key">5</button>
+                <button class="kb-key">6</button>
+                <button class="kb-key">7</button>
+                <button class="kb-key">8</button>
+                <button class="kb-key">9</button>
+                <button class="kb-key">0</button>
+              </div>
+              <div class="kb-row">
+                <button class="kb-key">q</button>
+                <button class="kb-key">w</button>
+                <button class="kb-key">e</button>
+                <button class="kb-key">r</button>
+                <button class="kb-key">t</button>
+                <button class="kb-key">y</button>
+                <button class="kb-key">u</button>
+                <button class="kb-key">i</button>
+                <button class="kb-key">o</button>
+                <button class="kb-key">p</button>
+              </div>
+              <div class="kb-row kb-row-mid">
+                <button class="kb-key">a</button>
+                <button class="kb-key">s</button>
+                <button class="kb-key">d</button>
+                <button class="kb-key">f</button>
+                <button class="kb-key">g</button>
+                <button class="kb-key">h</button>
+                <button class="kb-key">j</button>
+                <button class="kb-key">k</button>
+                <button class="kb-key">l</button>
+              </div>
+              <div class="kb-row">
+                <button class="kb-key kb-key-fn">⇧</button>
+                <button class="kb-key">z</button>
+                <button class="kb-key">x</button>
+                <button class="kb-key">c</button>
+                <button class="kb-key">v</button>
+                <button class="kb-key">b</button>
+                <button class="kb-key">n</button>
+                <button class="kb-key">m</button>
+                <button class="kb-key kb-key-fn">⌫</button>
+              </div>
+              <div class="kb-row">
+                <button class="kb-key kb-key-space">space</button>
+                <button class="kb-key kb-key-return">return</button>
+              </div>
+            </div>
+
             <div id="modal-buttons">
               <button id="cancel-btn">Cancel</button>
               <button id="save-item-btn">Save</button>
@@ -248,10 +391,10 @@
         </div>
       </div>
 
-      <!-- nav bar  -->
+      <!-- Nav bar with labels -->
       <div id="nav-bar">
         <a href="my-kitchen.html" class="nav-buttons" id="selected">
-          <!-- NAV ICONS FROM FONTAWESOME SVGS -->
+          <!-- box / crate icon -->
           <svg
             class="icon"
             aria-hidden="true"
@@ -259,9 +402,10 @@
             viewBox="0 0 640 640"
           >
             <path
-              d="M341.8 72.6C329.5 61.2 310.5 61.2 298.3 72.6L74.3 280.6C64.7 289.6 61.5 303.5 66.3 315.7C71.1 327.9 82.8 336 96 336L112 336L112 512C112 547.3 140.7 576 176 576L464 576C499.3 576 528 547.3 528 512L528 336L544 336C557.2 336 569 327.9 573.8 315.7C578.6 303.5 575.4 289.5 565.8 280.6L341.8 72.6zM304 384L336 384C362.5 384 384 405.5 384 432L384 528L256 528L256 432C256 405.5 277.5 384 304 384z"
+              d="M80 128C80 99.4 103.4 76 132 76L508 76C536.6 76 560 99.4 560 128L560 192L80 192L80 128zM272 128L272 192L368 192L368 128L272 128zM64 224L576 224L576 512C576 540.6 552.6 564 524 564L116 564C87.4 564 64 540.6 64 512L64 224zM272 288L272 432C272 440.8 279.2 448 288 448L352 448C360.8 448 368 440.8 368 432L368 288C368 279.2 360.8 272 352 272L288 272C279.2 272 272 279.2 272 288z"
             />
           </svg>
+          <span class="nav-label">Inventory</span>
         </a>
         <a href="recipe-book.html" class="nav-buttons">
           <svg
@@ -274,6 +418,7 @@
               d="M480 576L192 576C139 576 96 533 96 480L96 160C96 107 139 64 192 64L496 64C522.5 64 544 85.5 544 112L544 400C544 420.9 530.6 438.7 512 445.3L512 512C529.7 512 544 526.3 544 544C544 561.7 529.7 576 512 576L480 576zM192 448C174.3 448 160 462.3 160 480C160 497.7 174.3 512 192 512L448 512L448 448L192 448zM224 216C224 229.3 234.7 240 248 240L424 240C437.3 240 448 229.3 448 216C448 202.7 437.3 192 424 192L248 192C234.7 192 224 202.7 224 216zM248 288C234.7 288 224 298.7 224 312C224 325.3 234.7 336 248 336L424 336C437.3 336 448 325.3 448 312C448 298.7 437.3 288 424 288L248 288z"
             />
           </svg>
+          <span class="nav-label">Recipes</span>
         </a>
         <a href="shopping.html" class="nav-buttons">
           <svg
@@ -286,6 +431,7 @@
               d="M112 208C138.5 208 160 186.5 160 160C160 133.5 138.5 112 112 112C85.5 112 64 133.5 64 160C64 186.5 85.5 208 112 208zM256 128C238.3 128 224 142.3 224 160C224 177.7 238.3 192 256 192L544 192C561.7 192 576 177.7 576 160C576 142.3 561.7 128 544 128L256 128zM256 288C238.3 288 224 302.3 224 320C224 337.7 238.3 352 256 352L544 352C561.7 352 576 337.7 576 320C576 302.3 561.7 288 544 288L256 288zM256 448C238.3 448 224 462.3 224 480C224 497.7 238.3 512 256 512L544 512C561.7 512 576 497.7 576 480C576 462.3 561.7 448 544 448L256 448zM112 528C138.5 528 160 506.5 160 480C160 453.5 138.5 432 112 432C85.5 432 64 453.5 64 480C64 506.5 85.5 528 112 528zM160 320C160 293.5 138.5 272 112 272C85.5 272 64 293.5 64 320C64 346.5 85.5 368 112 368C138.5 368 160 346.5 160 320z"
             />
           </svg>
+          <span class="nav-label">Shopping</span>
         </a>
       </div>
     </div>
@@ -321,21 +467,24 @@
       );
       const cancelBtn = document.getElementById("cancel-btn");
       const saveItemBtn = document.getElementById("save-item-btn");
-      // function getTodayDate() {
-      //   const today = new Date();
-      //
-      //   return `${mm}/${dd}/${yy}`;
-      // }
-      // we are using UseBy instead of getTodays Date now
-
-      //rebuilds inevntoru table based on current search and location filters :]
 
       const modalOverlayItem = document.getElementById("modal-overlay-item");
       const itemDetailTitle = document.getElementById("item-detail-title");
       const itemBackBtn = document.getElementById("item-back-btn");
       const itemEditBtn = document.getElementById("item-edit-btn");
       const itemDeleteBtn = document.getElementById("item-delete-btn");
+      const itemSendBtn = document.getElementById("item-send-btn");
       const itemSaveBtn = document.getElementById("item-save-btn");
+
+      // send-to picker modal
+      const modalOverlaySend = document.getElementById("modal-overlay-send");
+      const sendModalTitle = document.getElementById("send-modal-title");
+      const sendShoppingSelect = document.getElementById(
+        "send-shopping-select"
+      );
+      const sendRecipeSelect = document.getElementById("send-recipe-select");
+      const sendCancelBtn = document.getElementById("send-cancel-btn");
+      const sendSaveBtn = document.getElementById("send-save-btn");
 
       const detailName = document.getElementById("detail-name");
       const detailDescription = document.getElementById("detail-description");
@@ -391,7 +540,7 @@
 
         if (filteredItems.length === 0) {
           const row = document.createElement("tr");
-          row.innerHTML = `<td colspan="5" class="empty-row">No items found.</td>`;
+          row.innerHTML = `<td colspan="6" class="empty-row">No items found.</td>`;
           inventoryBody.appendChild(row);
           return;
         }
@@ -407,6 +556,11 @@
             <td>${formatDate(item.useBy)}</td>
             <td>${formatQuantity(item.quantity, item.unit)}</td>
             <td>${item.location || "--"}</td>
+            <td class="col-caret">
+              <svg class="caret-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                <path d="M422.6 278.6L278.6 422.6C272.4 428.9 264 432 256 432C247.6 432 239.2 428.9 232.9 422.6C220.4 410.1 220.4 389.9 232.9 377.4L354.7 256L232.9 134.6C220.4 122.1 220.4 101.9 232.9 89.4C245.4 76.9 265.6 76.9 278.1 89.4L422.1 233.4C434.6 245.9 434.6 266.1 422.6 278.6z"/>
+              </svg>
+            </td>
           `;
           inventoryBody.appendChild(row);
         });
@@ -478,7 +632,7 @@
         detailQuantity.textContent = formatQuantity(item.quantity, item.unit);
         detailLocation.textContent = item.location || "--";
 
-        // preffill edit inputs (so they're ready when user clicks edit)
+        // preffill edit inputs
         editName.value = item.name || "";
         editDescription.value = item.description || "";
         editUseBy.value = item.useBy || "";
@@ -499,7 +653,6 @@
         detailEditMode = false;
       }
 
-      // toggles between view and edit modes
       function applyDetailMode() {
         const modal = document.getElementById("item-detail-modal");
         if (detailEditMode) {
@@ -541,7 +694,6 @@
           location,
         });
 
-        // refresh displayed values, exit edit mode, rerender table
         const updated = getInventory().find((i) => i.id === selectedItemId);
         if (updated) {
           itemDetailTitle.textContent = updated.name;
@@ -571,6 +723,97 @@
         renderInventory();
       }
 
+      // ── send-to-list/recipe picker ──
+      function openSendModal() {
+        if (!selectedItemId) return;
+        const item = getInventory().find((i) => i.id === selectedItemId);
+        if (!item) return;
+
+        sendModalTitle.textContent = `Add "${item.name}" to...`;
+
+        // populate shopping list dropdown
+        sendShoppingSelect.innerHTML = `<option value="">Select a list...</option>`;
+        getShoppingLists().forEach((list) => {
+          const opt = document.createElement("option");
+          opt.value = list.id;
+          opt.textContent = list.name;
+          sendShoppingSelect.appendChild(opt);
+        });
+
+        // populate recipe dropdown
+        sendRecipeSelect.innerHTML = `<option value="">Select a recipe...</option>`;
+        getRecipes().forEach((recipe) => {
+          const opt = document.createElement("option");
+          opt.value = recipe.id;
+          opt.textContent = recipe.name;
+          sendRecipeSelect.appendChild(opt);
+        });
+
+        modalOverlaySend.classList.add("open");
+      }
+
+      function closeSendModal() {
+        modalOverlaySend.classList.remove("open");
+        sendShoppingSelect.value = "";
+        sendRecipeSelect.value = "";
+      }
+
+      function saveSend() {
+        if (!selectedItemId) return;
+        const item = getInventory().find((i) => i.id === selectedItemId);
+        if (!item) return;
+
+        const listId = sendShoppingSelect.value;
+        const recipeId = sendRecipeSelect.value;
+
+        if (!listId && !recipeId) {
+          alert("Please select a shopping list or recipe.");
+          return;
+        }
+
+        // add to shopping list
+        if (listId) {
+          const lists = getShoppingLists();
+          const list = lists.find((l) => l.id === listId);
+          if (list) {
+            list.ingredientList = list.ingredientList || [];
+            list.ingredientList.push(
+              new Ingredient(
+                "i-" + Date.now(),
+                item.name,
+                item.description || "",
+                item.useBy || null,
+                item.location || "Pantry",
+                item.quantity || 1
+              )
+            );
+            saveShoppingLists(lists);
+          }
+        }
+
+        // add to recipe
+        if (recipeId) {
+          const recipes = getRecipes();
+          const recipe = recipes.find((r) => r.id === recipeId);
+          if (recipe) {
+            recipe.ingredients = recipe.ingredients || [];
+            recipe.ingredients.push(
+              new Ingredient(
+                "i-" + Date.now(),
+                item.name,
+                item.description || "",
+                item.useBy || null,
+                item.location || "Pantry",
+                item.quantity || 1
+              )
+            );
+            saveRecipes(recipes);
+          }
+        }
+
+        closeSendModal();
+      }
+
       addButton.addEventListener("click", openModal);
       cancelBtn.addEventListener("click", closeModal);
       saveItemBtn.addEventListener("click", saveInventoryItem);
@@ -578,7 +821,14 @@
       itemBackBtn.addEventListener("click", closeItemDetailModal);
       itemEditBtn.addEventListener("click", toggleEditMode);
       itemDeleteBtn.addEventListener("click", deleteCurrentItem);
+      itemSendBtn.addEventListener("click", openSendModal);
       itemSaveBtn.addEventListener("click", saveDetailEdits);
+
+      sendCancelBtn.addEventListener("click", closeSendModal);
+      sendSaveBtn.addEventListener("click", saveSend);
+      modalOverlaySend.addEventListener("click", (e) => {
+        if (e.target === modalOverlaySend) closeSendModal();
+      });
 
       searchInput.addEventListener("input", renderInventory);
       locationFilter.addEventListener("change", renderInventory);
@@ -587,7 +837,6 @@
         if (e.key === "Enter") saveInventoryItem();
       });
 
-      // close modals on overlay click (not on inner-modal click)
       modalOverlay.addEventListener("click", (e) => {
         if (e.target === modalOverlay) closeModal();
       });
